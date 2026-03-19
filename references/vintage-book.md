@@ -17,6 +17,107 @@
 
 ---
 
+## 字体方案
+
+### 优先：Google Fonts（有网络时）
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+```
+
+### 备用：系统中文字体（无网络时）
+
+```css
+:root {
+  /* 标题：优先书法感字体 */
+  --font-title: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', 'FangSong', '仿宋', serif;
+  /* 正文：清晰宋体 */
+  --font-body: 'Noto Serif SC', 'STSong', '宋体', 'SimSun', serif;
+  /* 装饰数字 */
+  --font-deco: 'Georgia', serif;
+}
+```
+
+---
+
+## 色彩映射
+
+| 书籍类型 | 主色调 | CSS 变量推荐 |
+|---------|--------|-------------|
+| 古典文学 | 赭石、朱红、墨绿 | `#8B2500` / `#C41E3A` / `#2D5016` |
+| 现代小说 | 靛蓝、灰白、银灰 | `#1B3A6B` / `#F5F5F0` / `#9E9E9E` |
+| 哲学思想 | 黑、灰、淡黄 | `#0A0A0A` / `#555` / `#F5F0DC` |
+| 自然科学 | 青绿、土黄、天蓝 | `#2A7F62` / `#C8A84B` / `#4A90D9` |
+| 历史传记 | 琥珀、深褐、米白 | `#B8860B` / `#4A2C0A` / `#F5ECD7` |
+
+---
+
+## 传统纹样 SVG 代码片段
+
+### 回纹边框（古典文学专用）
+
+```css
+.pattern-border {
+  border: 8px solid transparent;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 0 L20 0 L20 20 L40 20 L40 0 L60 0 L60 20 L40 20 L40 40 L60 40 L60 60 L40 60 L40 40 L20 40 L20 60 L0 60 L0 40 L20 40 L20 20 L0 20 Z' fill='none' stroke='%238B2500' stroke-width='2'/%3E%3C/svg%3E") 8 repeat;
+}
+```
+
+### 竹简线纹理
+
+```css
+.bamboo-bg {
+  background-color: #F5ECD7;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 48px,
+    rgba(139, 90, 43, 0.15) 48px,
+    rgba(139, 90, 43, 0.15) 50px
+  );
+}
+```
+
+### 印章效果
+
+```css
+.stamp {
+  display: inline-block;
+  border: 3px solid #C41E3A;
+  color: #C41E3A;
+  padding: 4px 10px;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  transform: rotate(-8deg);
+  opacity: 0.85;
+  box-shadow: inset 0 0 0 1px rgba(196,30,58,0.3);
+  font-family: var(--font-title);
+}
+```
+
+### 毛笔笔触分割线
+
+```css
+.brush-divider {
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(139, 69, 19, 0.6) 10%,
+    rgba(139, 69, 19, 0.9) 30%,
+    rgba(50, 30, 10, 1) 50%,
+    rgba(139, 69, 19, 0.9) 70%,
+    rgba(139, 69, 19, 0.6) 90%,
+    transparent 100%
+  );
+  border-radius: 2px;
+  margin: 1.5rem 0;
+}
+```
+
+---
+
 ## 处理流程
 
 ### 阶段 1：基础信息提取
@@ -47,7 +148,7 @@
 每个观点包含：
 - **标题**：4-8 字
 - **阐述**：28-35 字核心内容
-- **图标**：对应的图标描述
+- **图标**：对应的 Unicode 图标
 
 ### 阶段 5：经典语录（3 条）
 
@@ -83,41 +184,11 @@
 
 ---
 
-## 视觉风格配置
-
-### 色彩映射
-
-| 书籍类型 | 色调 |
-|---------|------|
-| 古典文学 | 赭石、朱红、墨绿 |
-| 现代小说 | 靛蓝、灰白、银灰 |
-| 哲学思想 | 黑、灰、淡黄 |
-| 自然科学 | 青绿、土黄、天蓝 |
-| 历史传记 | 琥珀、深褐、米白 |
-
-### 装饰纹样
-
-| 书籍类型 | 纹样 |
-|---------|------|
-| 古典文学 | 云纹、回纹、花卉纹 |
-| 武侠小说 | 剑纹、山水纹、龙纹 |
-| 现代作品 | 几何纹、线条纹 |
-| 历史类 | 青铜纹、印章纹、竹简纹 |
-| 哲学类 | 太极纹、八卦纹、禅意纹 |
-
-### 书法字体
-
-- 古代经典 → 颜真卿体（雄浑有力）
-- 文人雅致 → 欧阳询体（清秀规整）
-- 现代灵动 → 行书（流畅自然）
-
----
-
 ## 输出结构
 
 ```
 ┌─────────────────────────────────────┐
-│  [书名 - 书法风格]    [封面图]       │
+│  [书名 - 书法风格]    [印章装饰]    │
 │  作者：XXX                          │
 ├─────────────────────────────────────┤
 │  核心主题                           │
@@ -149,5 +220,5 @@
 - 忠实原著，不曲解原意
 - 精炼完整，避免信息过载
 - 所有文字清晰可读
-- 视觉风格统一
+- 视觉风格统一（颜色、字体与书籍类型匹配）
 - 一目了然，快速把握书籍精华
