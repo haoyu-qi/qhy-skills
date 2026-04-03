@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q2 重点工作优先级规划看板</title>
+  <style>
+    :root {
+      --bg-page: #f4f6fb;
+      --bg-card: rgba(255, 255, 255, 0.88);
+      --bg-hero: linear-gradient(135deg, #1c3566 0%, #2b5aed 58%, #5f84ff 100%);
+      --bg-p0: #eef3ff;
+      --bg-p1: #eef9f4;
+      --bg-p2: #fff8ed;
+      --bg-p3: #fff4f4;
+      --ink: #202633;
+      --muted: #5f697d;
+      --line: rgba(32, 38, 51, 0.10);
+      --blue: #2b5aed;
+      --green: #0d8b63;
+      --orange: #c56a12;
+      --red: #ca3b3b;
+      --shadow: 0 24px 60px rgba(30, 49, 94, 0.10);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+      --font-serif: "Songti SC", "STSong", "Noto Serif SC", serif;
+      --font-mono: "SFMono-Regular", "Menlo", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(circle at top left, rgba(95, 132, 255, 0.14), transparent 26%),
+        radial-gradient(circle at top right, rgba(13, 139, 99, 0.10), transparent 20%),
+        var(--bg-page);
+      color: var(--ink);
+      font-family: var(--font-sans);
+    }
+
+    body {
+      padding: 28px;
+    }
+
+    .board {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 32px;
+      padding: 34px 36px 30px;
+      background: var(--bg-hero);
+      color: #f8fbff;
+      box-shadow: 0 28px 80px rgba(43, 90, 237, 0.22);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 360px;
+      height: 360px;
+      top: -180px;
+      right: -120px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero::after {
+      width: 280px;
+      height: 280px;
+      bottom: -140px;
+      left: -80px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-top {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 28px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    h1 {
+      margin: 16px 0 10px;
+      font-family: var(--font-serif);
+      font-size: 54px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 48rem;
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(248, 251, 255, 0.88);
+    }
+
+    .headline-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 18px 18px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(10px);
+    }
+
+    .metric .value {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .metric .label {
+      display: block;
+      margin-top: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(248, 251, 255, 0.78);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 20px;
+    }
+
+    .column {
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-kicker {
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .timeline-item {
+      border-radius: var(--radius-md);
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+    }
+
+    .timeline-item .date {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(43, 90, 237, 0.10);
+      color: var(--blue);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .timeline-item h3,
+    .priority-card h3,
+    .stack h3,
+    .risk-list h3 {
+      margin: 14px 0 8px;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .timeline-item p,
+    .priority-card p,
+    .summary-note,
+    .stack p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .priority-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .priority-card {
+      border-radius: var(--radius-md);
+      padding: 18px;
+      border: 1px solid var(--line);
+    }
+
+    .priority-card ul,
+    .stack ul,
+    .risk-list ul,
+    .action-list,
+    .xa-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .priority-card li,
+    .stack li,
+    .risk-list li,
+    .action-list li,
+    .xa-list li {
+      position: relative;
+      padding-left: 16px;
+      margin-top: 8px;
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .priority-card li::before,
+    .stack li::before,
+    .risk-list li::before,
+    .action-list li::before,
+    .xa-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: currentColor;
+      opacity: 0.8;
+    }
+
+    .p0 { background: var(--bg-p0); color: var(--blue); }
+    .p1 { background: var(--bg-p1); color: var(--green); }
+    .p2 { background: var(--bg-p2); color: var(--orange); }
+    .p3 { background: var(--bg-p3); color: var(--red); }
+
+    .p0 li, .p1 li, .p2 li, .p3 li { color: var(--ink); }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stack-item {
+      border-radius: var(--radius-md);
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .stack-item .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-family: var(--font-mono);
+    }
+
+    .tag-green { color: var(--green); background: rgba(13, 139, 99, 0.10); }
+    .tag-blue { color: var(--blue); background: rgba(43, 90, 237, 0.10); }
+    .tag-orange { color: var(--orange); background: rgba(197, 106, 18, 0.10); }
+    .tag-red { color: var(--red); background: rgba(202, 59, 59, 0.10); }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .mini-card {
+      border-radius: var(--radius-md);
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .mini-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .risk-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .risk-item {
+      border-radius: var(--radius-md);
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.76);
+    }
+
+    .risk-item h3 {
+      margin-top: 0;
+    }
+
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 2px 4px 10px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-top,
+      .grid,
+      .split,
+      .timeline,
+      .priority-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+      .hero { padding: 24px 20px; }
+      h1 { font-size: 36px; }
+      .card { padding: 18px; }
+      .headline-metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <span class="eyebrow">Q2 Priority Board / Project Planning</span>
+          <h1>Q2 重点工作优先级规划看板</h1>
+          <p>这份规划的主轴不是“所有事项并列推进”，而是先稳住 4 月 10 日和 4 月 15 日两个交付窗口，再把云南公安、H.323 适配、人影专项和服务改造压到同一张节奏图里，形成按 P0 到 P3 分层推进的执行面板。</p>
+          <div class="pills">
+            <span class="pill">4 月关键节点</span>
+            <span class="pill">重点客户推进</span>
+            <span class="pill">专项开发压进度</span>
+          </div>
+        </div>
+        <div class="headline-metrics">
+          <div class="metric">
+            <span class="value">12</span>
+            <span class="label">核心规划目录与优先级条目</span>
+          </div>
+          <div class="metric">
+            <span class="value">67 人日</span>
+            <span class="label">雄安项目预估总工作量，当前暂不纳入本轮规划</span>
+          </div>
+          <div class="metric">
+            <span class="value">2</span>
+            <span class="label">4 月关键时间窗口：4/10 与 4/15</span>
+          </div>
+          <div class="metric">
+            <span class="value">P0 / P1</span>
+            <span class="label">本轮真正要压紧的执行重心</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Critical Milestones</div>
+          <h2>关键时间节点</h2>
+        </div>
+        <div class="section-kicker">先保节点，再拉通专项</div>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item">
+          <span class="date">04/10</span>
+          <h3>闪电与相关云平台更新</h3>
+          <p>平台类交付窗口，直接影响整体运行面。</p>
+        </article>
+        <article class="timeline-item">
+          <span class="date">04/10</span>
+          <h3>Q1 信创整体包与标准包补丁</h3>
+          <p>季度版本承诺项，需和测试、交付同步闭环。</p>
+        </article>
+        <article class="timeline-item">
+          <span class="date">04/15</span>
+          <h3>Q1 季度软件版本同步会</h3>
+          <p>跨部门协调节点，不宜后移，需材料前置准备。</p>
+        </article>
+        <article class="timeline-item">
+          <span class="date">04/15</span>
+          <h3>测试使用文档交付</h3>
+          <p>面向交付和测试落地的正式文档输出。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="column">
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Priority Layers</div>
+              <h2>P0 - P3 优先级分层</h2>
+            </div>
+            <div class="section-kicker">避免平均用力</div>
+          </div>
+          <div class="priority-grid">
+            <article class="priority-card p0">
+              <h3>P0 最高优先级</h3>
+              <p class="summary-note">围绕明确时间节点和核心客户问题展开，必须按期完成。</p>
+              <ul>
+                <li>4 月 10 日前后平台更新、Q1 包与补丁出具、培训与测试材料准备</li>
+                <li>云南公安 X1 / X5 核心音视频问题处理</li>
+                <li>移动端共享全屏速度、本地音频拾取等体验问题</li>
+              </ul>
+            </article>
+            <article class="priority-card p1">
+              <h3>P1 本月重点推进</h3>
+              <p class="summary-note">聚焦重点客户与核心功能适配，是本轮主要投入区。</p>
+              <ul>
+                <li>H.323 国产化适配、X5 H.323 增强功能、YL / PZ 终端迭代</li>
+                <li>人影系统白板 demo、GB 34114 解码、嵌入式适配</li>
+                <li>M340 录播服务器改造与 X1 国产化合成服务器测试</li>
+              </ul>
+            </article>
+            <article class="priority-card p2">
+              <h3>P2 持续优化</h3>
+              <p class="summary-note">围绕体验和服务能力做持续拉齐，不能挤占 P0 / P1 资源。</p>
+              <ul>
+                <li>AI 资源树、界面布局与交互逻辑优化</li>
+                <li>移动端、鸿蒙端、新 App 细节优化与录播闭环体验</li>
+                <li>地图嵌入、AI 交互后端接口、服务整合包体验修复</li>
+              </ul>
+            </article>
+            <article class="priority-card p3">
+              <h3>P3 待明确或长期规划</h3>
+              <p class="summary-note">先标记，不抢当前窗口，待需求清晰后再上提优先级。</p>
+              <ul>
+                <li>国家消防需求待确认后可上调至 P1</li>
+                <li>AI 产品线 Q2 长期规划持续推进</li>
+                <li>雄安项目 67 人日需求暂不纳入本轮正式排期</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">P1 Focus</div>
+              <h2>重点项目推进面</h2>
+            </div>
+            <div class="section-kicker">客户与功能双线推进</div>
+          </div>
+          <div class="stack">
+            <article class="stack-item">
+              <span class="tag tag-green">P1 / 协议适配</span>
+              <h3>H.323 协议与终端适配</h3>
+              <ul>
+                <li>推进 H.323 客户端在国产化终端与 X86 架构的深度兼容</li>
+                <li>完成 X5 客户端 H.323 增强功能，向 X86 原生能力对齐</li>
+                <li>持续推动 YL 与 PZ 定制终端版本迭代，形成稳定输出</li>
+              </ul>
+            </article>
+            <article class="stack-item">
+              <span class="tag tag-blue">P1 / 专项开发</span>
+              <h3>特定业务与人影系统专项</h3>
+              <ul>
+                <li>适配 GB 34114 摄像头协议解码，保证视频流稳定调取</li>
+                <li>推进协作白板功能嵌入式适配开发</li>
+                <li>输出白板落地 demo，可服务人影项目与雄安应急演示</li>
+              </ul>
+            </article>
+            <article class="stack-item">
+              <span class="tag tag-orange">P1 / 服务组</span>
+              <h3>服务组重点开发进度</h3>
+              <ul>
+                <li>M340 录播服务器改造适配</li>
+                <li>X1 国产化合成服务器与媒体服务器性能测试</li>
+                <li>录播服务升级对接、地图版本更新与 AI 态势感知嵌入</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <div class="column">
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Customer + Product</div>
+              <h2>关键客户与产品动作</h2>
+            </div>
+            <div class="section-kicker">问题优先于功能扩张</div>
+          </div>
+          <div class="split">
+            <article class="mini-card">
+              <h3>云南公安</h3>
+              <ul class="action-list">
+                <li>重点处理 X1 与 X5 核心音视频问题</li>
+                <li>持续整合反馈并形成每周进度汇报</li>
+              </ul>
+            </article>
+            <article class="mini-card">
+              <h3>AI 交互与后端服务</h3>
+              <ul class="action-list">
+                <li>推进客户端与移动端定制 AI 功能设计和交互实现</li>
+                <li>完善 AI 交互接口后端服务与原生接口信息同步</li>
+              </ul>
+            </article>
+          </div>
+          <div class="split">
+            <article class="mini-card">
+              <h3>多端体验优化</h3>
+              <ul class="action-list">
+                <li>优化 AI 资源树、界面布局、交互逻辑</li>
+                <li>补齐新 App、鸿蒙端、融合通信嵌入和录播闭环体验</li>
+              </ul>
+            </article>
+            <article class="mini-card">
+              <h3>产品功能推进</h3>
+              <ul class="action-list">
+                <li>会控整合、服务整合包修复、323 持久化管理界面设计开发</li>
+                <li>季度版本授权延长到季度末次月月底</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Deferred Scope</div>
+              <h2>雄安项目需求概览</h2>
+            </div>
+            <div class="section-kicker">看评审启动，暂不纳入本轮</div>
+          </div>
+          <p class="summary-note">雄安项目总计约 67 人日，当前建议保留需求池状态，等一线流程和评审启动后再决定切入顺序。</p>
+          <ul class="xa-list">
+            <li>即时通讯 15 人日</li>
+            <li>视频会商 20 人日</li>
+            <li>视频录像 7 人日</li>
+            <li>文字讨论 10 人日</li>
+            <li>白板标绘 5 人日</li>
+            <li>投票和举手 10 人日</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Risk Radar</div>
+              <h2>风险与执行机制</h2>
+            </div>
+            <div class="section-kicker">每周动态调整</div>
+          </div>
+          <div class="risk-list">
+            <article class="risk-item">
+              <h3>资源冲突风险</h3>
+              <ul>
+                <li>云南公安问题处理与雄安项目开发可能发生并行抢占</li>
+                <li>重庆总队统一平台认证对接可能临时穿插进当前节奏</li>
+              </ul>
+            </article>
+            <article class="risk-item">
+              <h3>技术风险</h3>
+              <ul>
+                <li>H.323 国产化适配难度可能超预期，需持续验证 X5 与嵌入方案</li>
+                <li>屏幕共享能力当前做不了，需提前沟通替代方案</li>
+              </ul>
+            </article>
+            <article class="risk-item">
+              <h3>执行规则</h3>
+              <ul>
+                <li>每周一产品会上动态调整 P0 / P1</li>
+                <li>云南公安问题形成固定周报</li>
+                <li>雄安需求需等待一线流程确认后再正式排序</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span>Q2 Priority Board</span>
+      <span>P0 稳节点，P1 压专项，P2 持续优化，P3 待明确</span>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "name": "qhy-skills",
+  "displayName": "QHY Skills",
+  "description": "A scalable multi-skill collection centered on qhy-card and designed for future qhy-* skills",
+  "version": "1.0.0",
+  "owner": {
+    "name": "haoyu-qi",
+    "url": "https://github.com/haoyu-qi"
+  },
+  "repository": "https://github.com/haoyu-qi/qhy-skills",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "visualization",
+    "multi-skill",
+    "infographic",
+    "html",
+    "content-creation"
+  ],
+  "categories": [
+    "Content Creation",
+    "Productivity",
+    "Design"
+  ],
+  "plugins": [
+    {
+      "name": "qhy-skills",
+      "description": "QHY multi-skill collection with extensible repository architecture",
+      "version": "1.0.0",
+      "source": "./"
+    }
+  ]
+}

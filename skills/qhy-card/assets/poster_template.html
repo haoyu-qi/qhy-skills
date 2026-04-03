@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      --bg: #111318;
+      --ink: #f4efe5;
+      --muted: rgba(244, 239, 229, 0.70);
+      --accent: #c55f34;
+      --accent-soft: rgba(197, 95, 52, 0.18);
+      --line: rgba(244, 239, 229, 0.14);
+      --font-display: "Baskerville", "Times New Roman", "Songti SC", serif;
+      --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+    body { font-family: var(--font-sans); }
+
+    .poster {
+      min-height: 100vh;
+      position: relative;
+      padding: 40px 28px;
+      overflow: hidden;
+    }
+
+    .poster::before,
+    .poster::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(16px);
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .poster::before {
+      width: 420px;
+      height: 420px;
+      top: -120px;
+      right: -100px;
+      background: radial-gradient(circle, rgba(197, 95, 52, 0.8), transparent 68%);
+    }
+
+    .poster::after {
+      width: 300px;
+      height: 300px;
+      bottom: -80px;
+      left: -70px;
+      background: radial-gradient(circle, rgba(255, 236, 204, 0.22), transparent 72%);
+    }
+
+    {{CUSTOM_CSS}}
+  </style>
+</head>
+<body>
+  <main class="poster">
+    {{CONTENT_HTML}}
+  </main>
+</body>
+</html>

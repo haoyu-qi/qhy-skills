@@ -1,0 +1,12 @@
+{
+  "name": "qhy-skills",
+  "version": "1.0.0",
+  "description": "QHY multi-skill collection with a scalable repository structure for cards and future qhy-* skills",
+  "author": {
+    "name": "haoyu-qi",
+    "url": "https://github.com/haoyu-qi"
+  },
+  "repository": "https://github.com/haoyu-qi/qhy-skills",
+  "keywords": ["skills", "multi-skill", "html-card", "infographic", "visualization"],
+  "skills": "./skills"
+}

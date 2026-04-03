@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      --paper: #f7f5ef;
+      --ink: #2d2c28;
+      --muted: #67645d;
+      --line: #c9c3b7;
+      --red: #cc4b37;
+      --blue: #3f6db3;
+      --green: #4c8b5d;
+      --yellow: #d1a62d;
+      --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+      --font-hand: "Kaiti SC", "STKaiti", "KaiTi", cursive;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #ece7dc; color: var(--ink); }
+    body { font-family: var(--font-sans); }
+
+    .board {
+      max-width: 1280px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 28px;
+    }
+
+    .sheet {
+      position: relative;
+      min-height: calc(100vh - 56px);
+      background:
+        linear-gradient(transparent 31px, rgba(201, 195, 183, 0.30) 32px),
+        linear-gradient(90deg, transparent 31px, rgba(201, 195, 183, 0.22) 32px),
+        var(--paper);
+      background-size: 32px 32px;
+      border: 1px solid rgba(45, 44, 40, 0.10);
+      border-radius: 28px;
+      box-shadow: 0 28px 70px rgba(83, 71, 45, 0.10);
+      overflow: hidden;
+    }
+
+    {{CUSTOM_CSS}}
+  </style>
+</head>
+<body>
+  <main class="board">
+    <section class="sheet">
+      {{CONTENT_HTML}}
+    </section>
+  </main>
+</body>
+</html>
