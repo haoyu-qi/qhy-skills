@@ -1,46 +1,39 @@
 # qhy-skills
 
-一个支持持续扩展的 Claude Code 技能仓库。它以 `qhy-card` 为起点，已经从单技能项目升级成多 skill 友好的仓库骨架，方便后续继续封装更多 `qhy-*` 技能。
+一个面向 Claude Code 的可扩展技能仓库，当前以 `qhy-card` 为核心，主打中文内容可视化、HTML 卡片生成和多 skill 结构化扩展。
 
-## 设计目标
+它不是单一的“信息图提示词集合”，而是一套适合继续长大的 skill repo：
 
-- 保留 `infographic-card` 擅长的中文信息图与 HTML 单文件输出
-- 借鉴 `ljg-card` 的长处，把“单一风格生成器”升级成“有模具、有审美底线、有模板骨架”的技能
-- 继续坚持零外部依赖 HTML，方便直接预览、分享、二次编辑
+- 有技能层：每个 skill 独立维护
+- 有模板层：新 skill 可以按模板快速复制
+- 有工具层：预览、校验、脚手架等公共脚本集中管理
 
-## 技能总览
+## Why This Repo
 
-| 技能 | 说明 |
+- 从 `infographic-card` 演进而来，保留中文信息图和 HTML 单文件输出能力
+- 吸收了更成熟的技能仓库组织方式，把项目升级成多 skill 友好结构
+- 默认零外部依赖，生成结果便于预览、分享和二次修改
+
+## Skills
+
+| Skill | Description |
 |------|------|
-| `qhy-card` | 将内容转为高质量 HTML 视觉卡片。支持信息图、海报、白板结构图、周报看板四类模具，并保留 7 种中文视觉风格。 |
-| `qhy-<new-skill>` | 预留扩展位。后续新技能建议统一采用 `qhy-*` 命名，并按模板目录创建。 |
+| `qhy-card` | 将内容转为高质量 HTML 视觉卡片，支持信息图、海报页、白板图、周报板四类模具。 |
+| `qhy-<new-skill>` | 预留扩展位。后续新技能建议统一使用 `qhy-*` 命名。 |
 
-## 扩展方式
-
-- 每个 skill 放在 `skills/<skill-name>/`
-- 每个 skill 至少包含 `SKILL.md`
-- 有额外知识时放 `references/`
-- 有模板、素材或骨架时放 `assets/`
-- 有 skill 专属脚本时放 `scripts/`
-- 共用工具继续放仓库根目录 `scripts/`
-
-建议优先使用模板目录 [skills/_template](/Users/qijingchun/Documents/qhy-card/qhy-skills/skills/_template) 作为新 skill 起点。
-
-## qhy-card 能力概览
+## qhy-card Highlights
 
 ### 模具
 
-| 参数 | 模具 | 说明 |
+| 参数 | 模具 | 适合场景 |
 |------|------|------|
-| `-i` | 信息图 | 自适应信息密度和非对称布局，适合“一图看懂”类内容 |
-| `-p` | 海报页 | 更强调封面感和传播感，适合活动预告、发布说明、观点海报 |
-| `-w` | 白板图 | 强调结构关系、箭头与标注，适合教程、流程、拆解 |
-| `-r` | 周报板 | 面向团队周报、月报和进展看板 |
+| `-i` | 信息图 | 一图看懂、概念拆解、项目总览 |
+| `-p` | 海报页 | 汇报封面、观点表达、活动预告 |
+| `-w` | 白板图 | 流程、关系、框架、结构解释 |
+| `-r` | 周报板 | 周报、月报、项目推进看板 |
 
-### 视觉风格
+### 风格
 
-- 默认由模型根据内容自动选择
-- 也支持先给用户 2 到 4 个候选方向，让用户交互式挑选
 - 暗黑科技风
 - 扁平现代风
 - 杂志质感风
@@ -49,14 +42,23 @@
 - 纯白演示风
 - 周报模块风
 
+默认由模型根据内容自动选择风格，也支持先给用户 2 到 4 个候选方向再交互选择。
+
 ### 输出
 
 - HTML 单文件
 - 内联 CSS
 - 默认零外部依赖
-- 可选输出结构化 JSON 草稿
+- 可选 JSON 结构草稿
 
-## 安装
+## Example Outputs
+
+仓库里已经包含两个示例：
+
+- [项目推进看板示例](examples/qhy-card-priority-board.html)
+- [汇报 Deck 示例](examples/qhy-card-priority-deck.html)
+
+## Install
 
 ```bash
 git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skills
@@ -64,17 +66,11 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 
 然后重启 Claude Code。
 
-如果后续为截图或批量导出补充了本地渲染工具，可运行：
+当前仓库的运行重点是 HTML 预览、检查和脚手架，不强依赖 Node。
 
-```bash
-cd ~/.claude/plugins/qhy-skills && bash scripts/install.sh
-```
+## Quick Start
 
-当前仓库的脚本以 HTML 预览、校验和提示词脚手架为主，不强依赖 Node。
-
-## 快速使用
-
-直接向 Claude 发送：
+直接给 Claude：
 
 ```text
 请用 qhy-card 生成一张信息图。
@@ -83,7 +79,7 @@ cd ~/.claude/plugins/qhy-skills && bash scripts/install.sh
 要求：信息密集、中文字体、宽一点
 ```
 
-如果你想让模型先给候选风格，也可以这样用：
+如果你想先挑风格：
 
 ```text
 请用 qhy-card 做一张卡片。
@@ -91,13 +87,13 @@ cd ~/.claude/plugins/qhy-skills && bash scripts/install.sh
 主题：AI 编码工具的工作流差异
 ```
 
-或者运行脚手架：
+或者使用脚手架：
 
 ```bash
 bash scripts/new-card.sh
 ```
 
-## 辅助脚本
+## Scripts
 
 ```bash
 bash scripts/new-card.sh
@@ -105,67 +101,45 @@ bash scripts/quality-check.sh output.html
 bash scripts/preview.sh output.html
 ```
 
-## 多 Skill 规范
-
-- 命名统一用 `qhy-*`
-- README 只做仓库级导航，不把单个 skill 的细节塞满首页
-- 每个 skill 自己维护独立的 `SKILL.md`
-- 可复用规范优先沉淀到模板和公共文档，而不是复制粘贴到每个 skill
-- 新增 skill 时优先复用 [skills/_template/SKILL.md](/Users/qijingchun/Documents/qhy-card/qhy-skills/skills/_template/SKILL.md) 和 [skills/README.md](/Users/qijingchun/Documents/qhy-card/qhy-skills/skills/README.md)
-
-## 仓库结构
+## Repo Layout
 
 ```text
 qhy-skills/
-├── .claude-plugin/
-│   ├── marketplace.json
-│   └── plugin.json
-├── docs/
-│   └── architecture.md
-├── README.md
-├── scripts/
-│   ├── install.sh
-│   ├── new-card.sh
-│   ├── preview.sh
-│   ├── quality-check.sh
-│   └── README.md
+├── .claude-plugin/          # 插件元数据
+├── docs/                    # 架构与仓库级说明
+├── examples/                # 示例 HTML 输出
+├── scripts/                 # 多 skill 共用脚本
 └── skills/
-    ├── README.md
-    ├── _template/
-    │   ├── SKILL.md
-    │   ├── assets/
-    │   │   └── README.md
-    │   ├── references/
-    │   │   └── README.md
-    │   └── scripts/
-    │       └── README.md
-    └── qhy-card/
-        ├── SKILL.md
-        ├── assets/
-        │   ├── infograph_template.html
-        │   ├── poster_template.html
-        │   └── whiteboard_template.html
-        └── references/
-            ├── taste.md
-            ├── mode-infograph.md
-            ├── mode-poster.md
-            ├── mode-whiteboard.md
-            ├── dark-tech.md
-            ├── flat-modern.md
-            ├── magazine.md
-            ├── vintage-book.md
-            ├── blueprint-pop.md
-            ├── white-presentation.md
-            └── weekly-report.md
+    ├── README.md            # skills 目录说明
+    ├── _template/           # 新 skill 模板
+    └── qhy-card/            # 当前主技能
 ```
 
-## 与原版 infographic-card 的区别
+## Multi-Skill Expansion
 
-- 从单技能仓库升级为技能集合仓库命名和目录结构
-- 从“只有风格”升级为“模具 + 风格 + 审美准则”的三层设计
-- 增加模板骨架，减少每次从零生成时的漂移
-- 增加更明确的工作流脚手架和更严格的输出质检
-- 预留多 skill 扩展模板和架构文档，方便后续继续封装
+后续新增 skill 时，推荐遵循这套结构：
+
+- 每个 skill 放在 `skills/<skill-name>/`
+- 每个 skill 至少包含 `SKILL.md`
+- 知识规则放 `references/`
+- 模板与静态资产放 `assets/`
+- skill 专属脚本放 `scripts/`
+- 公共工具继续放根目录 `scripts/`
+
+建议直接从 [skills/_template](skills/_template) 开始。
+
+更完整的仓库分层说明见：
+
+- [架构文档](docs/architecture.md)
+- [skills 目录说明](skills/README.md)
+
+## Compared To The Original infographic-card
+
+- 从单技能项目升级为多 skill 仓库
+- 从“只有风格”升级为“模具 + 风格 + 审美准则”
+- 增加模板骨架，减少输出漂移
+- 增加脚手架、质检和示例输出
+- 预留了可持续扩展的新 skill 模板
 
 ## License
 
