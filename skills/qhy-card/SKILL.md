@@ -40,7 +40,7 @@ description: |
 | `-i` | 信息图 | 一图看懂、概念解释、产品拆解、教程总览 | [mode-infograph.md](references/mode-infograph.md) | `assets/infograph_template.html` |
 | `-p` | 海报页 | 活动海报、观点主张、发布封面、单页传播 | [mode-poster.md](references/mode-poster.md) | `assets/poster_template.html` |
 | `-w` | 白板图 | 流程、框架、关系、结构拆解 | [mode-whiteboard.md](references/mode-whiteboard.md) | `assets/whiteboard_template.html` |
-| `-r` | 周报板 | 周报、月报、里程碑、团队看板 | [weekly-report.md](references/weekly-report.md) | `assets/infograph_template.html` |
+| `-r` | 周报板 | 周报、月报、里程碑、团队看板 | [weekly-report.md](references/weekly-report.md) | `assets/weekly_report_template.html` |
 
 未指定时默认使用 `-i` 信息图。
 

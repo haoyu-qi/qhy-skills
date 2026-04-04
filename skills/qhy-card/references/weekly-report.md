@@ -1,204 +1,302 @@
 # 周报模块风 (Weekly Report Style)
 
-适用于：工作周报、数据看板、结构化报告
+适用于：工作周报、月报、项目复盘、面向领导或团队同步的结构化看板
+
+## 参考方向
+
+本风格默认参考“窄幅移动卡片式周报”：
+
+- 整体宽度偏窄，默认 `420px - 560px`
+- 顶部标题居中，时间和标签集中排布
+- 每个板块都是浅色分区卡片，而不是深色大面板
+- 分区内允许再嵌套 2 到 4 张小卡片，用来承载负责人、模块、问题、结果
+- 更像“可转发周报海报”，而不是传统后台仪表盘
 
 ## 角色定义
 
-资深前端开发工程师与 B 端产品 UI 设计师。擅长将工作周报、数据看板等结构化文档转化为具有高可读性、模块化且视觉优雅的 HTML/CSS 代码。
+资深前端开发工程师与产品信息设计师。擅长把文字密集的周报压缩成一张轻量、可读、适合手机查看和群内转发的可视化卡片。
 
 ---
 
 ## 核心视觉配置
 
-### 色彩系统
+### 1. 版式基调
 
 ```css
 :root {
-  --brand-blue: #2B5AED;
-  --brand-green: #0D8B63;
-  --brand-orange: #C75800;
-  --brand-red: #D12525;
-
-  --bg-page: #F4F5F7;
-  --bg-card: #FFFFFF;
-  --bg-summary: #F2F6FE;    /* 淡蓝 */
-  --bg-details: #F0FAF5;    /* 淡绿 */
-  --bg-plan: #FFF9F0;       /* 淡黄 */
-  --bg-risk: #FFF5F5;       /* 淡红 */
-  --bg-tag: #E6F0FF;
-
-  --text-main: #333333;
-  --text-sub: #666666;
-  --text-light: #999999;
-
+  --page-width: 480px;
+  --page-padding: 14px;
+  --radius-xl: 22px;
   --radius-lg: 16px;
   --radius-md: 12px;
-  --radius-sm: 6px;
+  --radius-sm: 8px;
 }
 ```
 
-### 基础布局
+- 画布以单列窄屏为主
+- 外围主容器建议使用大圆角白底
+- 页面四周留白不能太小，要给“转发海报感”
+
+### 2. 色彩系统
 
 ```css
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-page);
-  color: var(--text-main);
-  display: flex;
-  justify-content: center;
-  line-height: 1.6;
-}
+:root {
+  --brand-blue: #4B7BFF;
+  --brand-green: #31A36A;
+  --brand-orange: #F29A38;
+  --brand-red: #EE6B60;
+  --brand-purple: #A06BFF;
 
-.report-container {
-  max-width: 800px;
-  background-color: var(--bg-card);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  padding: 3rem 4rem;
+  --bg-page: #F5F7FB;
+  --bg-shell: #FFFFFF;
+  --bg-summary: #EEF4FF;
+  --bg-work: #EEF9F2;
+  --bg-plan: #FFF5E9;
+  --bg-issue: #F6EEFF;
+  --bg-risk: #FFF0F0;
+  --bg-mini: rgba(255,255,255,0.72);
+
+  --text-main: #273142;
+  --text-sub: #5E6A7D;
+  --text-light: #8E98A8;
+  --line-soft: rgba(39, 49, 66, 0.08);
 }
 ```
+
+### 3. 字体与层级
+
+- 标题：居中、加粗、字号明显大于正文
+- 日期：灰色小字，位于标题下方
+- 标签：小胶囊，颜色轻，不喧宾夺主
+- 分区标题：图标 + 文字，颜色跟随分区色
+- 正文：14px 到 16px，行高 1.7 左右
+
+### 4. 卡片关系
+
+- 大卡片用于“核心摘要 / 本周工作 / 下周规划 / 问题处理 / 风险关注”
+- 小卡片用于“模块拆分 / 团队分工 / 子项结果 / 明细补充”
+- 小卡片背景比父卡片更白，但仍保留柔和边界
 
 ---
 
-## 处理流程
+## 推荐结构
 
-### 阶段 1：页眉
+### 阶段 1：顶部信息
 
 ```html
-<header>
+<header class="report-header">
   <h1>U8融合通信产品线周报</h1>
-  <div class="period">2026.03.02 - 2026.03.06 | 第09周</div>
+  <div class="period">2026年03月21日 | 第12期</div>
   <div class="tags">
-    <span class="tag">四端协同</span>
-    <span class="tag">鸿蒙适配</span>
+    <span class="tag">客户端</span>
+    <span class="tag">录播</span>
+    <span class="tag">Web服务</span>
+    <span class="tag">鸿蒙</span>
+    <span class="tag">AI</span>
   </div>
 </header>
 ```
 
-### 阶段 2：核心摘要（淡蓝区块）
+要求：
+
+- 标题必须居中
+- 日期必须清晰，但不能抢主标题
+- 标签控制在 3 到 6 个
+
+### 阶段 2：核心摘要（蓝色浅卡）
 
 ```html
-<div class="section-block summary-block">
-  <div class="section-header">
-    <span class="section-icon">📚</span>
-    <span>核心摘要</span>
+<section class="section-card summary-card">
+  <div class="section-title"><span>⚡</span><span>核心摘要</span></div>
+  <p>用一段话概括本周最重要的进展、结果和判断。</p>
+  <blockquote>附一句关键判断或高亮结论。</blockquote>
+</section>
+```
+
+要求：
+
+- 摘要是“看完整张图前必须先读的一段”
+- 引言或结论可单独强调，但不宜太长
+
+### 阶段 3：本周工作（绿色浅卡）
+
+```html
+<section class="section-card work-card">
+  <div class="section-title"><span>📌</span><span>本周工作</span></div>
+  <ul class="bullet-list">
+    <li>概括本周主要推进内容</li>
+    <li>概括第二条推进内容</li>
+  </ul>
+
+  <div class="mini-grid">
+    <article class="mini-card">
+      <h3>客户端</h3>
+      <p>说明具体进展</p>
+    </article>
+    <article class="mini-card">
+      <h3>Web服务</h3>
+      <p>说明具体进展</p>
+    </article>
   </div>
-  <div class="summary-content">本周内容概述...</div>
-  <div class="summary-quote">"整体研发进度平稳"</div>
-</div>
+</section>
 ```
 
-```css
-.summary-block { background-color: var(--bg-summary); }
-.summary-block .section-header { color: var(--brand-blue); }
-.summary-quote {
-  border-left: 3px solid var(--brand-blue);
-  color: var(--brand-blue);
-  font-style: italic;
-}
-```
+要求：
 
-### 阶段 3：关键指标（数据卡片）
+- 本周工作是信息密度最高的区域
+- 先用总述 bullet，再用小卡片拆模块
+- 小卡片建议 2 到 4 张，不宜过多
+
+### 阶段 4：下周规划（橙色浅卡）
 
 ```html
-<div class="metrics-container">
-  <div class="metric-card">
-    <span class="metric-value">50%</span>
-    <span class="metric-label">TTS 语音合成速度提升</span>
+<section class="section-card plan-card">
+  <div class="section-title"><span>🗓</span><span>下周规划</span></div>
+  <div class="plan-group">
+    <h3>客户端优化</h3>
+    <p>下一周要推进的关键动作</p>
   </div>
-  <div class="metric-card">
-    <span class="metric-value">100%</span>
-    <span class="metric-label">融合会议竖屏重构完成</span>
+  <div class="plan-group">
+    <h3>Web服务</h3>
+    <p>下一周要推进的关键动作</p>
   </div>
-</div>
+</section>
 ```
 
-### 阶段 4：研发详情（淡绿区块）
+要求：
+
+- 比“本周工作”更聚焦未来动作
+- 以模块或团队为单位归类
+
+### 阶段 5：问题处理（紫色浅卡）
 
 ```html
-<div class="section-block details-block">
-  <div class="detail-category">Web 服务</div>
-  <ul>
-    <li>完成鸿蒙适配架构设计</li>
-    <li>完成会控迭代需求季度基线收敛</li>
+<section class="section-card issue-card">
+  <div class="section-title"><span>💬</span><span>问题处理</span></div>
+  <ul class="bullet-list">
+    <li>列出已处理或处理中问题</li>
+    <li>可加入问题背景 + 当前状态</li>
   </ul>
-
-  <div class="detail-category">客户端</div>
-  <ul>
-    <li>持续推进 CString 向 QString 迁移</li>
-  </ul>
-</div>
+</section>
 ```
 
-```css
-.details-block { background-color: var(--bg-details); }
-.detail-category {
-  color: var(--brand-green);
-  font-weight: bold;
-}
-```
-
-### 阶段 5：下周计划（淡黄/橙区块）
+### 阶段 6：风险关注（红色浅卡）
 
 ```html
-<div class="section-block plan-block">
-  <div class="section-header">📋 下周计划</div>
-  <ul>
-    <li><strong>Web 服务:</strong> 继续鸿蒙适配</li>
-    <li><strong>客户端:</strong> 推进 Qt 国产化改造</li>
+<section class="section-card risk-card">
+  <div class="section-title"><span>⏰</span><span>风险关注</span></div>
+  <ul class="bullet-list">
+    <li>列出资源风险、外部依赖或延期点</li>
+    <li>避免空泛，要尽量具体</li>
   </ul>
-</div>
+</section>
 ```
 
-```css
-.plan-block { background-color: var(--bg-plan); }
-.plan-block .section-header { color: var(--brand-orange); }
-.plan-block li strong { color: var(--brand-orange); }
-```
-
-### 阶段 6：风险与关注项（淡红区块）
+### 阶段 7：底部署名
 
 ```html
-<div class="section-block risk-block">
-  <div class="section-header">⚠️ 风险与关注项</div>
-  <ul>
-    <li>数据上报数据库表锁问题需持续关注</li>
-  </ul>
-</div>
-```
-
-```css
-.risk-block { background-color: var(--bg-risk); }
-.risk-block .section-header { color: var(--brand-red); }
-```
-
-### 阶段 7：页脚
-
-```html
-<footer>
-  Generated by AI小齐 | 2026-03-07
+<footer class="report-footer">
+  Generated by AI小齐 | 2026年03月21日
 </footer>
+```
+
+若用户明确要求不出现生成信息，则 footer 仅保留日期或可省略。
+
+---
+
+## 关键 CSS 模式
+
+### 外层白色主容器
+
+```css
+.report-shell {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  background: var(--bg-shell);
+  border-radius: 26px;
+  padding: 18px 14px 20px;
+  box-shadow: 0 10px 30px rgba(39, 49, 66, 0.06);
+}
+```
+
+### 分区卡片
+
+```css
+.section-card {
+  border-radius: var(--radius-lg);
+  padding: 16px 14px;
+  margin-top: 14px;
+  border: 1px solid var(--line-soft);
+}
+
+.summary-card { background: var(--bg-summary); }
+.work-card { background: var(--bg-work); }
+.plan-card { background: var(--bg-plan); }
+.issue-card { background: var(--bg-issue); }
+.risk-card { background: var(--bg-risk); }
+```
+
+### 分区标题
+
+```css
+.section-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+```
+
+### 模块小卡片
+
+```css
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.mini-card {
+  background: var(--bg-mini);
+  border-radius: var(--radius-md);
+  padding: 10px 10px 12px;
+  border: 1px solid rgba(255,255,255,0.6);
+}
+```
+
+### 移动端断点
+
+```css
+@media (max-width: 768px) {
+  body { padding: 10px; }
+  .report-shell { border-radius: 22px; }
+  .mini-grid { grid-template-columns: 1fr 1fr; }
+}
 ```
 
 ---
 
-## 区块背景色映射
+## 输出风格约束
 
-| 区块 | 颜色 | 用途 |
-|------|------|------|
-| 摘要蓝 `#EEF3FB` | 淡蓝 | 核心摘要 |
-| 详情绿 `#F0FAF5` | 淡绿 | 研发详情 |
-| 计划黄 `#FFF8EE` | 淡黄 | 下周计划 |
-| 风险红 `#FFF5F5` | 淡红 | 风险与关注项 |
+- 以单列移动卡片为主，不要做成宽屏 dashboard
+- 标题居中，避免左上角大标题 + 横向数据带
+- 优先浅色柔和背景，不使用厚重阴影和强对比大块色面
+- 每个板块都要有明确语义色
+- 信息密度高时，用“总述 + 小卡片分组”而不是一整块长段落
+- 页脚弱化，不能抢正文
 
 ---
 
 ## 质量标准
 
-- 模块化布局：每个区块独立、可复用
-- 色彩区分：不同区块使用不同背景色
-- 行高舒适：1.6 到 1.8
-- 字体清晰：系统无衬线体
+- 适合手机截图或群内转发
+- 各区块视觉统一，但颜色能明显区分
+- 摘要、本周、下周、问题、风险这五类信息一眼可扫
+- 小卡片不应过多，避免拥挤
+- 文字要精炼，尽量避免超长段落
 
 ---
 
@@ -208,31 +306,26 @@ body {
 {
   "header": {
     "title": "周报标题",
-    "period": "日期范围 | 第X周",
-    "tags": ["标签1", "标签2"]
+    "period": "日期 | 期数",
+    "tags": ["标签1", "标签2", "标签3"]
   },
   "summary": {
-    "title": "核心摘要",
-    "content": "摘要内容",
-    "quote": "引言"
+    "content": "核心摘要",
+    "highlight": "高亮结论"
   },
-  "metrics": [
-    {"value": "50%", "label": "指标说明"}
-  ],
-  "details": {
-    "分类1": ["列表项1", "列表项2"],
-    "分类2": ["列表项1", "列表项2"]
-  },
-  "next_week_plan": {
-    "title": "下周计划",
-    "items": [
-      {"category": "分类", "content": "计划内容"}
+  "this_week": {
+    "bullets": ["本周重点1", "本周重点2"],
+    "cards": [
+      {"title": "客户端", "content": "明细"},
+      {"title": "Web服务", "content": "明细"}
     ]
   },
-  "risks": {
-    "title": "风险与关注项",
-    "items": ["风险1", "风险2"]
-  },
-  "footer": "Generated by AI小齐 | 日期"
+  "next_week": [
+    {"title": "客户端优化", "content": "计划内容"},
+    {"title": "Web服务", "content": "计划内容"}
+  ],
+  "issues": ["问题1", "问题2"],
+  "risks": ["风险1", "风险2"],
+  "footer": "日期或署名"
 }
 ```
