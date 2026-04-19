@@ -1,0 +1,20 @@
+{
+  "style": 2,
+  "title": "Tool Call Flow",
+  "subtitle": "Model selects tool, executes, parses result, returns",
+  "nodes": [
+    { "id": "user", "x": 60, "y": 180, "width": 140, "height": 64, "label": "User" },
+    { "id": "agent", "kind": "double_rect", "x": 250, "y": 180, "width": 180, "height": 72, "label": "Agent Core" },
+    { "id": "tool", "kind": "terminal", "x": 500, "y": 180, "width": 160, "height": 64, "label": "Tool Exec" },
+    { "id": "reply", "x": 730, "y": 180, "width": 150, "height": 64, "label": "Response" }
+  ],
+  "arrows": [
+    { "source": "user", "target": "agent", "flow": "data", "label": "ask" },
+    { "source": "agent", "target": "tool", "flow": "control", "label": "invoke" },
+    { "source": "tool", "target": "reply", "flow": "data", "label": "result" }
+  ],
+  "legend": [
+    { "flow": "data", "label": "Data flow" },
+    { "flow": "control", "label": "Control flow" }
+  ]
+}

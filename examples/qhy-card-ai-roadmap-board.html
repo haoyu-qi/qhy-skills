@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 产品线目标与交互闭环看板</title>
+  <style>
+    :root {
+      --bg-page: #f3f6fb;
+      --bg-card: rgba(255, 255, 255, 0.90);
+      --bg-hero: linear-gradient(135deg, #12315f 0%, #1f5eff 55%, #4c88ff 100%);
+      --ink: #1f2633;
+      --muted: #667085;
+      --line: rgba(31, 38, 51, 0.10);
+      --blue: #1f5eff;
+      --green: #0f9b68;
+      --orange: #c97414;
+      --red: #d44848;
+      --violet: #4f46c8;
+      --bg-blue: #edf3ff;
+      --bg-green: #eef9f4;
+      --bg-orange: #fff7ed;
+      --bg-red: #fff4f4;
+      --shadow: 0 24px 60px rgba(31, 56, 109, 0.10);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+      --font-serif: "Songti SC", "STSong", "Noto Serif SC", serif;
+      --font-mono: "SFMono-Regular", "Menlo", monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(circle at top left, rgba(76, 136, 255, 0.14), transparent 24%),
+        radial-gradient(circle at 90% 10%, rgba(15, 155, 104, 0.10), transparent 22%),
+        var(--bg-page);
+      color: var(--ink);
+      font-family: var(--font-sans);
+    }
+
+    body { padding: 28px; }
+
+    .board {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 36px 38px 30px;
+      background: var(--bg-hero);
+      color: #f8fbff;
+      box-shadow: 0 28px 80px rgba(31, 94, 255, 0.22);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 360px;
+      height: 360px;
+      top: -180px;
+      right: -100px;
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .hero::after {
+      width: 320px;
+      height: 320px;
+      bottom: -180px;
+      left: -70px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.65fr 1fr;
+      gap: 28px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    h1 {
+      margin: 16px 0 12px;
+      font-family: var(--font-serif);
+      font-size: 58px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 52rem;
+      font-size: 18px;
+      line-height: 1.75;
+      color: rgba(248, 251, 255, 0.90);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .hero-tag {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 18px 18px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(10px);
+    }
+
+    .metric .value {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .metric .label {
+      display: block;
+      margin-top: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(248, 251, 255, 0.80);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 20px;
+    }
+
+    .column {
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .section-kicker {
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .summary-box,
+    .detail-box,
+    .lane,
+    .mini-card,
+    .stack-item {
+      border-radius: var(--radius-md);
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .summary-box .label,
+    .detail-box .label {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .label.blue { color: var(--blue); background: rgba(31, 94, 255, 0.10); }
+    .label.green { color: var(--green); background: rgba(15, 155, 104, 0.10); }
+    .label.orange { color: var(--orange); background: rgba(201, 116, 20, 0.10); }
+    .label.red { color: var(--red); background: rgba(212, 72, 72, 0.10); }
+    .label.violet { color: var(--violet); background: rgba(79, 70, 200, 0.10); }
+
+    .summary-box h3,
+    .detail-box h3,
+    .lane h3,
+    .mini-card h3,
+    .stack-item h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .summary-box p,
+    .detail-box p,
+    .lane p,
+    .mini-card p,
+    .stack-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .clean-list,
+    .lane-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .clean-list li,
+    .lane-list li {
+      position: relative;
+      padding-left: 16px;
+      margin-top: 8px;
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .clean-list li::before,
+    .lane-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: currentColor;
+      opacity: 0.85;
+    }
+
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .detail-box.short-term { background: var(--bg-blue); color: var(--blue); }
+    .detail-box.long-term { background: var(--bg-green); color: var(--green); }
+    .detail-box.platform { background: var(--bg-orange); color: var(--orange); }
+    .detail-box.loop { background: var(--bg-red); color: var(--red); }
+    .detail-box li { color: var(--ink); }
+
+    .roadmap {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .lane {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .lane .phase {
+      border-radius: 16px;
+      padding: 16px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.45;
+    }
+
+    .phase.phase-1 { background: linear-gradient(135deg, #1f5eff, #4c88ff); }
+    .phase.phase-2 { background: linear-gradient(135deg, #0f9b68, #35b983); }
+    .phase.phase-3 { background: linear-gradient(135deg, #4f46c8, #7b70ea); }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 2px 4px 10px;
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .grid,
+      .summary-grid,
+      .focus-grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .lane {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+      .hero { padding: 24px 20px; }
+      h1 { font-size: 40px; }
+      .card { padding: 18px; }
+      .hero-metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="board">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Generic AI Product Roadmap</span>
+          <h1>AI 产品线目标与交互闭环看板</h1>
+          <p>这轮规划的核心不是单点增加 AI 功能，而是把“前端设备算法赋能、AI 原生通道交互、多模态态势感知、自动复盘报告”连成一条完整闭环，从短期落地项一直拉到长期软硬件一体化能力。</p>
+          <div class="hero-tags">
+            <span class="hero-tag">设备算法赋能</span>
+            <span class="hero-tag">AI 原生交互</span>
+            <span class="hero-tag">录播纪要整合</span>
+            <span class="hero-tag">多模态态势感知</span>
+          </div>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric">
+            <span class="value">Top 1</span>
+            <span class="label">短期目标是先把现有 AI 能力赋能前端设备，形成硬件与平台竞争力。</span>
+          </div>
+          <div class="metric">
+            <span class="value">3 条主线</span>
+            <span class="label">设备算法落地、交互闭环成型、录播数据整合发布。</span>
+          </div>
+          <div class="metric">
+            <span class="value">4 类设备</span>
+            <span class="label">智能球机、移动终端、记录仪、指挥箱都要逐步纳入 AI 覆盖面。</span>
+          </div>
+          <div class="metric">
+            <span class="value">闭环能力</span>
+            <span class="label">从识别、交互、分析到复盘报告，形成真正可用的 AI 产品链路。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Strategic Summary</div>
+          <h2>目标结构总览</h2>
+        </div>
+        <div class="section-kicker">短期打通落地，长期形成产品矩阵</div>
+      </div>
+      <div class="summary-grid">
+        <article class="summary-box">
+          <span class="label blue">短期目标</span>
+          <h3>设备侧 AI 赋能先落地</h3>
+          <p>优先把现有 AI 产品线能力真正挂到前端设备上，让布控球和既有硬件具备算法目标检测与控标竞争力。</p>
+        </article>
+        <article class="summary-box">
+          <span class="label green">交互目标</span>
+          <h3>AI 原生通道与客户端闭环</h3>
+          <p>把 AI 资源树、原生通道、算法选择、Alpha AI 助手、智能纪要与通知展示整合成一体化交互体验。</p>
+        </article>
+        <article class="summary-box">
+          <span class="label orange">数据目标</span>
+          <h3>录播与纪要整合发布</h3>
+          <p>客户端、移动端、后台 web 三端统一查看录播与会议纪要，形成可点播、可分享的数据呈现面。</p>
+        </article>
+        <article class="summary-box">
+          <span class="label violet">长期目标</span>
+          <h3>软硬件一体化解决方案</h3>
+          <p>逐步覆盖全部前端设备与国产算力平台，并向边缘智能、多模态态势感知和自动复盘报告演进。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="column">
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Short-Term Focus</div>
+              <h2>短期必须落地的 4 个重点面</h2>
+            </div>
+            <div class="section-kicker">先形成可见能力，再扩大覆盖面</div>
+          </div>
+          <div class="focus-grid">
+            <article class="detail-box short-term">
+              <h3>前端设备算法赋能</h3>
+              <ul class="clean-list">
+                <li>基于现有 AI 产品线能力赋能前端设备，先支持现有几款布控球实现算法目标检测</li>
+                <li>支持指定硬件设置算法检测与算法场景选择</li>
+                <li>平台侧同步写入相关参数配置，增强平台产品与硬件产品控标竞争力</li>
+              </ul>
+            </article>
+            <article class="detail-box long-term">
+              <h3>AI 原生通道与交互落地</h3>
+              <ul class="clean-list">
+                <li>支持原生 AI 资源树通道</li>
+                <li>支持指定前端设备算法选择与算法检测</li>
+                <li>上线全新 Alpha AI 助手与 AI 相关展示界面</li>
+              </ul>
+            </article>
+            <article class="detail-box platform">
+              <h3>会议纪要与内容呈现</h3>
+              <ul class="clean-list">
+                <li>支持全新会议纪要内容显示与 Alpha AI 显示</li>
+                <li>会议内容智能识别、多方言语音识别与字幕呈现</li>
+                <li>AI 通知与纪要界面在客户端深度集成</li>
+              </ul>
+            </article>
+            <article class="detail-box loop">
+              <h3>录播数据整合发布</h3>
+              <ul class="clean-list">
+                <li>新录播界面同时嵌入客户端、移动端和后台 web</li>
+                <li>会议结束后统一查看录播和纪要整合数据</li>
+                <li>支持点播查看、数据分享与多端协同访问</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Interaction Loop</div>
+              <h2>客户端 AI 功能闭环</h2>
+            </div>
+            <div class="section-kicker">从资源树到分析结果形成完整链路</div>
+          </div>
+          <div class="stack">
+            <article class="stack-item">
+              <span class="label blue">入口</span>
+              <h3>AI 资源树与原生通道</h3>
+              <p>客户端侧要能直接配置视频算法，并通过原生通道形式调用和呈现，不能只停留在后台配置层。</p>
+            </article>
+            <article class="stack-item">
+              <span class="label green">感知</span>
+              <h3>智能会议纪要与语音呈现</h3>
+              <p>围绕会议内容智能识别、多方言语音识别、多方言字幕呈现，把 AI 从“功能按钮”变成会议过程中的实时辅助层。</p>
+            </article>
+            <article class="stack-item">
+              <span class="label orange">控制</span>
+              <h3>语音控制与调度支持</h3>
+              <p>支持 Alpha AI 语音控制、语音指令调用和基础调度控制，让交互从点击式扩展到语音式。</p>
+            </article>
+            <article class="stack-item">
+              <span class="label red">分析与增强</span>
+              <h3>录像分析、深度检索与智能功能上线</h3>
+              <p>支持录像数据分析查看、深度检索、分享，并逐步上线人脸识别、会议铭牌、人数签到等场景能力。</p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <div class="column">
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Long-Term Roadmap</div>
+              <h2>长期路线图</h2>
+            </div>
+            <div class="section-kicker">兼容覆盖 -> 多模态感知 -> 自动复盘</div>
+          </div>
+          <div class="roadmap">
+            <article class="lane">
+              <div class="phase phase-1">Phase 1<br>软件兼容落地</div>
+              <div>
+                <h3>先把 AI 能力从少数设备扩展到完整设备面</h3>
+                <ul class="lane-list">
+                  <li>AI 能力覆盖球机、终端、记录仪、指挥箱等全部前端设备</li>
+                  <li>适配多种国产化算力平台</li>
+                  <li>适配 AI 专用边缘计算设备，实现离线智能分析</li>
+                  <li>建立硬件-软件一体化解决方案，形成完整产品矩阵</li>
+                </ul>
+              </div>
+            </article>
+            <article class="lane">
+              <div class="phase phase-2">Phase 2<br>用户交互优化</div>
+              <div>
+                <h3>从单点 AI 功能走向多模态态势感知界面</h3>
+                <ul class="lane-list">
+                  <li>实现全语音交互能力上线</li>
+                  <li>基于视频 + 音频 + IoT 数据形成多模态融合感知</li>
+                  <li>支持设备自动标记检测、标签打标与地图数据嵌入</li>
+                  <li>单会议只打开一个态势感知界面，单界面支持最多 9 设备画面呈现</li>
+                  <li>支持多维设备数据与业务系统对接，增强平台级态势感知能力</li>
+                </ul>
+              </div>
+            </article>
+            <article class="lane">
+              <div class="phase phase-3">Phase 3<br>闭环管理</div>
+              <div>
+                <h3>智能复盘与自动报告生成</h3>
+                <ul class="lane-list">
+                  <li>基于会议调度数据、画面分析数据和会议纪要内容生成复盘结果</li>
+                  <li>输出合规的指挥调度报告与内容参考建议</li>
+                  <li>让 AI 从“过程辅助”进入“结果沉淀”和“复盘决策”阶段</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <div>
+              <div class="section-kicker">Key Integration Areas</div>
+              <h2>关键整合面</h2>
+            </div>
+            <div class="section-kicker">多端统一与场景融合</div>
+          </div>
+          <div class="split">
+            <article class="mini-card">
+              <span class="label blue">录播整合</span>
+              <h3>新录播界面统一三端发布</h3>
+              <p>客户端、移动端、后台 web 统一查看录播与纪要结果，是这轮“可见能力”里最容易形成用户感知的一项。</p>
+            </article>
+            <article class="mini-card">
+              <span class="label green">设备整合</span>
+              <h3>算法、设备、平台参数打通</h3>
+              <p>设备侧算法选择、算法检测、平台参数配置和客户端呈现必须保持同一条链路，避免能力断层。</p>
+            </article>
+          </div>
+          <div class="split">
+            <article class="mini-card">
+              <span class="label orange">交互整合</span>
+              <h3>Alpha AI 助手 + 语音控制</h3>
+              <p>客户端深度集成 Alpha AI 界面、纪要、通知和语音控制后，AI 才真正成为主界面能力，而不是外挂功能。</p>
+            </article>
+            <article class="mini-card">
+              <span class="label violet">感知整合</span>
+              <h3>多维设备数据上图上屏</h3>
+              <p>温湿度、经纬度、雷达等数据与地图界面结合后，态势感知才具备空间和业务维度，而不只是视频拼接。</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span>AI Product Line Board</span>
+      <span>短期打通设备赋能与交互闭环，长期形成多模态一体化能力</span>
+    </footer>
+  </main>
+</body>
+</html>

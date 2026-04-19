@@ -9,18 +9,18 @@
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File skills/qhy-ppt/scripts/new-deck.ps1 my-talk
-powershell -ExecutionPolicy Bypass -File skills/qhy-ppt/scripts/render.ps1 path/to/index.html all
+powershell -ExecutionPolicy Bypass -File skills/qhy-ppt/scripts/render.ps1 skills/qhy-ppt/examples/my-talk/index.html all
 ```
 
 ## macOS / Linux
 
 ```bash
 bash skills/qhy-ppt/scripts/new-deck.sh my-talk
-bash skills/qhy-ppt/scripts/render.sh path/to/index.html all
+bash skills/qhy-ppt/scripts/render.sh skills/qhy-ppt/examples/my-talk/index.html all
 ```
 
 ## 说明
 
-- `new-deck` 默认从 `assets/deck-starter.html` 复制到指定目录
+- `new-deck` 默认从 `assets/deck-starter.html` 复制到 `examples/<name>/index.html`
 - `render` 默认输出 1920x1080 PNG
 - `render all` 会自动统计 `.slide` 数量并逐页截图

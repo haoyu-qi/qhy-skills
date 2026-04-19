@@ -1,0 +1,23 @@
+{
+  "style": 1,
+  "title": "Mem0 Memory Architecture",
+  "subtitle": "Input, memory manager, storage tiers, retrieval",
+  "containers": [
+    { "x": 40, "y": 100, "width": 260, "height": 180, "label": "Input Layer", "header_prefix": "01" },
+    { "x": 350, "y": 100, "width": 260, "height": 180, "label": "Memory Manager", "header_prefix": "02" },
+    { "x": 660, "y": 100, "width": 240, "height": 260, "label": "Storage Layer", "header_prefix": "03" }
+  ],
+  "nodes": [
+    { "id": "user", "x": 80, "y": 150, "width": 160, "height": 64, "label": "User" },
+    { "id": "manager", "kind": "double_rect", "x": 390, "y": 150, "width": 180, "height": 72, "label": "Memory Manager" },
+    { "id": "vector", "kind": "cylinder", "x": 700, "y": 145, "width": 140, "height": 90, "label": "Vector Store" }
+  ],
+  "arrows": [
+    { "source": "user", "target": "manager", "flow": "data", "label": "query" },
+    { "source": "manager", "target": "vector", "flow": "write", "label": "store" }
+  ],
+  "legend": [
+    { "flow": "data", "label": "Primary flow" },
+    { "flow": "write", "label": "Write path" }
+  ]
+}

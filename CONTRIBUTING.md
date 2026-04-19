@@ -18,6 +18,7 @@
 3. 完成 `SKILL.md`
 4. 按需补充 `references/`、`assets/`、`scripts/`
 5. 更新根目录 `README.md` 中的技能列表
+6. 如有代表性产出，可在 `examples/` 增加示例
 
 ## 目录约定
 
@@ -36,6 +37,7 @@
 
 - 新技能统一使用 `qhy-*`
 - skill 名尽量表达能力，不要只表达技术实现
+- 示例文件名尽量能看出内容类型，例如 `qhy-card-priority-board.html`
 
 ## 提交建议
 

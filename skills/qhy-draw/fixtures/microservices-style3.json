@@ -1,0 +1,25 @@
+{
+  "style": 3,
+  "title": "Microservices Architecture",
+  "subtitle": "Edge, services, data, observability",
+  "containers": [
+    { "x": 40, "y": 100, "width": 180, "height": 220, "header_prefix": "01 //", "header_text": "EDGE" },
+    { "x": 250, "y": 100, "width": 320, "height": 220, "header_prefix": "02 //", "header_text": "SERVICES" },
+    { "x": 610, "y": 100, "width": 250, "height": 220, "header_prefix": "03 //", "header_text": "DATA" }
+  ],
+  "nodes": [
+    { "id": "gateway", "x": 70, "y": 165, "width": 120, "height": 64, "label": "Gateway" },
+    { "id": "svc1", "x": 290, "y": 145, "width": 110, "height": 60, "label": "User Svc" },
+    { "id": "svc2", "x": 420, "y": 145, "width": 110, "height": 60, "label": "Order Svc" },
+    { "id": "db", "kind": "cylinder", "x": 670, "y": 150, "width": 120, "height": 90, "label": "Postgres" }
+  ],
+  "arrows": [
+    { "source": "gateway", "target": "svc1", "flow": "data" },
+    { "source": "gateway", "target": "svc2", "flow": "data" },
+    { "source": "svc2", "target": "db", "flow": "write", "label": "write" }
+  ],
+  "legend": [
+    { "flow": "data", "label": "Request path" },
+    { "flow": "write", "label": "Storage write" }
+  ]
+}
