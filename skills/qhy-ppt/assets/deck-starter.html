@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{DECK_TITLE}}</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --surface: rgba(15, 23, 42, 0.82);
+      --surface-2: rgba(30, 41, 59, 0.78);
+      --border: rgba(148, 163, 184, 0.22);
+      --text-1: #e5eefc;
+      --text-2: #bfd0ea;
+      --text-3: #7c93b7;
+      --accent: #7dd3fc;
+      --accent-2: #a78bfa;
+      --good: #86efac;
+      --warn: #fcd34d;
+      --bad: #fca5a5;
+      --shadow: 0 24px 64px rgba(2, 8, 23, 0.38);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --font-sans: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      --font-serif: "Georgia", "Songti SC", serif;
+      --font-mono: "Consolas", "SFMono-Regular", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: radial-gradient(circle at top, #18233d, var(--bg) 60%); color: var(--text-1); }
+    body { font-family: var(--font-sans); min-height: 100vh; }
+
+    .deck {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+      min-height: 100vh;
+      padding: 56px 56px 88px;
+      position: relative;
+    }
+
+    .slide.is-active {
+      display: block;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      background:
+        linear-gradient(135deg, rgba(125, 211, 252, 0.05), rgba(167, 139, 250, 0.05)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+      box-shadow: var(--shadow);
+      pointer-events: none;
+    }
+
+    .slide-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      gap: 28px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: clamp(42px, 7vw, 88px);
+      line-height: 0.95;
+      max-width: 10ch;
+    }
+
+    h2 {
+      font-size: clamp(28px, 4vw, 54px);
+      line-height: 1.05;
+      max-width: 14ch;
+    }
+
+    .lede {
+      max-width: 64ch;
+      font-size: 20px;
+      line-height: 1.7;
+      color: var(--text-2);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--text-3);
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      backdrop-filter: blur(10px);
+    }
+
+    .panel strong {
+      color: var(--text-1);
+    }
+
+    .stat {
+      display: grid;
+      gap: 8px;
+    }
+
+    .stat-value {
+      font-size: clamp(38px, 7vw, 80px);
+      line-height: 0.9;
+      font-weight: 700;
+    }
+
+    .list {
+      display: grid;
+      gap: 14px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .list li {
+      padding-left: 18px;
+      position: relative;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    .list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+    }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 3;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 180ms ease;
+    }
+
+    .page-indicator {
+      position: fixed;
+      right: 24px;
+      bottom: 16px;
+      z-index: 3;
+      color: var(--text-2);
+      font-size: 14px;
+    }
+
+    .notes {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .slide { padding: 24px 20px 72px; }
+      .slide::before { inset: 12px; }
+      .g2, .g3, .g4 { grid-template-columns: 1fr; }
+      .lede { font-size: 17px; }
+      .page-indicator { right: 16px; bottom: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide is-active">
+      <div class="slide-inner">
+        <div class="eyebrow">{{KICKER}}</div>
+        <h1>{{DECK_TITLE}}</h1>
+        <p class="lede">{{DECK_SUBTITLE}}</p>
+        <div class="meta">
+          <span>{{AUTHOR}}</span>
+          <span>{{DATE}}</span>
+          <span>{{AUDIENCE}}</span>
+        </div>
+        <aside class="notes">
+          <p>这一页先说明主题、目标和受众预期，再自然切到目录页。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-inner">
+        <div class="eyebrow">Agenda</div>
+        <h2>{{SECTION_TITLE}}</h2>
+        <div class="grid g2">
+          <article class="panel">
+            <strong>01</strong>
+            <p>{{AGENDA_ITEM_1}}</p>
+          </article>
+          <article class="panel">
+            <strong>02</strong>
+            <p>{{AGENDA_ITEM_2}}</p>
+          </article>
+          <article class="panel">
+            <strong>03</strong>
+            <p>{{AGENDA_ITEM_3}}</p>
+          </article>
+          <article class="panel">
+            <strong>04</strong>
+            <p>{{AGENDA_ITEM_4}}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-inner">
+        <div class="eyebrow">Key Point</div>
+        <h2>{{SLIDE_TITLE}}</h2>
+        <p class="lede">{{SLIDE_LEDE}}</p>
+        <div class="grid g2">
+          <article class="panel stat">
+            <span class="stat-value">{{STAT_VALUE}}</span>
+            <strong>{{STAT_LABEL}}</strong>
+            <p>{{STAT_EXPLAIN}}</p>
+          </article>
+          <article class="panel">
+            <ul class="list">
+              <li>{{POINT_1}}</li>
+              <li>{{POINT_2}}</li>
+              <li>{{POINT_3}}</li>
+            </ul>
+          </article>
+        </div>
+        <aside class="notes">
+          <p>先给结论，再补三条解释，不要先讲背景。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-inner">
+        <div class="eyebrow">Next Step</div>
+        <h2>{{CLOSING_TITLE}}</h2>
+        <p class="lede">{{CLOSING_COPY}}</p>
+        <div class="panel">
+          <strong>{{CTA_TITLE}}</strong>
+          <p>{{CTA_BODY}}</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="progress" aria-hidden="true">
+    <div class="progress-bar"></div>
+  </div>
+  <div class="page-indicator">1 / 4</div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const progressBar = document.querySelector(".progress-bar");
+    const indicator = document.querySelector(".page-indicator");
+    let activeIndex = 0;
+
+    function renderSlide(index) {
+      activeIndex = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("is-active", i === activeIndex);
+      });
+      const ratio = slides.length > 1 ? activeIndex / (slides.length - 1) : 1;
+      progressBar.style.width = `${ratio * 100}%`;
+      indicator.textContent = `${activeIndex + 1} / ${slides.length}`;
+      window.location.hash = `/${activeIndex + 1}`;
+    }
+
+    function handleHash() {
+      const match = window.location.hash.match(/^#\/(\d+)$/);
+      if (!match) return;
+      renderSlide(Number(match[1]) - 1);
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        renderSlide(activeIndex + 1);
+      }
+      if (["ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        renderSlide(activeIndex - 1);
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        renderSlide(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        renderSlide(slides.length - 1);
+      }
+    });
+
+    window.addEventListener("hashchange", handleHash);
+    handleHash();
+    renderSlide(activeIndex);
+  </script>
+</body>
+</html>

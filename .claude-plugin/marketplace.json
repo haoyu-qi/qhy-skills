@@ -1,7 +1,7 @@
 {
   "name": "qhy-skills",
   "displayName": "QHY Skills",
-  "description": "A scalable multi-skill collection centered on qhy-card and designed for future qhy-* skills",
+  "description": "A scalable multi-skill collection covering cards, slide decks, diagrams, and documents",
   "version": "1.0.0",
   "owner": {
     "name": "haoyu-qi",
@@ -15,7 +15,10 @@
     "multi-skill",
     "infographic",
     "html",
-    "content-creation"
+    "content-creation",
+    "slides",
+    "diagram",
+    "document"
   ],
   "categories": [
     "Content Creation",
@@ -25,7 +28,7 @@
   "plugins": [
     {
       "name": "qhy-skills",
-      "description": "QHY multi-skill collection with extensible repository architecture",
+      "description": "QHY multi-skill collection with card, ppt, drawing, and document capabilities",
       "version": "1.0.0",
       "source": "./"
     }

@@ -1,6 +1,6 @@
 # qhy-skills 架构说明
 
-这个仓库现在按“仓库层 + skill 层 + 模板层”组织，目标是让后续新增 skill 时不需要重想一遍结构。
+这个仓库现在按“仓库层 + skill 层 + 模板层”组织，目标是让后续新增 skill 时不需要重想一遍结构，并且能稳定承接 `qhy-card`、`qhy-ppt`、`qhy-draw`、`qhy-word` 这类并列能力。
 
 ## 1. 仓库层
 
@@ -32,6 +32,13 @@ skills/<skill-name>/
 - `references/`：规则、模式、知识参考、风格库
 - `scripts/`：仅当前 skill 使用的专属脚本
 
+当前建议把 skill 按“输出形态”而不是“行业场景”拆分：
+
+- `qhy-card`：单页视觉卡片
+- `qhy-ppt`：多页演示文稿
+- `qhy-draw`：图示与白板结构
+- `qhy-word`：正式文档正文
+
 ## 3. 模板层
 
 `skills/_template/` 是新增 skill 的标准起点。
@@ -46,15 +53,15 @@ skills/<skill-name>/
 
 ## 4. 命名约定
 
-- 仓库内技能统一用 `qhy-*`
+- 仓库内技能统一使用 `qhy-*`
 - 目录名、skill 名、README 展示名尽量一致
 - 不建议混入风格完全不同的命名前缀
 
 ## 5. 公共与私有边界
 
-放到根目录 `scripts/` 的，应该是多个 skill 都可能用到的工具。
+放到根目录 `scripts/` 的，应当是多个 skill 都可能用到的工具。
 
-只服务单个 skill 的工具，放到对应 skill 的 `scripts/`。
+只服务单一 skill 的工具，放到对应 skill 的 `scripts/`。
 
 判断标准：
 
@@ -63,10 +70,14 @@ skills/<skill-name>/
 
 ## 6. 扩展建议
 
-后续新增多个 skill 时，推荐优先补这三类：
+当前仓库已经具备四类基础表达能力，后续更适合补“跨 skill 编排层”：
 
-1. `qhy-paper`：论文/报告理解与结构化输出
+1. `qhy-flow`：把多个 skill 串成工作流
 2. `qhy-plain`：复杂内容白话化改写
-3. `qhy-flow`：把多个 skill 串成工作流
+3. `qhy-paper`：论文 / 报告理解与结构化输出
 
-这样仓库会从“单一可视化工具”逐步变成“内容理解 + 生成 + 工作流”的组合。
+建议路径是：
+
+- 先让单项能力边界清晰
+- 再补多 skill 协同
+- 最后再加更细分的垂类 skill

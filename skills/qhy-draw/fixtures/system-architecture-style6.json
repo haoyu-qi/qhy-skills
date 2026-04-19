@@ -1,0 +1,19 @@
+{
+  "style": 6,
+  "title": "System Architecture",
+  "subtitle": "Interface, core, foundation",
+  "containers": [
+    { "x": 80, "y": 100, "width": 800, "height": 100, "label": "Interface Layer", "side_label": "Layer 1" },
+    { "x": 80, "y": 220, "width": 800, "height": 120, "label": "Core Layer", "side_label": "Layer 2" },
+    { "x": 80, "y": 360, "width": 800, "height": 120, "label": "Foundation Layer", "side_label": "Layer 3" }
+  ],
+  "nodes": [
+    { "id": "surface", "x": 140, "y": 120, "width": 170, "height": 60, "label": "Client Surface" },
+    { "id": "planner", "kind": "double_rect", "x": 390, "y": 250, "width": 180, "height": 72, "label": "Task Planner" },
+    { "id": "memory", "kind": "cylinder", "x": 650, "y": 385, "width": 140, "height": 90, "label": "Memory Store" }
+  ],
+  "arrows": [
+    { "source": "surface", "target": "planner", "flow": "data" },
+    { "source": "planner", "target": "memory", "flow": "write" }
+  ]
+}

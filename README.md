@@ -1,8 +1,8 @@
 # qhy-skills
 
-一个面向 Claude Code 的可扩展技能仓库，当前以 `qhy-card` 为核心，主打中文内容可视化、HTML 卡片生成和多 skill 结构化扩展。
+一个面向 Claude Code / Codex 的可扩展技能仓库，围绕中文内容生产与表达，逐步补齐“卡片、演示、图示、文档”四类核心能力。
 
-它不是单一的“信息图提示词集合”，而是一套适合继续长大的 skill repo：
+它不是单一的提示词集合，而是一套适合持续扩展的 skill repo：
 
 - 有技能层：每个 skill 独立维护
 - 有模板层：新 skill 可以按模板快速复制
@@ -10,39 +10,55 @@
 
 ## Why This Repo
 
-- 从 `infographic-card` 演进而来，保留中文信息图和 HTML 单文件输出能力
-- 吸收了更成熟的技能仓库组织方式，把项目升级成多 skill 友好结构
-- 默认零外部依赖，生成结果便于预览、分享和二次修改
+- 保留 `qhy-card` 在中文可视化表达上的优势
+- 让仓库从单一 HTML 卡片能力，扩展到多种内容交付形态
+- 为后续新增 `qhy-*` 技能保留统一结构和命名规范
 
 ## Skills
 
 | Skill | Description |
 |------|------|
-| `qhy-card` | 将内容转为高质量 HTML 视觉卡片，支持信息图、海报页、白板图、周报板四类模具。 |
-| `qhy-<new-skill>` | 预留扩展位。后续新技能建议统一使用 `qhy-*` 命名。 |
+| `qhy-card` | 将内容转为高质量 HTML 视觉卡片，适合信息图、海报页、白板图、周报板。 |
+| `qhy-ppt` | 将想法、报告、方案和纪要重组为适合汇报和演示的 PPT / Slide Deck 结构。 |
+| `qhy-draw` | 将复杂关系、流程、架构和讨论内容转为可沟通的图示表达。 |
+| `qhy-word` | 将零散材料整理成可提交、可审阅、可流转的正式文档。 |
+
+## Capability Map
+
+### `qhy-card`
+
+- 面向“看一眼就明白”的视觉表达
+- 输出以单文件 HTML 为主
+- 更适合封面、信息图、结构白板、周报看板
+
+### `qhy-ppt`
+
+- 面向“讲给别人听”的演示表达
+- 输出以多页 HTML deck、逐页文案、讲稿备注结构为主
+- 更适合汇报、提案、培训、路演
+
+### `qhy-draw`
+
+- 面向“把关系画清楚”的图示表达
+- 输出以 Mermaid、结构草图、图示布局方案为主
+- 更适合流程、架构、关系、白板讨论
+
+### `qhy-word`
+
+- 面向“形成正式文档”的书面表达
+- 输出以提纲、正文、章节草稿、修订建议为主
+- 更适合方案、报告、纪要、说明文
 
 ## qhy-card Highlights
 
-### 模具
+### 模式
 
-| 参数 | 模具 | 适合场景 |
+| 参数 | 模式 | 适合场景 |
 |------|------|------|
 | `-i` | 信息图 | 一图看懂、概念拆解、项目总览 |
 | `-p` | 海报页 | 汇报封面、观点表达、活动预告 |
 | `-w` | 白板图 | 流程、关系、框架、结构解释 |
 | `-r` | 周报板 | 周报、月报、项目推进看板 |
-
-### 风格
-
-- 暗黑科技风
-- 扁平现代风
-- 杂志质感风
-- 复古书卷风
-- 蓝图波普风
-- 纯白演示风
-- 周报模块风
-
-默认由模型根据内容自动选择风格，也支持先给用户 2 到 4 个候选方向再交互选择。
 
 ### 输出
 
@@ -53,10 +69,11 @@
 
 ## Example Outputs
 
-仓库里已经包含两个示例：
+仓库中已包含若干 `qhy-card` 示例：
 
 - [项目推进看板示例](examples/qhy-card-priority-board.html)
 - [汇报 Deck 示例](examples/qhy-card-priority-deck.html)
+- [AI 路线图示例](examples/qhy-card-ai-roadmap-board.html)
 
 ## Install
 
@@ -64,33 +81,32 @@
 git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skills
 ```
 
-然后重启 Claude Code。
+然后重启 Claude Code / Codex。
 
-当前仓库的运行重点是 HTML 预览、检查和脚手架，不强依赖 Node。
+当前四个核心 skill 以文本工作流为主，不强依赖 Node。现有公共脚本重点服务 `qhy-card` 的 HTML 预览、检查和脚手架。
 
 ## Quick Start
 
-直接给 Claude：
+可以直接这样使用：
 
 ```text
-请用 qhy-card 生成一张信息图。
-模具：信息图
+请用 qhy-card 生成一张信息图
 主题：MCP、Skill、Plugin 三者的区别
-要求：信息密集、中文字体、宽一点
+要求：中文、信息密集、宽一点
 ```
-
-如果你想先挑风格：
 
 ```text
-请用 qhy-card 做一张卡片。
-先别直接生成，先根据内容给我 3 个合适的风格方向，我选一个再出图。
-主题：AI 编码工具的工作流差异
+请用 qhy-ppt 把下面这份项目周报整理成 8 页以内的汇报 deck
+受众：老板
+目标：同步进展并争取资源
 ```
 
-或者使用脚手架：
+```text
+请用 qhy-draw 把这个系统流程整理成 Mermaid 流程图
+```
 
-```bash
-bash scripts/new-card.sh
+```text
+请用 qhy-word 把这些会议纪要整理成正式纪要，并补一个待办清单
 ```
 
 ## Scripts
@@ -107,12 +123,15 @@ bash scripts/preview.sh output.html
 qhy-skills/
 ├── .claude-plugin/          # 插件元数据
 ├── docs/                    # 架构与仓库级说明
-├── examples/                # 示例 HTML 输出
+├── examples/                # 示例输出
 ├── scripts/                 # 多 skill 共用脚本
 └── skills/
     ├── README.md            # skills 目录说明
     ├── _template/           # 新 skill 模板
-    └── qhy-card/            # 当前主技能
+    ├── qhy-card/            # HTML 卡片能力
+    ├── qhy-ppt/             # 演示文稿能力
+    ├── qhy-draw/            # 图示表达能力
+    └── qhy-word/            # 正式文档能力
 ```
 
 ## Multi-Skill Expansion
@@ -128,18 +147,13 @@ qhy-skills/
 
 建议直接从 [skills/_template](skills/_template) 开始。
 
-更完整的仓库分层说明见：
-
-- [架构文档](docs/architecture.md)
-- [skills 目录说明](skills/README.md)
-
 ## Compared To The Original infographic-card
 
 - 从单技能项目升级为多 skill 仓库
-- 从“只有风格”升级为“模具 + 风格 + 审美准则”
+- 从“只有风格”升级为“模块 + 风格 + 审美准则 + 多表达形态”
 - 增加模板骨架，减少输出漂移
 - 增加脚手架、质检和示例输出
-- 预留了可持续扩展的新 skill 模板
+- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-word` 三个方向的基础能力
 
 ## License
 
