@@ -36,7 +36,7 @@
 
 ### 4. `test-all-styles.sh`
 
-批量读取 `fixtures/*.json`，调用 `generate-from-template.py` 生成 SVG，并对输出做验证。
+批量读取 JSON 数据，调用 `generate-from-template.py` 生成 SVG，并对输出做验证。
 
 ## 推荐流程
 

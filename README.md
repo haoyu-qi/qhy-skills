@@ -67,14 +67,6 @@
 - 默认零外部依赖
 - 可选 JSON 结构草稿
 
-## Example Outputs
-
-仓库中已包含若干 `qhy-card` 示例：
-
-- [项目推进看板示例](examples/qhy-card-priority-board.html)
-- [汇报 Deck 示例](examples/qhy-card-priority-deck.html)
-- [AI 路线图示例](examples/qhy-card-ai-roadmap-board.html)
-
 ## Install
 
 ```bash
@@ -123,7 +115,6 @@ bash scripts/preview.sh output.html
 qhy-skills/
 ├── .claude-plugin/          # 插件元数据
 ├── docs/                    # 架构与仓库级说明
-├── examples/                # 示例输出
 ├── scripts/                 # 多 skill 共用脚本
 └── skills/
     ├── README.md            # skills 目录说明
