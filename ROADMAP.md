@@ -30,8 +30,8 @@
 
 ### 3. 完善仓库协作体验
 
-- [ ] 增加 issue / PR 模板
-- [ ] 补充更完整的 examples 导航页
+- [x] 增加 issue / PR 模板
+- [x] 补充更完整的 examples 导航页
 - [ ] 统一 docs 里的中英文风格
 
 ## Later

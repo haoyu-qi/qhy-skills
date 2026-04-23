@@ -44,6 +44,13 @@
 - 一个 commit 尽量只完成一类改动
 - 文档、模板、脚本混改时，commit message 要能说明变化意图
 - 若新增 skill，建议在 commit message 里直接写出 skill 名
+- 提交 PR 时，优先按 `.github/pull_request_template.md` 补齐变更背景、验证方式和注意事项
+
+## Issue / PR 模板
+
+- 提 bug 时优先使用 `.github/ISSUE_TEMPLATE/bug-report.md`
+- 提新能力时优先使用 `.github/ISSUE_TEMPLATE/feature-request.md`
+- 提 PR 时使用 `.github/pull_request_template.md`
 
 ## 质量检查
 

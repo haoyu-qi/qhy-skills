@@ -75,6 +75,8 @@
 - [汇报 Deck 示例](examples/qhy-card-priority-deck.html)
 - [AI 路线图示例](examples/qhy-card-ai-roadmap-board.html)
 
+也可以直接查看 [examples/README.md](examples/README.md) 获取示例导航与使用建议。
+
 ## Install
 
 ```bash
@@ -116,6 +118,16 @@ bash scripts/new-card.sh
 bash scripts/quality-check.sh output.html
 bash scripts/preview.sh output.html
 ```
+
+## Collaboration
+
+仓库已经补充基础协作模板：
+
+- Bug 报告：`.github/ISSUE_TEMPLATE/bug-report.md`
+- 能力提案：`.github/ISSUE_TEMPLATE/feature-request.md`
+- PR 模板：`.github/pull_request_template.md`
+
+如果你准备继续扩展 skill、模板或脚本，建议先看 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ## Repo Layout
 

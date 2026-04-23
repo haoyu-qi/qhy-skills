@@ -7,9 +7,11 @@
 位于根目录，负责整个仓库被识别、安装和导航：
 
 - `.claude-plugin/`：插件元数据
+- `.github/`：issue / PR 模板等协作入口
 - `README.md`：仓库总入口
 - `scripts/`：跨 skill 复用的公共脚本
 - `docs/`：仓库级规范和架构说明
+- `examples/`：示例输出与导航页
 
 ## 2. Skill 层
 
