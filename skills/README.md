@@ -6,15 +6,17 @@
 
 - `qhy-card`：HTML 视觉卡片生成
 - `qhy-ppt`：演示文稿结构与逐页表达
-- `qhy-draw`：图示表达与结构化画图
+- `qhy-draw`：draw.io 图表生成与导出
 - `qhy-word`：正式文档写作与整理
+- `qhy-humanizer-zh`：中文文本去 AI 味与自然化改写
 
 ## 推荐分工
 
 - `qhy-card`：适合看板、卡片、封面、信息图
 - `qhy-ppt`：适合汇报、提案、培训、路演
-- `qhy-draw`：适合流程、架构、关系、白板
+- `qhy-draw`：适合流程图、架构图、UML、ER 图、思维导图、网络拓扑图
 - `qhy-word`：适合方案、报告、纪要、说明文
+- `qhy-humanizer-zh`：适合文章、文案、报告段落、对外说明
 
 ## 新增技能建议
 

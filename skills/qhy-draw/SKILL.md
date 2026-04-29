@@ -1,200 +1,289 @@
 ---
 name: qhy-draw
 description: |
-  将复杂关系、流程、架构、方案、Agent 系统或讨论内容转成结构清晰、可沟通、可交付的图示表达。
+  Use this skill when the user wants to create a draw.io / diagrams.net diagram: flowchart, architecture diagram, UML sequence/class diagram, ER diagram, mindmap, network topology, or any visual diagram.
 
-  适用场景：
-  - 生成流程图、架构图、关系图、时序图、对比图、路线图、白板图
-  - 把口头想法、会议记录、系统设计、方案草稿整理成可讨论的图
-  - 在产品、技术、运营、培训、AI / Agent 场景中把“讲不清”的东西画清楚
-  - 当用户需要 Mermaid、SVG 结构稿、可交付 SVG 图、图示布局方案时优先使用
+  触发词：画图、图表、流程图、架构图、UML、时序图、类图、ER 图、思维导图、网络拓扑、可视化、draw.io、drawio、diagrams.net。
 
-  输入类型：文本、要点列表、需求说明、会议纪要、方案草稿、系统描述
-  输出格式：Mermaid、SVG 结构说明、可交付 SVG 草稿、白板图草案、图示布局方案
+  Workflow: understand requirements -> generate drawio XML directly -> self-review -> save .drawio -> CLI export PNG/SVG/PDF.
 ---
 
-# qhy-draw
+# qhy-draw: Draw.io Diagram Generator
 
-一个面向结构表达和图示思考的技能。它的目标不是“多画几个框”，而是帮助用户先判断应该画什么，再决定怎么画，最后输出既能讨论也能交付的图。
+本技能复刻自 `https://github.com/bruc3van/bruce-drawio`，并按本仓库命名改为 `qhy-draw`。核心约束保持一致：直接生成 draw.io XML，完成自检后保存 `.drawio`，再用 draw.io Desktop CLI 导出 PNG / SVG / PDF。
 
-它吸收了 `fireworks-tech-graph` 里“图类型分类 + 风格系统 + 语义箭头 + SVG 交付”的方法，但保留本仓库中文优先、轻依赖、可渐进输出的路线。
+## Workflow
 
-## 核心原则
+```
+1. Understand requirements  -> determine diagram type, elements, relationships
+2. Generate XML directly    -> write drawio XML (read only the relevant section from references/best-practices.md)
+3. Self-review (DO NOT SKIP) -> re-read XML and fix any issues found
+4. Save .drawio file        -> write to user's working directory
+5. CLI export               -> call draw.io desktop CLI to export image
+6. Deliver to user          -> show image + mention editable .drawio file
+```
 
-1. 先判断图的任务，再决定图的类型。
-2. 图的重点是关系、层次和主路径，不是装饰。
-3. 一张图最好只回答一个核心问题；复杂内容优先拆图。
-4. 默认先给结构正确的图，再追求视觉完成度。
-5. 没有明确要求时，优先输出“结构说明 + Mermaid / SVG 草稿”；明确要交付稿时再进入高保真 SVG。
+## Step 1: Understand Requirements
 
-## 执行顺序
+Determine:
+- **Diagram type**: flowchart / architecture / uml-sequence / uml-class / er / mindmap / network
+- **Key elements**: nodes, components, participants, entities
+- **Relationships**: connections, dependencies, flow direction
+- **Output format**: PNG (default) / SVG / PDF
+- **Language**: match the user's language for labels
 
-生成前按顺序读取：
+## Step 2: Generate XML
 
-1. `references/diagram-types.md`
-2. `references/layout-rules.md`
-3. `references/style-system.md`
-4. `references/style-diagram-matrix.md`
-5. `references/svg-layout-best-practices.md`
-6. `references/domain-patterns.md`
-7. `references/output-spec.md`
-8. `references/prompt-recipes.md`
-9. 需要品牌或产品图标时读取 `references/icons.md`
-10. 需要 SVG 交付时优先复用 `templates/` 与 `assets/svg_canvas_template.svg`
+**You MUST write the XML directly.** Do not call any script to generate it.
 
-## 什么时候直接开始，什么时候先确认
+### Base XML Structure
 
-如果用户已经给了足够描述，可以直接开始，并默认判断：
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="drawio-skill" version="21.0.0" type="device">
+  <diagram name="DiagramName" id="diagram-1">
+    <mxGraphModel dx="1422" dy="762"
+                   grid="1" gridSize="10"
+                   guides="1" tooltips="1" connect="1"
+                   arrows="1" fold="1"
+                   page="1" pageScale="1"
+                   pageWidth="1600" pageHeight="1200"
+                   math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
 
-- 这张图是给谁看
-- 这张图要回答什么问题
-- 输出更适合 Mermaid 还是 SVG
-- 是否需要拆成主图 + 子图
+        <!-- nodes and edges here -->
 
-只有在以下情况才先追问：
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+```
 
-- 用户同时想表达流程、架构、对比、时序，图型明显冲突
-- 用户要求“直接出最终视觉稿”，但关键信息仍缺失
-- 用户要求品牌化、海报级或非常具体的视觉风格
+### Node Template
 
-## 图型选择
+```xml
+<mxCell id="node-1" value="Label"
+        style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;"
+        vertex="1" parent="1">
+  <mxGeometry x="100" y="100" width="160" height="60" as="geometry" />
+</mxCell>
+```
 
-| 用户意图 | 优先图型 | 何时用 |
-|---|---|---|
-| 说明步骤和判断 | 流程图 | 讲先后顺序、判断分支、执行链路 |
-| 说明模块与边界 | 架构图 | 讲系统组成、分层、服务协作 |
-| 说明数据如何流动 | 数据流图 | 讲输入、处理、存储、输出 |
-| 说明实体间连接 | 关系图 | 讲依赖、影响、映射、角色关联 |
-| 说明时间顺序 | 时序图 | 讲参与方之间的调用顺序 |
-| 说明方案差异 | 对比图 / 矩阵图 | 讲 A/B、旧/新、能力差异 |
-| 说明任务推进 | 路线图 / 时间线 | 讲阶段、里程碑、节奏 |
-| 说明发散思考 | 白板图 / 脑图 | 讲探索、梳理、概念发散 |
-| 说明 Agent / Memory / Tool 系统 | Agent 架构图 / Memory 架构图 | 讲 AI 系统层次、读写路径、工具调用 |
+### Text Content Rules
 
-未指定时，优先根据“用户最关心的问题”选图型，而不是根据名词数量堆节点。
+- For multi-line labels, encode line breaks as `&#xa;` inside `value`, for example `value="API&#xa;Gateway"`
+- Do not write literal `\n` inside `value`; draw.io will render it as backslash + n text
+- Keep `html=1` on nodes, but still use `&#xa;` as the default line-break form for predictable output
 
-## 输出模式
+### Edge Template
 
-### 模式 1：结构快稿
+```xml
+<mxCell id="edge-1" value=""
+        style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;"
+        edge="1" parent="1" source="node-1" target="node-2">
+  <mxGeometry relative="1" as="geometry" />
+</mxCell>
+```
 
-适合：
+## Step 3: Layout Rules (CRITICAL for beautiful output)
 
-- 用户要快速复制使用
-- 更重结构，不重视觉装饰
-- 还在讨论和调整内容
+### General Principles
 
-默认输出：
+1. **Grid alignment**: all x, y coordinates must be multiples of 10 (snap to grid)
+2. **Generous spacing**: minimum 80px gap between node edges (not centers)
+3. **Center alignment**: nodes in the same column share the same x; nodes in the same row share the same y
+4. **Consistent sizing**: same-type nodes use identical width and height
+5. **Page margins**: keep at least 60px from the canvas edge (pageWidth/pageHeight)
+6. **Use `whiteSpace=wrap;html=1;`** on all nodes so long text wraps instead of overflowing
+7. **Balanced gutters**: outer padding around a row/column should visually match the internal gaps; avoid one oversized blank side
+8. **Symmetry first**: centered groups should have roughly equal left/right and top/bottom whitespace
+9. **Dense fill**: containers, sub-groups, and sidebars should fit content plus consistent padding; do not leave large dead zones just because the canvas is large
 
-1. 图标题
-2. 图的结构说明
-3. 可直接使用的 Mermaid 或白板布局草稿
+### Layout by Diagram Type
 
-### 模式 2：SVG 交付稿
+| Type | Direction | Primary axis | Spacing (between edges) | Alignment |
+|------|-----------|-------------|------------------------|-----------|
+| Flowchart | Top-to-bottom | Y increases | 100px vertical | Center x |
+| Architecture | Layered block (preferred) | Y increases | 20px between layers | Left label + container rows |
+| UML Sequence | Left-to-right participants | X increases | 200px horizontal | Top-aligned |
+| UML Class | Grid / top-to-bottom | Y increases | 100px vertical, 80px horizontal | Left-aligned columns |
+| ER Diagram | Spread / grid | Both axes | 120px both | Grid-aligned |
+| Mindmap | Center-outward radial | Both axes | 150px from center per level | Radial symmetric |
+| Network | Hierarchical layers | Y increases | 100px vertical, 120px horizontal | Center each layer |
 
-适合：
+### Anti-Overlap Checklist
 
-- 用户明确说“出图”“做成 SVG”“给我可交付版本”
-- 图要放文档、报告、文章、演示中
-- 需要清晰图例、语义箭头、图层、分区
+Before finalizing coordinates, verify:
+- No two nodes' bounding boxes overlap (check x, y, width, height)
+- Edge labels don't overlap with nodes
+- Decision branches (Yes/No) go in clearly different directions
+- For flowcharts with branches: main path goes down, alternate path goes right (or left)
+- For wide diagrams: increase `pageWidth` in mxGraphModel; for tall ones increase `pageHeight`
 
-输出时应包含：
+### Calculating Coordinates
 
-1. 图标题
-2. 布局说明
-3. 完整 SVG
-4. 图例或箭头语义说明
+Use this formula to center N items horizontally in a row:
 
-如需更稳定地产出 SVG，可配合：
+```
+total_width = N * node_width + (N - 1) * gap
+start_x = (pageWidth - total_width) / 2
+item[i].x = start_x + i * (node_width + gap)
+```
 
-- `scripts/generate-from-template.py`
-- `scripts/validate-svg.sh`
-- `scripts/generate-diagram.sh`
-- `scripts/test-all-styles.sh`
+For vertical centering in a column, apply the same logic to Y axis.
 
-### 模式 3：拆图方案
+For rows inside a fixed-width container, also check fill density:
 
-适合：
+```
+inner_width = container_width - 2 * side_pad
+gap = (inner_width - N * item_width) / (N - 1)
+```
 
-- 节点过多
-- 同时存在流程、架构、对比三种逻辑
-- 一张图无法在 10 秒内看懂主干
+If `gap` is much larger than the item width, or side padding is much larger than `gap`, adjust one of:
+- increase item width moderately
+- increase item count per row only if still readable
+- reduce container width
+- split into multiple balanced rows
 
-先输出：
+For incomplete last rows, center the remaining items instead of left-aligning them and leaving a large blank tail.
 
-- 主图标题与任务
-- 子图标题与任务
-- 每张图保留哪些节点和关系
+### Standard Sizes
 
-## 风格选择
+| Element | Width | Height |
+|---------|-------|--------|
+| Standard node | 160 | 60 |
+| Decision (rhombus) | 160 | 80 |
+| Database (cylinder) | 140 | 80 |
+| Actor (UML) | 40 | 60 |
+| Start/End (rounded) | 160 | 60 |
+| Mindmap center | 180 | 80 |
+| Mindmap branch | 140 | 50 |
+| Mindmap leaf | 120 | 40 |
+| ER table header | 200 | varies |
+| Group/container | auto | auto |
 
-先看用户是否明确指定；未指定时，按内容匹配：
+## Step 4: Self-Review (DO NOT SKIP)
 
-| 场景 | 推荐风格 | 参考 |
-|---|---|---|
-| 通用文档、博客、说明文 | 扁平图标风 | `references/style-system.md` |
-| 开发者流程、CLI、深色技术内容 | 暗色终端风 | `references/style-system.md` |
-| 工程架构、基础设施、蓝图式说明 | 蓝图工程风 | `references/style-system.md` |
-| Wiki、Confluence、内部文档 | Notion 极简风 | `references/style-system.md` |
-| 产品展示、发布会、未来感系统图 | 玻璃拟态风 | `references/style-system.md` |
-| 温暖、克制、偏 Anthropic 气质 | Claude 风 | `references/style-system.md` |
-| 干净、现代、偏 OpenAI 气质 | OpenAI 风 | `references/style-system.md` |
+After generating XML, re-read your output and check each item below. If any check fails, fix the XML before proceeding. This step catches the most common rendering bugs — skipping it results in broken diagrams.
 
-用户不指定时，默认：
+**Structural checks:**
+- [ ] All `id` values are unique across the entire file
+- [ ] Every `mxCell` with `vertex="1"` has correct `parent` (usually `"1"`, but container children use the container ID)
+- [ ] Every edge's `source` and `target` reference existing node IDs
+- [ ] XML is well-formed: all tags closed, all attribute values quoted
+- [ ] `mxGeometry` always has `as="geometry"` attribute
 
-- Mermaid：不强加重风格，优先结构清晰
-- SVG：`扁平图标风`
-- 工程/架构内容：可默认 `蓝图工程风`
-- AI / Agent 内容：可默认 `暗色终端风` 或 `玻璃拟态风`
+**Layout checks** (these are the most common failures — actually verify the numbers):
+- [ ] No two non-container nodes overlap: for each pair, confirm their bounding boxes (x, y, x+width, y+height) don't intersect
+- [ ] All coordinates (x, y) are multiples of 10 — scan every `mxGeometry` element
+- [ ] Page dimensions (pageWidth, pageHeight) are large enough for all content with margins
+- [ ] Sibling items in the same row/column use equal sizes and equal gaps unless there is a clear reason not to
+- [ ] Left/right padding and top/bottom padding inside each container are visually balanced; no obvious one-sided blank area
+- [ ] Containers, sub-groups, and sidebars are sized to content plus padding; if a blank region is larger than a normal item gap or roughly a full item row, tighten the layout
+- [ ] Incomplete last rows are centered or otherwise balanced; they are not stuck to one side with a large empty remainder
 
-如果用户已经指定风格编号或风格名，应优先读取对应的：
+**Style checks:**
+- [ ] All nodes include `whiteSpace=wrap;html=1;` in style
+- [ ] Every multi-line label uses `&#xa;` inside `value`, never literal `\n`
+- [ ] `fontSize=14` or larger for readability
+- [ ] Edges use `edgeStyle=orthogonalEdgeStyle` for clean routing (except mindmaps which use `curved=1`)
+- [ ] Decision nodes use `rhombus` shape; database nodes use `shape=cylinder3`
 
-- `references/style-1-flat-icon.md`
-- `references/style-2-dark-terminal.md`
-- `references/style-3-blueprint.md`
-- `references/style-4-notion-clean.md`
-- `references/style-5-glassmorphism.md`
-- `references/style-6-claude-official.md`
-- `references/style-7-openai.md`
+## Step 5: CLI Export (Cross-Platform)
 
-## 用户指令映射
+### 5a. Detect draw.io
 
-| 用户描述 | 处理方式 |
-|---|---|
-| “先出个草图” | 走结构快稿 |
-| “直接出 Mermaid” | 输出 Mermaid，不展开 SVG |
-| “做成 SVG” | 走 SVG 交付稿 |
-| “画架构图” | 优先架构图，先分层再连线 |
-| “画流程图” | 优先流程图，主干自上而下 |
-| “画时序图” | 优先时序图，参与方垂直排布 |
-| “比较一下” | 优先对比图或矩阵图 |
-| “梳理 Agent / RAG / Memory” | 读 `domain-patterns.md`，优先 Agent / Memory 架构图 |
-| “白板感、讨论稿” | 保留探索感，不要过度整齐 |
-| “正式一点、交付稿” | 收敛文案、补图例、统一箭头语义 |
+Run these commands **in order**, stop at the first one that succeeds:
 
-## 必须做到
+```bash
+# 1. Try PATH first (works if user installed globally)
+which draw.io 2>/dev/null || which drawio 2>/dev/null
+```
 
-- 主路径、主层次、主关系清楚
-- 文本标签短而明确，避免整句塞进节点
-- 节点分组优先于箭头暴增
-- 使用一致的形状语义和箭头语义
-- 当箭头类型超过 2 种时补图例
-- 复杂图优先拆层，不要一张图塞满所有内容
+If that fails, check platform-specific default paths:
 
-## 禁止做到
+**macOS:**
+```bash
+ls /Applications/draw.io.app/Contents/MacOS/draw.io 2>/dev/null
+```
 
-- 禁止所有节点同权重、同尺寸、同颜色
-- 禁止箭头满天飞但没有主干逻辑
-- 禁止把段落原样贴进节点里
-- 禁止为了“好看”损失可读性
-- 禁止 SVG 中出现无法解释的装饰线、发光、阴影
-- 禁止在尚未稳定的信息上假装输出“最终定稿”
+**Windows (bash/MSYS2):**
+```bash
+# Check common install locations
+ls "/c/Program Files/draw.io/draw.io.exe" 2>/dev/null || \
+ls "$LOCALAPPDATA/Programs/draw.io/draw.io.exe" 2>/dev/null
+```
 
-## 输出前自检
+**Linux:**
+```bash
+ls /usr/bin/drawio 2>/dev/null || ls /snap/bin/drawio 2>/dev/null
+```
 
-- [ ] 这张图要回答的问题是否唯一且明确
-- [ ] 选择的图型是否真的适合当前内容
-- [ ] 读者能否在 10 秒内看懂主干
-- [ ] 是否存在可以拆图却硬塞一张的情况
-- [ ] 标签是否足够短、足够一致、足够可扫读
-- [ ] 箭头是否有语义，不只是“连起来了”
-- [ ] 若为 SVG，图例、分组、层次是否已经补齐
+### 5b. If not found, guide installation
+
+Tell the user draw.io is not installed and suggest:
+
+| Platform | Install Command |
+|----------|----------------|
+| macOS | `brew install --cask drawio` |
+| Windows | `winget install JGraph.Draw` |
+| Linux | `snap install drawio` |
+| All | Download from https://github.com/jgraph/drawio-desktop/releases |
+
+Do NOT auto-install without user confirmation.
+
+### 5c. Export
+
+Use the detected path (stored as `$DRAWIO`) to export:
+
+```bash
+"$DRAWIO" -x -f png --scale 2 -o output.png diagram.drawio
+```
+
+### Export flags
+
+| Flag | Purpose |
+|------|---------|
+| `-x` | Export mode (no GUI) |
+| `-f png/svg/pdf` | Output format |
+| `-o path` | Output file path |
+| `--scale 2` | 2x resolution for crisp PNG |
+| `--border 20` | Add border padding (px) |
+| `--width 1600` | Constrain output width |
+| `-p 0` | Export specific page (0-indexed) |
+| `--crop` | Crop to diagram content |
+
+## Step 6: Deliver to User
+
+After export:
+- Show the exported image
+- Tell the user the `.drawio` file location (can be edited at https://app.diagrams.net)
+- Mention the export format used
+
+## File Naming
+
+- Lowercase + hyphens: `ecommerce-order-flow.drawio`
+- No Chinese characters, spaces, or special characters in filenames
+- Output image uses same base name: `ecommerce-order-flow.png`
+
+## Architecture Diagram: Layered Block Style
+
+For architecture diagrams, use the **Layered Block Style** — see `references/best-practices.md` for full templates and layout constants. This is the preferred style: structured block layout with no arrows, horizontal layers, left label column, and optional cross-cutting sidebar.
+
+## Modifying Existing Diagrams
+
+When the user is not satisfied with the result and asks for modifications:
+1. **Read the existing .drawio file** first to understand current structure
+2. **Edit based on the existing XML** — do not regenerate from scratch
+3. Apply the user's requested changes while preserving the overall layout and style
+4. Run the same self-review and export steps
+
+## Reference
+
+`references/best-practices.md` contains:
+- **General Rules** — ID management, style essentials, common mistakes
+- **Architecture Diagram Templates (Layered Block Style)** — the preferred architecture style with full XML templates and layout constants
+
+For other diagram types (flowchart, UML, ER, mindmap, network, etc.), generate appropriate draw.io XML directly based on your knowledge. Read the "General Rules" section for basic formatting guidance.

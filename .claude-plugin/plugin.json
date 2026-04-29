@@ -1,7 +1,7 @@
 {
   "name": "qhy-skills",
   "version": "1.0.0",
-  "description": "QHY multi-skill collection for cards, slide decks, diagrams, and documents with a scalable qhy-* architecture",
+  "description": "QHY multi-skill collection for cards, slide decks, diagrams, documents, and Chinese text polishing with a scalable qhy-* architecture",
   "author": {
     "name": "haoyu-qi",
     "url": "https://github.com/haoyu-qi"
@@ -14,7 +14,9 @@
     "slides",
     "diagram",
     "document",
-    "visualization"
+    "visualization",
+    "text-polishing",
+    "chinese"
   ],
   "skills": "./skills"
 }

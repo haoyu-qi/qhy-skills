@@ -1,7 +1,7 @@
 {
   "name": "qhy-skills",
   "displayName": "QHY Skills",
-  "description": "A scalable multi-skill collection covering cards, slide decks, diagrams, and documents",
+  "description": "A scalable multi-skill collection covering cards, slide decks, diagrams, documents, and Chinese text polishing",
   "version": "1.0.0",
   "owner": {
     "name": "haoyu-qi",
@@ -18,7 +18,9 @@
     "content-creation",
     "slides",
     "diagram",
-    "document"
+    "document",
+    "text-polishing",
+    "chinese"
   ],
   "categories": [
     "Content Creation",
@@ -28,7 +30,7 @@
   "plugins": [
     {
       "name": "qhy-skills",
-      "description": "QHY multi-skill collection with card, ppt, drawing, and document capabilities",
+      "description": "QHY multi-skill collection with card, ppt, drawing, document, and Chinese text polishing capabilities",
       "version": "1.0.0",
       "source": "./"
     }

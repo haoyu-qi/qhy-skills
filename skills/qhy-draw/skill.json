@@ -1,0 +1,7 @@
+{
+  "name": "qhy-draw",
+  "description": "Cross-platform draw.io / diagrams.net diagram generator, adapted from bruc3van/bruce-drawio. Use when user wants to create any diagram: flowchart, architecture, UML (sequence/class), ER, mindmap, network topology. Trigger: draw diagram, flowchart, architecture diagram, UML, sequence diagram, mindmap, ER diagram, network topology, visualize, draw.io, drawio. Workflow: LLM generates drawio XML -> self-review -> save .drawio -> CLI export PNG/SVG/PDF. Supports Windows, macOS, Linux.",
+  "version": "3.0.2",
+  "author": "brucevanfdm@gmail.com; adapted for qhy-skills",
+  "tags": ["diagram", "flowchart", "architecture", "uml", "mindmap", "visualization", "er-diagram", "network-topology", "drawio", "cross-platform"]
+}

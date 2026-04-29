@@ -1,6 +1,6 @@
 # qhy-skills
 
-一个面向 Claude Code / Codex 的可扩展技能仓库，围绕中文内容生产与表达，逐步补齐“卡片、演示、图示、文档”四类核心能力。
+一个面向 Claude Code / Codex 的可扩展技能仓库，围绕中文内容生产与表达，逐步补齐“卡片、演示、图示、文档、文本润色”几类核心能力。
 
 它不是单一的提示词集合，而是一套适合持续扩展的 skill repo：
 
@@ -20,8 +20,9 @@
 |------|------|
 | `qhy-card` | 将内容转为高质量 HTML 视觉卡片，适合信息图、海报页、白板图、周报板。 |
 | `qhy-ppt` | 将想法、报告、方案和纪要重组为适合汇报和演示的 PPT / Slide Deck 结构。 |
-| `qhy-draw` | 将复杂关系、流程、架构和讨论内容转为可沟通的图示表达。 |
+| `qhy-draw` | 直接生成 draw.io XML，并导出流程图、架构图、UML、ER 图、思维导图和网络拓扑图。 |
 | `qhy-word` | 将零散材料整理成可提交、可审阅、可流转的正式文档。 |
+| `qhy-humanizer-zh` | 识别并去除中文文本中的 AI 写作痕迹，让表达更自然、更像真人写作。 |
 
 ## Capability Map
 
@@ -39,15 +40,21 @@
 
 ### `qhy-draw`
 
-- 面向“把关系画清楚”的图示表达
-- 输出以 Mermaid、结构草图、图示布局方案为主
-- 更适合流程、架构、关系、白板讨论
+- 面向“把关系画清楚”的 draw.io 图示表达
+- 输出以 `.drawio` 源文件为主，可通过 draw.io Desktop CLI 导出 PNG / SVG / PDF
+- 更适合流程图、架构图、UML 时序/类图、ER 图、思维导图、网络拓扑图
 
 ### `qhy-word`
 
 - 面向“形成正式文档”的书面表达
 - 输出以提纲、正文、章节草稿、修订建议为主
 - 更适合方案、报告、纪要、说明文
+
+### `qhy-humanizer-zh`
+
+- 面向“去掉 AI 味”的文本润色
+- 识别宣传腔、空泛归因、三段式排比、过度连接词等常见 AI 写作痕迹
+- 更适合文章、文案、报告段落、对外说明的自然化改写
 
 ## qhy-card Highlights
 
@@ -85,7 +92,7 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 
 然后重启 Claude Code / Codex。
 
-当前四个核心 skill 以文本工作流为主，不强依赖 Node。现有公共脚本重点服务 `qhy-card` 的 HTML 预览、检查和脚手架。
+当前技能以文本工作流为主，不强依赖 Node。现有公共脚本重点服务 `qhy-card` 的 HTML 预览、检查和脚手架。
 
 ## Quick Start
 
@@ -104,11 +111,15 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 ```
 
 ```text
-请用 qhy-draw 把这个系统流程整理成 Mermaid 流程图
+请用 qhy-draw 画一个电商下单流程图，并导出 PNG
 ```
 
 ```text
 请用 qhy-word 把这些会议纪要整理成正式纪要，并补一个待办清单
+```
+
+```text
+请用 qhy-humanizer-zh 把下面这段话改得更自然，去掉 AI 味
 ```
 
 ## Scripts
@@ -142,8 +153,9 @@ qhy-skills/
     ├── _template/           # 新 skill 模板
     ├── qhy-card/            # HTML 卡片能力
     ├── qhy-ppt/             # 演示文稿能力
-    ├── qhy-draw/            # 图示表达能力
-    └── qhy-word/            # 正式文档能力
+    ├── qhy-draw/            # draw.io 图表生成能力
+    ├── qhy-word/            # 正式文档能力
+    └── qhy-humanizer-zh/    # 中文文本去 AI 味
 ```
 
 ## Multi-Skill Expansion
@@ -165,7 +177,7 @@ qhy-skills/
 - 从“只有风格”升级为“模块 + 风格 + 审美准则 + 多表达形态”
 - 增加模板骨架，减少输出漂移
 - 增加脚手架、质检和示例输出
-- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-word` 三个方向的基础能力
+- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-word`、`qhy-humanizer-zh` 等方向的基础能力
 
 ## License
 
