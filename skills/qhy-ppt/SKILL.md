@@ -1,6 +1,6 @@
 ---
 name: qhy-ppt
-description: qhy-ppt 用于生成中文友好的杂志风 / 电子墨水风单文件 HTML 演示文稿，适合 PPT、slides、deck、发布会、演讲、分享、私享会、demo day 等多页横向翻页场景。内置 WebGL 流体背景、5 套主题预设、10 种布局模板、衬线标题 + 非衬线正文的 editorial magazine 版式；当用户提到"杂志风 PPT"、"horizontal swipe deck"、"editorial magazine"、"电子墨水"时优先使用。
+description: qhy-ppt 用于生成中文友好的单文件 HTML 演示文稿，适合 PPT、slides、deck、发布会、演讲、分享、私享会、demo day 等多页横向翻页场景。内置默认杂志风 / 电子墨水模板、avcon 企业汇报模板、WebGL 流体背景、5 套主题预设、10 种布局模板、衬线标题 + 非衬线正文的 editorial magazine 版式；当用户提到"杂志风 PPT"、"horizontal swipe deck"、"editorial magazine"、"电子墨水"、"avcon 模板"时优先使用。
 ---
 
 # qhy-ppt
@@ -10,6 +10,7 @@ description: qhy-ppt 用于生成中文友好的杂志风 / 电子墨水风单�
 生成一份**单文件 HTML**的横向翻页 PPT，视觉基调是：
 
 - **电子杂志 + 电子墨水**混血风格
+- **Avcon 企业汇报模板**（白底、红色页眉线、右下 AVCOn 标识、Proprietary 页脚、封面红粉环形装饰）
 - **WebGL 流体 / 等高线 / 色散背景**（hero 页可见）
 - **衬线标题（Noto Serif SC + Playfair Display）+ 非衬线正文（Noto Sans SC + Inter）+ 等宽元数据（IBM Plex Mono）**
 - **Lucide 线性图标**（不用 emoji）
@@ -106,7 +107,13 @@ description: qhy-ppt 用于生成中文友好的杂志风 / 电子墨水风单�
 - 配图比例必须匹配最终落位:主视觉 16:9,左文右图 16:10 / 4:3,信息图 16:9 / 16:10,截图再设计 16:10,图文混排小图 3:2 / 3:4,网格图统一高度裁切
 - 生成后的图片放到 `images/` 下,命名遵守 `{页号}-{语义}.{ext}`
 
-### Step 2 · 拷贝模板
+### Step 2 · 选择并拷贝模板
+
+#### 2.0 · 模板选择
+
+默认使用 `assets/template.html` 的杂志风模板。
+
+如果用户明确说 **avcon / Avcon / AVCOn 模板**，或提供的参考图是"白底 + Avcon 红色线条 + 底部 Proprietary + 右下 AVCOn logo"的企业汇报风格，改用 `assets/avcon_template.html`。avcon 模板不走默认 5 套主题色，也不使用 WebGL 背景；它是固定企业汇报视觉。
 
 从 `assets/template.html` 拷贝一份到目标位置（通常是 `项目/XXX/ppt/index.html`），同时在同级建 `images/` 文件夹准备接图片，并复制本地 Motion One 兜底文件与固定作者头像。
 
@@ -119,6 +126,15 @@ cp "<SKILL_ROOT>/assets/avatar.jpg" "项目/XXX/ppt/images/avatar.jpg"
 
 `template.html` 是一个**完整可运行**的文件——CSS、WebGL shader、翻页 JS、字体/图标 CDN、右上角作者徽标样式全已预设好；`assets/motion.min.js` 用于断网时的动效兜底；`assets/avatar.jpg` 是固定作者头像。只需要把生成的 `<section class="slide ...">` 页面填入 `<div id="deck">` 的 `SLIDES_HERE` 位置。
 
+avcon 模板的拷贝方式：
+
+```bash
+mkdir -p "项目/XXX/ppt/images"
+cp "<SKILL_ROOT>/assets/avcon_template.html" "项目/XXX/ppt/index.html"
+```
+
+`avcon_template.html` 内置 3 个基础版式：封面页、正文页、结束页。它不需要复制 `motion.min.js` 或 `avatar.jpg`。
+
 #### 2.1 · 必改占位符（**容易漏**）
 
 拷贝后立刻改掉以下占位符，否则浏览器 Tab 会显示"[必填] 替换为 PPT 标题"这种尴尬文字：
@@ -129,9 +145,9 @@ cp "<SKILL_ROOT>/assets/avatar.jpg" "项目/XXX/ppt/images/avatar.jpg"
 
 每次拷贝完 template.html 第一件事:grep 一下"[必填]" 确认全部替换完。
 
-#### 2.2 · 选定主题色(5 套预设 · 不允许自定义)
+#### 2.2 · 选定主题色(默认杂志模板适用 · 5 套预设 · 不允许自定义)
 
-本 skill **只允许从 5 套精心调配的预设里选一套**,不接受用户自定义 hex 值——颜色搭配错了画面瞬间变丑,保护美学比给自由更重要。
+默认杂志模板 **只允许从 5 套精心调配的预设里选一套**,不接受用户自定义 hex 值——颜色搭配错了画面瞬间变丑,保护美学比给自由更重要。avcon 模板不参与这一规则，使用固定企业红白灰视觉。
 
 | # | 主题 | 适合 |
 |---|------|------|
@@ -256,11 +272,14 @@ qhy-ppt/
 ├── SKILL.md              ← 你正在读
 ├── assets/
 │   ├── template.html     ← 完整的可运行模板（种子文件）
+│   ├── avcon_template.html ← Avcon 企业汇报模板（封面/正文/结束页）
+│   ├── avcon-logo.png    ← Avcon 模板使用的原始 PNG logo
 │   ├── motion.min.js     ← Motion One 本地副本（离线兜底,约 64KB）
 │   └── avatar.jpg        ← 固定作者头像（右上角徽标）
 └── references/
     ├── components.md     ← 组件手册（字体、色、网格、图标、callout、stat、pipeline、动效...）
     ├── layouts.md        ← 10 种页面布局骨架（可直接粘贴,含动效标记）
+    ├── avcon-template.md ← Avcon 企业汇报模板说明
     ├── themes.md         ← 5 套主题色预设（只能选不能自定义）
     ├── image-prompts.md  ← GPT-M 2.0 配图类型、比例和基础提示词
     └── checklist.md      ← 质量检查清单（P0/P1/P2/P3 分级）
