@@ -1,0 +1,3 @@
+display_name: QHY AVCON ZenTao Iteration
+short_description: ZenTao iteration task template
+default_prompt: Create a ZenTao software iteration using the AVCON 5-stage template, then ask whether to create subtasks from requirement documents.

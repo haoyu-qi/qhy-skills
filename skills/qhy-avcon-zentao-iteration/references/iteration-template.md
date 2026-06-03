@@ -66,7 +66,14 @@ For a four-week monthly iteration:
 
 ## Requirement-Based Subtask Decomposition
 
-When a requirement document, requirement link, requirement ID, or feature list is available, extract:
+When a requirement document, requirement link, requirement ID, or feature list is available, extract requirement-based subtasks for stages one through four.
+
+Do not decompose `阶段五：版本发布阶段` from requirement documents. Its subtasks are fixed:
+
+| Order | Fixed Subtask | Goal |
+| --- | --- | --- |
+| 1 | 版本发布评审 | 确认版本范围、测试结论、遗留问题、发布风险和准出条件 |
+| 2 | 产品资料准备 | 准备发布说明、版本范围、使用说明、验收材料和归档资料 |
 
 | Source Information | Use |
 | --- | --- |
@@ -76,7 +83,7 @@ When a requirement document, requirement link, requirement ID, or feature list i
 | 接口/数据/权限规则 | 拆分后端、联调、兼容性任务 |
 | 验收标准 | 拆分测试验证子任务 |
 | 依赖项/风险点 | 拆分评审、联调、风险验证任务 |
-| 发布影响范围 | 拆分版本发布、发布说明、上线检查任务 |
+| 发布影响范围 | 仅作为阶段五固定任务的评审输入，不新增阶段五子任务 |
 
 Subtask naming pattern:
 
@@ -102,7 +109,7 @@ Stage mapping:
 | 阶段二：需求设计阶段 | 产品方案、交互设计、技术方案、接口设计、风险评审 |
 | 阶段三：功能开发阶段 | 前端实现、后端实现、客户端实现、接口联调、自测 |
 | 阶段四：测试验证阶段 | 测试用例、集成测试、回归测试、缺陷验证、准出检查 |
-| 阶段五：版本发布阶段 | 发版清单、发布说明、安装包/构建物、上线验证、归档 |
+| 阶段五：版本发布阶段 | 固定创建 `版本发布评审`、`产品资料准备` 两个子任务 |
 
 Quality rules:
 
@@ -111,16 +118,18 @@ Quality rules:
 - A subtask should not span multiple stages.
 - If requirements are unclear, create clarification subtasks under `阶段一：需求明确阶段`.
 - If technical risk is high, create validation or review subtasks under `阶段二：需求设计阶段`.
+- `阶段五：版本发布阶段` must contain exactly `版本发布评审` and `产品资料准备`; do not add requirement-document-based release subtasks.
 
 ## ZenTao Creation Rules
 
 1. Create or update the execution with the selected product, project, branch, date range, and concise name.
 2. Create the five fixed first-level stage tasks.
 3. Ask whether to create subtasks before creating them.
-4. If the user confirms subtasks, prioritize requirement-document-based decomposition.
-5. If there is no requirement document, use standard or custom decomposition only after clarifying with the user.
-6. Verify by listing tasks from the execution.
-7. Summarize what was created, including execution ID and task IDs.
+4. If the user confirms subtasks, prioritize requirement-document-based decomposition for stages one through four.
+5. Always create only `版本发布评审` and `产品资料准备` under `阶段五：版本发布阶段`.
+6. If there is no requirement document, use standard or custom decomposition only after clarifying with the user.
+7. Verify by listing tasks from the execution.
+8. Summarize what was created, including execution ID and task IDs.
 
 ## Known X86 Client Example
 
