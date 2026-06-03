@@ -23,6 +23,7 @@
 | `qhy-draw` | 直接生成 draw.io XML，并导出流程图、架构图、UML、ER 图、思维导图和网络拓扑图。 |
 | `qhy-word` | 将零散材料整理成可提交、可审阅、可流转的正式文档。 |
 | `qhy-humanizer-zh` | 识别并去除中文文本中的 AI 写作痕迹，让表达更自然、更像真人写作。 |
+| `qhy-avcon-zentao-iteration` | 固化 AVCON/QHY 禅道软件迭代任务模板，按 5 个阶段创建任务，并支持基于需求文档拆解子任务。 |
 
 ## Capability Map
 
@@ -55,6 +56,12 @@
 - 面向“去掉 AI 味”的文本润色
 - 识别宣传腔、空泛归因、三段式排比、过度连接词等常见 AI 写作痕迹
 - 更适合文章、文案、报告段落、对外说明的自然化改写
+
+### `qhy-avcon-zentao-iteration`
+
+- 面向 AVCON/QHY 禅道软件迭代任务编排
+- 固定 5 个一级阶段：需求明确、需求设计、功能开发、测试验证、版本发布
+- 支持在创建子任务前先询问，并优先基于需求文档拆解子任务
 
 ## qhy-card Highlights
 
@@ -151,6 +158,7 @@ qhy-skills/
 └── skills/
     ├── README.md            # skills 目录说明
     ├── _template/           # 新 skill 模板
+    ├── qhy-avcon-zentao-iteration/ # 禅道软件迭代任务模板
     ├── qhy-card/            # HTML 卡片能力
     ├── qhy-ppt/             # 演示文稿能力
     ├── qhy-draw/            # draw.io 图表生成能力
