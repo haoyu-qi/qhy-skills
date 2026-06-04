@@ -14,28 +14,29 @@ Use this skill to create or maintain ZenTao software iteration task structures.
 3. Identify the target product, project, execution, iteration month, date range, and owner assumptions.
 4. Create or update the execution with a concise name such as `{project/product short name}{month}月迭代`.
 5. Create exactly five first-level stage tasks unless the user explicitly requests a different structure:
-   - `父一、概念阶段`
-   - `父二、计划阶段`
-   - `父三、开发阶段`
-   - `父四、验证阶段`
-   - `父五、发布阶段`
+   - `一、概念阶段`
+   - `二、计划阶段`
+   - `三、开发阶段`
+   - `四、验证阶段`
+   - `五、发布阶段`
 6. Before creating subtasks, ask whether subtasks should be created.
-7. If subtasks are requested, use the fixed default subtasks below for stages one, two, four, and five. For `父三、开发阶段`, align subtasks with the requirement document when one is provided:
-   - `父一、概念阶段`
+7. If subtasks are requested, use the fixed default subtasks below for stages one, two, four, and five. For `三、开发阶段`, align subtasks with the requirement document when one is provided:
+   - `一、概念阶段`
      - `需求说明书确认`
-   - `父二、计划阶段`
+   - `二、计划阶段`
      - `项目计划规划与评审`
-   - `父三、开发阶段`
+   - `三、开发阶段`
      - Extract modules, features, pages, interfaces, or deliverables from the requirement document.
      - Create development-stage subtasks using those extracted items.
      - If no requirement document or feature list is available, fall back to `模块一的测试`, `模块一的开发`, and `模块一的设计页面设计`.
-   - `父四、验证阶段`
+   - `四、验证阶段`
      - `集成测试`
-   - `父五、发布阶段`
+   - `五、发布阶段`
      - `版本发布评审`
      - `产品资料准备`
-8. If requirement documents are provided, use them to generate `父三、开发阶段` subtasks and to refine owners, deadlines, descriptions, and completion criteria. Do not replace the five-stage structure unless the user explicitly asks.
-9. After writing to ZenTao, verify by listing the execution tasks and summarize task IDs, names, owners, and deadlines.
+8. If requirement documents are provided, use them to generate `三、开发阶段` subtasks and to refine owners, deadlines, descriptions, and completion criteria. Do not replace the five-stage structure unless the user explicitly asks.
+9. When creating real ZenTao subtasks, pass `parent` in the full `--data` JSON payload instead of as a standalone CLI flag, for example `zentao task create --data='{"executionID":306,"parent":970,"name":"..."}'`. Verify that the created task has the expected nonzero `parent`.
+10. After writing to ZenTao, verify by listing the execution tasks and summarize task IDs, names, parent IDs, owners, and deadlines.
 
 ## Subtask Decision
 
@@ -50,20 +51,20 @@ If the user provides requirement documents, requirement links, requirement IDs, 
 The default subtask structure is:
 
 ```text
-父一、概念阶段
+一、概念阶段
 - 需求说明书确认
 
-父二、计划阶段
+二、计划阶段
 - 项目计划规划与评审
 
-父三、开发阶段
+三、开发阶段
 - 按需求文档中的模块/功能点/页面/接口/交付物生成
 - 无需求文档时兜底使用：模块一的测试、模块一的开发、模块一的设计页面设计
 
-父四、验证阶段
+四、验证阶段
 - 集成测试
 
-父五、发布阶段
+五、发布阶段
 - 版本发布评审
 - 产品资料准备
 ```
