@@ -23,7 +23,7 @@
 | `qhy-draw` | 直接生成 draw.io XML，并导出流程图、架构图、UML、ER 图、思维导图和网络拓扑图。 |
 | `qhy-word` | 将零散材料整理成可提交、可审阅、可流转的正式文档。 |
 | `qhy-humanizer-zh` | 识别并去除中文文本中的 AI 写作痕迹，让表达更自然、更像真人写作。 |
-| `qhy-avcon-zentao-iteration` | 固化 AVCON/QHY 禅道软件迭代任务模板，按 5 个阶段创建任务，并支持基于需求文档拆解子任务。 |
+| `qhy-avcon-zentao-iteration` | 为 AVCON/QHY 禅道项目创建或更新五阶段迭代执行与任务清单。 |
 
 ## Capability Map
 
@@ -59,9 +59,10 @@
 
 ### `qhy-avcon-zentao-iteration`
 
-- 面向 AVCON/QHY 禅道软件迭代任务编排
-- 固定 5 个一级阶段：需求明确、需求设计、功能开发、测试验证、版本发布
-- 支持在创建子任务前先询问，并优先基于需求文档拆解子任务
+- 面向“把软件迭代落到禅道任务”的项目执行表达
+- 固定创建概念、计划、开发、验证、发布五个父阶段
+- 开发阶段子任务优先对齐需求文档中的模块、功能点、页面、接口和交付物
+- 更适合 AVCON/QHY 月度迭代、版本执行、需求落地和任务模板复用
 
 ## qhy-card Highlights
 
@@ -129,6 +130,10 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 请用 qhy-humanizer-zh 把下面这段话改得更自然，去掉 AI 味
 ```
 
+```text
+请用 qhy-avcon-zentao-iteration 为 X86 客户端创建 6 月禅道迭代，并按需求文档生成开发阶段子任务
+```
+
 ## Scripts
 
 ```bash
@@ -163,7 +168,8 @@ qhy-skills/
     ├── qhy-ppt/             # 演示文稿能力
     ├── qhy-draw/            # draw.io 图表生成能力
     ├── qhy-word/            # 正式文档能力
-    └── qhy-humanizer-zh/    # 中文文本去 AI 味
+    ├── qhy-humanizer-zh/    # 中文文本去 AI 味
+    └── qhy-avcon-zentao-iteration/ # AVCON/QHY 禅道迭代任务模板
 ```
 
 ## Multi-Skill Expansion
@@ -185,7 +191,7 @@ qhy-skills/
 - 从“只有风格”升级为“模块 + 风格 + 审美准则 + 多表达形态”
 - 增加模板骨架，减少输出漂移
 - 增加脚手架、质检和示例输出
-- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-word`、`qhy-humanizer-zh` 等方向的基础能力
+- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration` 等方向的基础能力
 
 ## License
 
