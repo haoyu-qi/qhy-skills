@@ -10,6 +10,7 @@
 - `qhy-word`：正式文档写作与整理
 - `qhy-humanizer-zh`：中文文本去 AI 味与自然化改写
 - `qhy-avcon-zentao-iteration`：AVCON/QHY 禅道五阶段迭代执行与任务清单
+- `qhy-mail`：HTML 卡片邮件起草、回复与发送前确认
 
 ## 推荐分工
 
@@ -19,6 +20,7 @@
 - `qhy-word`：适合方案、报告、纪要、说明文
 - `qhy-humanizer-zh`：适合文章、文案、报告段落、对外说明
 - `qhy-avcon-zentao-iteration`：适合月度迭代、版本执行、需求文档到禅道任务的落地
+- `qhy-mail`：适合会议通知、评审邀请、周报月报、发布通知和对外邮件沟通
 
 ## 新增技能建议
 

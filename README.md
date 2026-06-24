@@ -24,6 +24,7 @@
 | `qhy-word` | 将零散材料整理成可提交、可审阅、可流转的正式文档。 |
 | `qhy-humanizer-zh` | 识别并去除中文文本中的 AI 写作痕迹，让表达更自然、更像真人写作。 |
 | `qhy-avcon-zentao-iteration` | 为 AVCON/QHY 禅道项目创建或更新五阶段迭代执行与任务清单。 |
+| `qhy-mail` | 起草、润色、回复和发送邮件，默认生成 qhy-card HTML 卡片正文，并强制发送前人工确认。 |
 
 ## Capability Map
 
@@ -63,6 +64,13 @@
 - 固定创建概念、计划、开发、验证、发布五个父阶段
 - 开发阶段子任务优先对齐需求文档中的模块、功能点、页面、接口和交付物
 - 更适合 AVCON/QHY 月度迭代、版本执行、需求落地和任务模板复用
+
+### `qhy-mail`
+
+- 面向“业务邮件可读、好看、可控发送”的沟通表达
+- 默认用 `qhy-card` 生成 HTML 卡片正文，并保留纯文本草稿
+- 所有发送、回复、转发前必须展示确认清单并等待人工确认
+- 更适合会议通知、评审邀请、周报月报、发布通知和对外沟通
 
 ## qhy-card Highlights
 
@@ -134,6 +142,10 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 请用 qhy-avcon-zentao-iteration 为 X86 客户端创建 6 月禅道迭代，并按需求文档生成开发阶段子任务
 ```
 
+```text
+请用 qhy-mail 起草一封发布评审会议通知邮件，正文做成 HTML 卡片，我确认后再发送
+```
+
 ## Scripts
 
 ```bash
@@ -169,6 +181,7 @@ qhy-skills/
     ├── qhy-draw/            # draw.io 图表生成能力
     ├── qhy-word/            # 正式文档能力
     ├── qhy-humanizer-zh/    # 中文文本去 AI 味
+    ├── qhy-mail/            # HTML 卡片邮件能力
     └── qhy-avcon-zentao-iteration/ # AVCON/QHY 禅道迭代任务模板
 ```
 
@@ -191,7 +204,7 @@ qhy-skills/
 - 从“只有风格”升级为“模块 + 风格 + 审美准则 + 多表达形态”
 - 增加模板骨架，减少输出漂移
 - 增加脚手架、质检和示例输出
-- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration` 等方向的基础能力
+- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration`、`qhy-mail` 等方向的基础能力
 
 ## License
 
