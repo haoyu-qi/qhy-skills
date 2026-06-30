@@ -21,6 +21,7 @@
 | `qhy-card` | 将内容转为高质量 HTML 视觉卡片，适合信息图、海报页、白板图、周报板。 |
 | `qhy-ppt` | 将想法、报告、方案和纪要重组为适合汇报和演示的 PPT / Slide Deck 结构。 |
 | `qhy-draw` | 直接生成 draw.io XML，并导出流程图、架构图、UML、ER 图、思维导图和网络拓扑图。 |
+| `qhy-draw-gif` | 将架构、流程和技术说明转为 `.excalidraw`、PNG 预览和真实动态 GIF。 |
 | `qhy-word` | 将零散材料整理成可提交、可审阅、可流转的正式文档。 |
 | `qhy-humanizer-zh` | 识别并去除中文文本中的 AI 写作痕迹，让表达更自然、更像真人写作。 |
 | `qhy-avcon-zentao-iteration` | 为 AVCON/QHY 禅道项目创建或更新五阶段迭代执行与任务清单。 |
@@ -45,6 +46,12 @@
 - 面向“把关系画清楚”的 draw.io 图示表达
 - 输出以 `.drawio` 源文件为主，可通过 draw.io Desktop CLI 导出 PNG / SVG / PDF
 - 更适合流程图、架构图、UML 时序/类图、ER 图、思维导图、网络拓扑图
+
+### `qhy-draw-gif`
+
+- 面向“让技术关系动起来”的动态图示表达
+- 输出以 `.excalidraw` 源文件、PNG 静态预览和 animated GIF 为主
+- 更适合动态架构图、流程动图、黑底手绘技术解释、文章/方案的一图看懂动效版
 
 ### `qhy-word`
 
@@ -108,7 +115,7 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 
 然后重启 Claude Code / Codex。
 
-当前技能以文本工作流为主，不强依赖 Node。现有公共脚本重点服务 `qhy-card` 的 HTML 预览、检查和脚手架。
+当前技能以文本工作流为主，不强依赖 Node。`qhy-draw-gif` 需要 Python 3.9+ 与 `Pillow>=10.0.0`；现有公共脚本重点服务 `qhy-card` 的 HTML 预览、检查和脚手架。
 
 ## Quick Start
 
@@ -128,6 +135,10 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 
 ```text
 请用 qhy-draw 画一个电商下单流程图，并导出 PNG
+```
+
+```text
+请用 qhy-draw-gif 把这段 Agent 工作流做成动态架构 GIF，并给我 Excalidraw 源文件
 ```
 
 ```text
@@ -179,6 +190,7 @@ qhy-skills/
     ├── qhy-card/            # HTML 卡片能力
     ├── qhy-ppt/             # 演示文稿能力
     ├── qhy-draw/            # draw.io 图表生成能力
+    ├── qhy-draw-gif/        # 动态架构图与 GIF 生成能力
     ├── qhy-word/            # 正式文档能力
     ├── qhy-humanizer-zh/    # 中文文本去 AI 味
     ├── qhy-mail/            # HTML 卡片邮件能力
@@ -204,7 +216,7 @@ qhy-skills/
 - 从“只有风格”升级为“模块 + 风格 + 审美准则 + 多表达形态”
 - 增加模板骨架，减少输出漂移
 - 增加脚手架、质检和示例输出
-- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration`、`qhy-mail` 等方向的基础能力
+- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-draw-gif`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration`、`qhy-mail` 等方向的基础能力
 
 ## License
 

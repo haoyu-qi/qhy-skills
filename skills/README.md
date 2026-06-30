@@ -7,6 +7,7 @@
 - `qhy-card`：HTML 视觉卡片生成
 - `qhy-ppt`：演示文稿结构与逐页表达
 - `qhy-draw`：draw.io 图表生成与导出
+- `qhy-draw-gif`：动态架构图、流程动图与 Excalidraw/GIF 输出
 - `qhy-word`：正式文档写作与整理
 - `qhy-humanizer-zh`：中文文本去 AI 味与自然化改写
 - `qhy-avcon-zentao-iteration`：AVCON/QHY 禅道五阶段迭代执行与任务清单
@@ -16,7 +17,8 @@
 
 - `qhy-card`：适合看板、卡片、封面、信息图
 - `qhy-ppt`：适合汇报、提案、培训、路演
-- `qhy-draw`：适合流程图、架构图、UML、ER 图、思维导图、网络拓扑图
+- `qhy-draw`：适合需要 `.drawio` 源文件的流程图、架构图、UML、ER 图、思维导图、网络拓扑图
+- `qhy-draw-gif`：适合动态架构图、流程动图、黑底手绘技术解释、`.excalidraw` + PNG + GIF 交付
 - `qhy-word`：适合方案、报告、纪要、说明文
 - `qhy-humanizer-zh`：适合文章、文案、报告段落、对外说明
 - `qhy-avcon-zentao-iteration`：适合月度迭代、版本执行、需求文档到禅道任务的落地

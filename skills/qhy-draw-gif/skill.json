@@ -1,0 +1,7 @@
+{
+  "name": "qhy-draw-gif",
+  "description": "Animated architecture and process diagram generator. Produces editable .excalidraw source, static PNG preview, and genuinely animated GIF from a compact JSON spec. Supports qhy/lanshu-style dark hand-drawn diagrams plus terminal-green, blueprint-cyan, warm-amber, and paper-ink styles.",
+  "version": "1.0.0",
+  "author": "haoyu-qi; renderer adapted from cclank/lanshu-animated-architecture-diagram",
+  "tags": ["diagram", "animated-gif", "architecture", "process", "excalidraw", "png", "visualization", "hand-drawn", "qhy"]
+}

@@ -1,6 +1,6 @@
 # qhy-skills 架构说明
 
-这个仓库现在按“仓库层 + skill 层 + 模板层”组织，目标是让后续新增 skill 时不需要重想一遍结构，并且能稳定承接 `qhy-card`、`qhy-ppt`、`qhy-draw`、`qhy-word`、`qhy-humanizer-zh` 这类并列能力。
+这个仓库现在按“仓库层 + skill 层 + 模板层”组织，目标是让后续新增 skill 时不需要重想一遍结构，并且能稳定承接 `qhy-card`、`qhy-ppt`、`qhy-draw`、`qhy-draw-gif`、`qhy-word`、`qhy-humanizer-zh` 这类并列能力。
 
 ## 1. 仓库层
 
@@ -39,6 +39,7 @@ skills/<skill-name>/
 - `qhy-card`：单页视觉卡片
 - `qhy-ppt`：多页演示文稿
 - `qhy-draw`：draw.io 图表生成与导出
+- `qhy-draw-gif`：动态架构图、流程动图与 Excalidraw/GIF 输出
 - `qhy-word`：正式文档正文
 - `qhy-humanizer-zh`：中文文本去 AI 味与自然化改写
 

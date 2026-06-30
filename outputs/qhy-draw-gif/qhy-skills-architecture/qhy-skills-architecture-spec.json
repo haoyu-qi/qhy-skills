@@ -1,0 +1,155 @@
+{
+  "canvas": {
+    "width": 1210,
+    "height": 1138,
+    "fps": 20,
+    "frames": 41
+  },
+  "style": "blueprint-cyan",
+  "signature": "@QHY",
+  "title": {
+    "prefix": "架构图：",
+    "highlight": "qhy-skills",
+    "subtitle": "多技能仓库：卡片、演示、图示、文档、邮件和交付工作流"
+  },
+  "input_title": "入口 / 触发",
+  "inputs": [
+    {
+      "label": "提示词",
+      "icon": "file",
+      "color": "#7eeaff"
+    },
+    {
+      "label": "材料",
+      "icon": "folder",
+      "color": "#ff9fd6"
+    },
+    {
+      "label": "上下文",
+      "icon": "scan",
+      "color": "#ffd166"
+    },
+    {
+      "label": "仓库",
+      "icon": "db",
+      "color": "#65e4ff"
+    }
+  ],
+  "core": {
+    "title": "技能路由",
+    "subtitle": "（按输出形态选择）",
+    "cards": [
+      {
+        "title": "内容表达",
+        "body": "qhy-card\nqhy-ppt",
+        "icon": "package",
+        "color": "#7eeaff"
+      },
+      {
+        "title": "图示输出",
+        "body": "qhy-draw\nqhy-draw-gif",
+        "icon": "scan",
+        "color": "#ffd166"
+      },
+      {
+        "title": "业务执行",
+        "body": "word、mail\n润色、禅道",
+        "icon": "shield",
+        "color": "#ff9fd6"
+      }
+    ]
+  },
+  "decision": {
+    "title": "匹配？",
+    "body": "技能对\n输出对"
+  },
+  "output": {
+    "label": "交付",
+    "icon": "package"
+  },
+  "loop_label": "输出形态变化时，回到路由并重新加载对应技能规则",
+  "retry_label": "否 / 需要换技能或补充上下文",
+  "yes_label": "是",
+  "read_label": "读取",
+  "context_label": "上下文",
+  "left_panel": {
+    "title": "视觉表达技能",
+    "badge": "内容",
+    "cards": [
+      {
+        "title": "qhy-card",
+        "body": "HTML 视觉卡片\n信息图/海报/看板",
+        "icon": "file",
+        "color": "#7eeaff"
+      },
+      {
+        "title": "qhy-ppt",
+        "body": "单文件 HTML\n演示文稿",
+        "icon": "package",
+        "color": "#ffd166"
+      },
+      {
+        "title": "qhy-mail",
+        "body": "HTML 卡片邮件\n发送前确认",
+        "icon": "shield",
+        "color": "#ff9fd6"
+      }
+    ]
+  },
+  "center_panel": {
+    "title": "技能资产层",
+    "subtitle": "（每个技能独立维护说明、参考、资产和脚本）",
+    "footer": "_template 扩展新技能",
+    "cards": [
+      {
+        "title": "SKILL.md",
+        "body": "触发词\n工作流",
+        "icon": "file",
+        "color": "#7eeaff"
+      },
+      {
+        "title": "参考资料",
+        "body": "规则\n风格文档",
+        "icon": "folder",
+        "color": "#65e4ff"
+      },
+      {
+        "title": "资产",
+        "body": "模板\n素材",
+        "icon": "package",
+        "color": "#ffd166"
+      },
+      {
+        "title": "脚本",
+        "body": "渲染\n校验",
+        "icon": "hash",
+        "color": "#ff9fd6"
+      }
+    ]
+  },
+  "right_panel": {
+    "title": "交付技能",
+    "incoming_label": "产出",
+    "return_label": "改进",
+    "cards": [
+      {
+        "title": "qhy-draw",
+        "body": "draw.io 源文件\nPNG/SVG/PDF",
+        "icon": "scan",
+        "color": "#7eeaff"
+      },
+      {
+        "title": "qhy-draw-gif",
+        "body": "Excalidraw\nPNG + GIF",
+        "icon": "package",
+        "color": "#ffd166"
+      },
+      {
+        "title": "qhy-word + 执行",
+        "body": "正式文档\n润色 + 禅道",
+        "icon": "file",
+        "color": "#ff9fd6"
+      }
+    ]
+  }
+}

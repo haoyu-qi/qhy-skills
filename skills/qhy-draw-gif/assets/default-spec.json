@@ -1,0 +1,142 @@
+{
+  "canvas": {
+    "width": 1210,
+    "height": 1138,
+    "fps": 20,
+    "frames": 41
+  },
+  "style": "lanshu-classic",
+  "signature": "@QHY",
+  "title": {
+    "prefix": "动态图生成",
+    "highlight": "qhy-draw-gif",
+    "subtitle": "JSON 结构稿 -> Excalidraw 源文件、PNG 预览、动态 GIF"
+  },
+  "input_title": "输入来源",
+  "inputs": [
+    {
+      "label": "文章",
+      "icon": "file",
+      "color": "#7ee3d6"
+    },
+    {
+      "label": "系统",
+      "icon": "folder",
+      "color": "#ff7ab6"
+    },
+    {
+      "label": "流程",
+      "icon": "scan",
+      "color": "#f4b64e"
+    },
+    {
+      "label": "笔记",
+      "icon": "file",
+      "color": "#7ee3d6"
+    }
+  ],
+  "core": {
+    "title": "图示核心",
+    "subtitle": "（本地确定性渲染）",
+    "cards": [
+      {
+        "title": "提取",
+        "body": "识别角色、阶段\n和数据流向",
+        "icon": "scan"
+      },
+      {
+        "title": "结构化",
+        "body": "整理为面板\n和核心卡片",
+        "icon": "shield"
+      },
+      {
+        "title": "渲染",
+        "body": "输出 PNG、GIF\n和 Excalidraw",
+        "icon": "package"
+      }
+    ]
+  },
+  "decision": {
+    "title": "清楚？",
+    "body": "标签短\n不重叠"
+  },
+  "output": {
+    "label": "GIF",
+    "icon": "file"
+  },
+  "loop_label": "循环优化，直到层级清楚、文字合适、动效可见",
+  "retry_label": "否 / 内容不清或布局拥挤",
+  "yes_label": "是",
+  "read_label": "读取",
+  "context_label": "上下文",
+  "left_panel": {
+    "title": "来源地图",
+    "badge": "只读",
+    "cards": [
+      {
+        "title": "文章",
+        "body": "主题、观点\n关键案例",
+        "icon": "file"
+      },
+      {
+        "title": "架构",
+        "body": "角色、服务\n接口关系",
+        "icon": "folder"
+      },
+      {
+        "title": "流程",
+        "body": "阶段与\n交接关系",
+        "icon": "scan"
+      }
+    ]
+  },
+  "center_panel": {
+    "title": "渲染层",
+    "subtitle": "（可编辑源文件 + 可验证动效）",
+    "footer": "验证 + 检查",
+    "cards": [
+      {
+        "title": "结构稿",
+        "body": "紧凑 JSON\n内容源",
+        "icon": "file"
+      },
+      {
+        "title": "静态图",
+        "body": "PNG 预览\n便于审阅",
+        "icon": "file"
+      },
+      {
+        "title": "动效",
+        "body": "流光点\n和脉冲",
+        "icon": "hash"
+      },
+      {
+        "title": "可编辑",
+        "body": "Excalidraw\n源文件",
+        "icon": "db"
+      }
+    ]
+  },
+  "right_panel": {
+    "title": "交付物",
+    "incoming_label": "导出",
+    "return_label": "迭代",
+    "cards": [
+      {
+        "title": "动态 GIF",
+        "body": "真实动效\n循环播放",
+        "icon": "package"
+      },
+      {
+        "title": "PNG 预览",
+        "body": "静态图片\n便于查看",
+        "icon": "file"
+      },
+      {
+        "title": "Excalidraw",
+        "body": "可编辑源文件\n便于后续修改",
+        "icon": "file"
+      }
+    ]
+  }
+}
