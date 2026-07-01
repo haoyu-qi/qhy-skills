@@ -12,6 +12,7 @@
 - `qhy-humanizer-zh`：中文文本去 AI 味与自然化改写
 - `qhy-avcon-zentao-iteration`：AVCON/QHY 禅道五阶段迭代执行与任务清单
 - `qhy-mail`：HTML 卡片邮件起草、回复与发送前确认
+- `qhy-bug-xlsx`：导入禅道 bug-list 并输出 bug 整理表
 
 ## 推荐分工
 
@@ -23,6 +24,7 @@
 - `qhy-humanizer-zh`：适合文章、文案、报告段落、对外说明
 - `qhy-avcon-zentao-iteration`：适合月度迭代、版本执行、需求文档到禅道任务的落地
 - `qhy-mail`：适合会议通知、评审邀请、周报月报、发布通知和对外邮件沟通
+- `qhy-bug-xlsx`：适合禅道缺陷导出整理、T0 问题跟踪、发布前 bug 清单复盘
 
 ## 新增技能建议
 

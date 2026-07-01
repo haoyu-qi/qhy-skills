@@ -26,6 +26,7 @@
 | `qhy-humanizer-zh` | 识别并去除中文文本中的 AI 写作痕迹，让表达更自然、更像真人写作。 |
 | `qhy-avcon-zentao-iteration` | 为 AVCON/QHY 禅道项目创建或更新五阶段迭代执行与任务清单。 |
 | `qhy-mail` | 起草、润色、回复和发送邮件，默认生成 qhy-card HTML 卡片正文，并强制发送前人工确认。 |
+| `qhy-bug-xlsx` | 导入禅道 bug-list 导出，输出包含总览、全部明细和 T0 明细的 bug 整理表。 |
 
 ## Capability Map
 
@@ -78,6 +79,13 @@
 - 默认用 `qhy-card` 生成 HTML 卡片正文，并保留纯文本草稿
 - 所有发送、回复、转发前必须展示确认清单并等待人工确认
 - 更适合会议通知、评审邀请、周报月报、发布通知和对外沟通
+
+### `qhy-bug-xlsx`
+
+- 面向“禅道 bug-list 变成可读整理表”的质量跟踪表达
+- 输入禅道 / ZenTao 导出的 `.xlsx/.xls/.csv` bug 列表
+- 输出 `总览`、`全部明细`、`T0明细`，并统一状态归类、模块归类、日期/备注拆分和行距样式
+- 更适合版本缺陷复盘、T0 问题跟踪、发布前 bug 清单整理和跨团队同步
 
 ## qhy-card Highlights
 
@@ -157,6 +165,11 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 请用 qhy-mail 起草一封发布评审会议通知邮件，正文做成 HTML 卡片，我确认后再发送
 ```
 
+```text
+请用 qhy-bug-xlsx 导入这份禅道 bug-list，输出 bug 整理表
+要求：包含总览、全部明细和 T0 明细
+```
+
 ## Scripts
 
 ```bash
@@ -194,6 +207,7 @@ qhy-skills/
     ├── qhy-word/            # 正式文档能力
     ├── qhy-humanizer-zh/    # 中文文本去 AI 味
     ├── qhy-mail/            # HTML 卡片邮件能力
+    ├── qhy-bug-xlsx/        # 禅道 bug-list Excel 整理能力
     └── qhy-avcon-zentao-iteration/ # AVCON/QHY 禅道迭代任务模板
 ```
 
@@ -216,7 +230,7 @@ qhy-skills/
 - 从“只有风格”升级为“模块 + 风格 + 审美准则 + 多表达形态”
 - 增加模板骨架，减少输出漂移
 - 增加脚手架、质检和示例输出
-- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-draw-gif`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration`、`qhy-mail` 等方向的基础能力
+- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-draw-gif`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration`、`qhy-mail`、`qhy-bug-xlsx` 等方向的基础能力
 
 ## License
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "QHY Bug XLSX"
+  short_description: "导入禅道 bug-list 并输出整理表"
+  default_prompt: "Use $qhy-bug-xlsx to导入禅道 bug-list，输出包含总览、全部明细和T0明细的 bug 整理表。"
