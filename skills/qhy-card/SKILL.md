@@ -50,7 +50,10 @@ description: |
 
 | 触发关键词 | 风格 | 参考文件 |
 |-----------|------|----------|
-| 产品介绍、功能列表、版本日志、发布说明 | 暗黑科技风 | [dark-tech.md](references/dark-tech.md) |
+| 更新说明、发布说明、版本日志、变更日志、release note、changelog | 更新说明卡片风 | [release-note-card.md](references/release-note-card.md) |
+| 产品介绍、功能列表 | 暗黑科技风 | [dark-tech.md](references/dark-tech.md) |
+| Claude 官网风、Anthropic 风、暖色官网风、米色科技风 | Claude 官网风格 | [claude-official.md](references/claude-official.md) |
+| Google 官网风、白色 Google、Google 白色官网风、彩色极简官网风 | 白色 Google 官网风格 | [google-white.md](references/google-white.md) |
 | AI 产品、性能对比、技术指标、跑分 | 扁平现代风 | [flat-modern.md](references/flat-modern.md) |
 | 深度报道、专题内容、研究分析 | 杂志质感风 | [magazine.md](references/magazine.md) |
 | 书籍解析、文学内容、读书笔记 | 复古书卷风 | [vintage-book.md](references/vintage-book.md) |
@@ -99,6 +102,9 @@ description: |
 | 信息密集、干货 | 增加注释、编号、对比表和标注层 |
 | 暗色 | 优先暗黑科技风 |
 | 浅色、亮色 | 优先扁平现代风或纯白演示风 |
+| Claude 官网风、Anthropic 风 | 使用 Claude 官网风格 |
+| Google 官网风、白色 Google 风 | 使用白色 Google 官网风格 |
+| 更新说明、较上次发布、版本更新卡片 | 使用更新说明卡片风 |
 | 你来决定、自动选风格 | 启用模型自主风格判断 |
 | 给我几个风格选项、让我挑风格 | 进入交互式风格引导，给出 2 到 4 个候选 |
 | 手绘、白板 | 优先 `-w` 白板图 |
