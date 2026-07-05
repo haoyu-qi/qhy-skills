@@ -194,12 +194,17 @@ def font_candidates(hand=False, cjk=False, bold=False):
         ]
     if cjk:
         return [
+            "C:/Windows/Fonts/msyhbd.ttc" if bold else "C:/Windows/Fonts/msyh.ttc",
+            "C:/Windows/Fonts/simhei.ttf",
+            "C:/Windows/Fonts/simsun.ttc",
             "/System/Library/Fonts/STHeiti Medium.ttc" if bold else "/System/Library/Fonts/STHeiti Light.ttc",
             "/System/Library/Fonts/Hiragino Sans GB.ttc",
             "/Library/Fonts/Arial Unicode.ttf",
             "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
         ]
     return [
+        "C:/Windows/Fonts/arialbd.ttf" if bold else "C:/Windows/Fonts/arial.ttf",
+        "C:/Windows/Fonts/msyhbd.ttc" if bold else "C:/Windows/Fonts/msyh.ttc",
         "/System/Library/Fonts/Helvetica.ttc",
         "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
     ]
@@ -561,8 +566,8 @@ def brand(ex, draw, signature):
 def small_input(ex, draw, x, y, item):
     kind = item.get("icon", "file")
     color = item.get("color", THEME["cyan"])
-    icon(ex, draw, kind, x + 22, y + 4, color, 0.68)
-    draw_text(ex, draw, item.get("label", ""), x - 5, y + 51, 78, 24, 14, THEME["white"], "center", fit=True, min_size=10)
+    icon(ex, draw, kind, x + 25, y + 2, color, 0.54)
+    draw_text(ex, draw, item.get("label", ""), x - 7, y + 36, 82, 22, 13, THEME["white"], "center", fit=True, min_size=10)
 
 
 def core_card(ex, draw, x, y, card):
@@ -601,7 +606,8 @@ def render_static(spec):
     draw_text(ex, draw, title.get("subtitle", ""), 104, 90, 420, 25, 15, THEME["muted"], "left")
 
     draw_rect(ex, draw, 18, 117, 1174, 994, THEME["frame"], None, 2, 29)
-    brand(ex, draw, spec.get("signature", "@岚叔"))
+    if spec.get("signature", "@岚叔"):
+        brand(ex, draw, spec.get("signature", "@岚叔"))
 
     inputs = spec.get("inputs", [])
     while len(inputs) < 4:
@@ -658,14 +664,14 @@ def render_static(spec):
     layer_cards = center.get("cards", [])[:4]
     while len(layer_cards) < 4:
         layer_cards.append({"title": "", "body": "", "icon": "file"})
-    for x, card in zip([346, 486, 626, 766], layer_cards):
+    for x, card in zip([346, 474, 602, 730], layer_cards):
         draw_rect(ex, draw, x, 827, 112, 142, THEME["purple"], THEME["center_card_fill"], 2, 8)
         icon(ex, draw, card.get("icon", "file"), x + 24, 846, card.get("color", THEME["cyan"],), 0.78)
         draw_text(ex, draw, card.get("title", ""), x + 10, 910, 92, 25, 18, THEME["white"], "center", bold=True, fit=True, min_size=12)
         draw_text(ex, draw, card.get("body", ""), x + 8, 936, 96, 30, 12, THEME["white"], "center", spacing=2, fit=True, min_size=9)
-    draw_line(ex, draw, [(458, 890), (486, 890)], THEME["white"], 2, "solid", True)
-    draw_line(ex, draw, [(598, 890), (626, 890)], THEME["white"], 2, "solid", True)
-    draw_line(ex, draw, [(738, 890), (766, 890)], THEME["white"], 2, "solid", True)
+    draw_line(ex, draw, [(458, 890), (474, 890)], THEME["white"], 2, "solid", True)
+    draw_line(ex, draw, [(586, 890), (602, 890)], THEME["white"], 2, "solid", True)
+    draw_line(ex, draw, [(714, 890), (730, 890)], THEME["white"], 2, "solid", True)
     draw_rect(ex, draw, 491, 1010, 220, 50, THEME["purple"], THEME["archive_fill"], 2, 8)
     draw_text(ex, draw, center.get("footer", "Redact + Dedup"), 528, 1017, 165, 33, 20, THEME["white"], "center", hand=True, bold=True, fit=True, min_size=14)
     draw_line(ex, draw, [(603, 969), (603, 1010)], THEME["muted"], 2, "dashed", True)
@@ -680,9 +686,10 @@ def render_static(spec):
     draw_line(ex, draw, [(1036, 735), (1036, 691), (766, 691), (766, 628)], THEME["white"], 2, "solid", True)
     draw_text(ex, draw, right.get("return_label", "Reusable"), 867, 669, 75, 23, 16, THEME["white"], "center")
 
-    for x, y, color in [(375, 292, THEME["cyan"]), (704, 293, THEME["green"]), (1048, 292, THEME["purple"]), (315, 707, THEME["green"]), (868, 707, THEME["purple"])]:
-        draw_line(ex, draw, [(x - 8, y), (x + 8, y)], color, 2)
-        draw_line(ex, draw, [(x, y - 8), (x, y + 8)], color, 2)
+    if spec.get("show_decorations", True):
+        for x, y, color in [(375, 292, THEME["cyan"]), (704, 293, THEME["green"]), (1048, 292, THEME["purple"]), (315, 707, THEME["green"]), (868, 707, THEME["purple"])]:
+            draw_line(ex, draw, [(x - 8, y), (x + 8, y)], color, 2)
+            draw_line(ex, draw, [(x, y - 8), (x, y + 8)], color, 2)
 
     return ex, img.resize((width, height), Image.Resampling.LANCZOS).convert("RGB")
 
