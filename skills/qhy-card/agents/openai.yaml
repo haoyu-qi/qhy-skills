@@ -1,0 +1,4 @@
+interface:
+  display_name: "QHY Card 视觉铸卡"
+  short_description: "将复杂中文内容铸成可分享、可编辑、可离线预览的 HTML 视觉卡片"
+  default_prompt: "使用 $qhy-card 将这份内容制作成一张高质量的单文件 HTML 视觉卡片。"

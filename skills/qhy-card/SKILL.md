@@ -5,6 +5,7 @@ description: |
 
   适用场景：
   - 一图看懂产品、概念、教程、版本更新
+  - 设备配置、部署教程、操作手册、故障排查
   - 将长文、播客、会议纪要提炼成传播型视觉内容
   - 生成海报页、结构白板图、周报看板
   - 将书籍、报告、技术资料转化为可分享的单文件 HTML
@@ -31,7 +32,7 @@ description: |
 1. `references/taste.md`
 2. 对应模具说明
 3. 对应风格参考
-4. 对应模板骨架
+4. 对应模板骨架；风格有专用模板时优先读取专用模板
 
 ## 模具选择
 
@@ -57,11 +58,18 @@ description: |
 | AI 产品、性能对比、技术指标、跑分 | 扁平现代风 | [flat-modern.md](references/flat-modern.md) |
 | 深度报道、专题内容、研究分析 | 杂志质感风 | [magazine.md](references/magazine.md) |
 | 书籍解析、文学内容、读书笔记 | 复古书卷风 | [vintage-book.md](references/vintage-book.md) |
+| 设备配置、部署教程、操作手册、故障排查 | 蓝图技术手册风 | [blueprint-manual.md](references/blueprint-manual.md) |
 | 教程、评测、横向对比、避坑指南 | 蓝图波普风 | [blueprint-pop.md](references/blueprint-pop.md) |
 | 发布会、季度汇报、演示文稿 | 纯白演示风 | [white-presentation.md](references/white-presentation.md) |
 | 周报、月报、项目看板、团队进展 | 周报模块风 | [weekly-report.md](references/weekly-report.md) |
 
 无法判断时默认 `暗黑科技风 + 信息图模具`。
+
+### 蓝图风格分流
+
+- 内容以设备参数、操作顺序、运行状态和验收检查为主时，选择“蓝图技术手册风”。
+- 内容以知识盘点、产品对比、选购建议和避坑信息为主时，选择“蓝图波普风”。
+- 使用“蓝图技术手册风”时，读取 `assets/blueprint_manual_template.html`，保留参数表、关键步骤链和成功检查区，按内容增删模块。
 
 ## 风格选择策略
 
@@ -100,6 +108,7 @@ description: |
 | 竖版、窄一点 | 单列优先，减少横向分栏 |
 | 简洁、极简 | 减少卡片数，放大标题和留白 |
 | 信息密集、干货 | 增加注释、编号、对比表和标注层 |
+| 技术手册、设备配置、步骤加参数 | 使用 `-i` 信息图 + 蓝图技术手册风 |
 | 暗色 | 优先暗黑科技风 |
 | 浅色、亮色 | 优先扁平现代风或纯白演示风 |
 | Claude 官网风、Anthropic 风 | 使用 Claude 官网风格 |
@@ -122,6 +131,7 @@ description: |
 - 添加移动端断点 `@media (max-width: 768px)`
 - 保证中文场景可读性
 - 用非对称布局建立节奏，不默认三等分
+- 技术手册类卡片必须区分示例值与正式配置值，并明确可选项、默认值和关键操作顺序
 
 ### 禁止做
 
@@ -141,6 +151,7 @@ description: |
 - [ ] 没有外部依赖和外部图片
 - [ ] 文字字号适合手机缩放阅读
 - [ ] 空列表、占位文本、未替换模板变量都已清理
+- [ ] 技术手册中的参数名称、单位、示例值和操作状态与原始材料一致
 
 ## 辅助脚本
 
@@ -149,3 +160,5 @@ bash scripts/new-card.sh
 bash scripts/quality-check.sh output.html
 bash scripts/preview.sh output.html
 ```
+
+`new-card.sh` 可接受第二个模板参数：`infograph`、`poster`、`whiteboard`、`weekly` 或 `blueprint-manual`。

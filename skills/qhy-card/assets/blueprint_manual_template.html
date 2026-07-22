@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      --paper: #f2f6f7;
+      --ink: #182d35;
+      --muted: #5d727a;
+      --blue: #287fa1;
+      --blue-soft: #d9eef5;
+      --teal: #0a8f85;
+      --teal-soft: #d6efeb;
+      --yellow: #ffe56f;
+      --orange: #f29b38;
+      --pink: #d94d72;
+      --white: #fffefa;
+      --line: rgba(24,45,53,.16);
+      --shadow: 0 24px 64px rgba(33,79,92,.14);
+      --sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+      --serif: "Songti SC", "STSong", serif;
+      --mono: "SFMono-Regular", "Menlo", "Consolas", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; color: var(--ink); background: #dce9ec; }
+    body { font-family: var(--sans); }
+
+    .manual {
+      width: min(1280px, calc(100% - 32px));
+      margin: 32px auto;
+      overflow: hidden;
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(rgba(40,127,161,.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(40,127,161,.09) 1px, transparent 1px),
+        linear-gradient(rgba(40,127,161,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(40,127,161,.035) 1px, transparent 1px);
+      background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+      border: 1px solid rgba(40,127,161,.24);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .topbar, footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 42px;
+      color: #dff1f4;
+      background: var(--ink);
+      font: 12px/1.5 var(--mono);
+      letter-spacing: .08em;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0,1.2fr) minmax(300px,.8fr);
+      gap: 56px;
+      padding: 64px;
+      background: rgba(255,254,250,.86);
+      border-bottom: 2px solid var(--ink);
+    }
+
+    h1 { margin: 16px 0; font: 800 clamp(48px,6vw,82px)/1 var(--serif); letter-spacing: -.04em; }
+    .subtitle { max-width: 650px; color: var(--muted); font-size: 18px; line-height: 1.7; }
+
+    .coord {
+      display: inline-block;
+      padding: 5px 10px;
+      color: var(--blue);
+      background: rgba(40,127,161,.08);
+      border: 1px solid rgba(40,127,161,.4);
+      border-radius: 3px;
+      font: 700 12px/1 var(--mono);
+      letter-spacing: .12em;
+    }
+
+    .device-panel {
+      align-self: end;
+      min-height: 220px;
+      padding: 26px;
+      color: #ecffff;
+      background: #203b45;
+      border: 2px solid var(--ink);
+      box-shadow: 12px 12px 0 var(--blue-soft);
+      font-family: var(--mono);
+    }
+
+    main { padding: 48px 64px 64px; }
+    .section-title { display: flex; align-items: center; gap: 12px; margin: 42px 0 20px; color: var(--blue); font: 800 13px/1 var(--mono); letter-spacing: .12em; }
+    .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(40,127,161,.28); }
+
+    .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; padding: 24px; background: rgba(255,254,250,.84); border: 1px solid var(--line); }
+    .check { padding: 10px 0; border-bottom: 1px dashed var(--line); }
+    .check::before { content: "✓"; margin-right: 10px; color: var(--teal); font-weight: 900; }
+
+    .workflow { display: grid; grid-template-columns: .85fr 1.1fr .85fr; gap: 24px; padding: 30px; background: rgba(255,254,250,.86); border: 2px solid var(--ink); box-shadow: 10px 10px 0 var(--yellow); }
+    .step { padding: 24px; background: var(--paper); border: 1px solid var(--line); }
+    .step.key { color: #f3ffff; background: var(--ink); }
+    .step small { color: var(--orange); font: 800 12px/1 var(--mono); }
+    .step h3 { margin: 10px 0 6px; font-size: 26px; }
+    .step p { margin: 0; color: var(--muted); line-height: 1.6; }
+    .step.key p { color: #bed0d5; }
+
+    .parameter-area { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(280px,.65fr); gap: 28px; }
+    .parameter-sheet { background: rgba(255,254,250,.9); border: 1px solid var(--line); box-shadow: 6px 6px 0 var(--blue-soft); }
+    .parameter { display: grid; grid-template-columns: 52px minmax(130px,.5fr) minmax(220px,1fr); gap: 14px; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+    .parameter:last-child { border-bottom: 0; }
+    .parameter-id { color: var(--blue); font: 800 12px/1.6 var(--mono); }
+    .parameter h3, .parameter p { margin: 0; }
+    .parameter p { color: var(--muted); line-height: 1.6; }
+    code { padding: 3px 6px; color: #145d71; background: var(--blue-soft); border-radius: 3px; font-family: var(--mono); }
+
+    .field-note { align-self: start; padding: 26px; background: var(--teal-soft); border: 2px solid var(--teal); }
+    .field-note h3 { font-size: 24px; }
+    .field-note li { margin: 12px 0; color: #365a5c; line-height: 1.55; }
+
+    .verify { display: grid; grid-template-columns: 1.15fr .85fr; gap: 28px; }
+    .execute, .success { padding: 30px; }
+    .execute { color: #f2fbfc; background: var(--ink); }
+    .success { background: var(--white); border: 2px solid var(--teal); box-shadow: 8px 8px 0 var(--teal-soft); }
+    .execute li, .success li { margin: 12px 0; line-height: 1.6; }
+
+    .warning { margin-top: 34px; padding: 20px 24px; color: #664d2f; background: #fff6d5; border-left: 6px solid var(--orange); line-height: 1.65; }
+
+    @media (max-width: 900px) {
+      header, .parameter-area, .verify { grid-template-columns: 1fr; }
+      .workflow { grid-template-columns: 1fr; }
+      header, main { padding-left: 28px; padding-right: 28px; }
+    }
+
+    @media (max-width: 768px) {
+      .manual { width: 100%; margin: 0; border: 0; border-radius: 0; }
+      .topbar, footer { padding: 14px 20px; }
+      .checklist { grid-template-columns: 1fr; }
+      .parameter { grid-template-columns: 44px 1fr; }
+      .parameter p { grid-column: 2; }
+      .subtitle { font-size: 16px; }
+    }
+
+    {{CUSTOM_CSS}}
+  </style>
+</head>
+<body>
+  <article class="manual">
+    <div class="topbar"><span>{{TOPBAR_LEFT}}</span><span>{{DOC_META}}</span></div>
+    <header>
+      <div><span class="coord">{{EYEBROW}}</span><h1>{{TITLE}}</h1><p class="subtitle">{{SUBTITLE}}</p></div>
+      <div class="device-panel">{{DEVICE_PANEL_HTML}}</div>
+    </header>
+    <main>
+      {{CONTENT_HTML}}
+    </main>
+    <footer><span>{{FOOTER_LEFT}}</span><span>{{FOOTER_RIGHT}}</span></footer>
+  </article>
+</body>
+</html>
