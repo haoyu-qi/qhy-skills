@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      --paper:#f1eadc; --paper-light:#fbf7ef; --ink:#1d211e; --muted:#6b6a61;
+      --line:rgba(29,33,30,.22); --accent:#b53a2e; --accent-soft:rgba(181,58,46,.10);
+      --structure:#304b3c; --serif:"Songti SC","STSong",Georgia,serif;
+      --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    }
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%}
+    body{padding:34px 18px;color:var(--ink);font-family:var(--sans);background:#d7d0c3}
+    .card{width:min(1280px,100%);margin:auto;overflow:hidden;background:var(--paper);box-shadow:0 28px 80px rgba(52,43,30,.22)}
+    .kicker,.section-id{font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+    .kicker{display:flex;align-items:center;gap:14px;color:var(--accent)}
+    .kicker::before{content:"";width:54px;height:4px;background:var(--accent)}
+    header{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.5fr);gap:48px;padding:56px 64px 42px;border-top:12px solid var(--ink);border-bottom:1px solid var(--ink)}
+    h1{margin:27px 0 0;font:900 clamp(50px,7vw,102px)/.98 var(--serif);letter-spacing:-.06em}
+    h1 em{color:var(--accent);font-style:normal}.deck{max-width:760px;margin:24px 0 0;font:700 22px/1.55 var(--serif)}
+    .edition{display:flex;flex-direction:column;justify-content:space-between;padding-left:28px;border-left:1px solid var(--ink)}
+    .edition-no{color:var(--accent);font:700 108px/.8 Georgia,serif}.edition-title{margin-top:18px;font-weight:800;line-height:1.6;letter-spacing:.12em}
+    .source{color:var(--muted);font-size:12px;line-height:1.7}
+    .thesis{display:grid;grid-template-columns:1fr 1.75fr;border-bottom:1px solid var(--ink)}
+    .thesis-lead{display:flex;min-height:340px;flex-direction:column;justify-content:space-between;padding:42px 44px;color:var(--paper-light);background:var(--structure)}
+    .thesis-lead h2,.section h2{margin:10px 0 0;font:900 42px/1.15 var(--serif)}
+    .thesis-lead p{margin:24px 0 0;font-size:16px;line-height:1.7}
+    .thesis-grid{display:grid;grid-template-columns:1fr 1fr;padding:30px 42px}
+    .point{padding:18px 28px 22px 0}.point:nth-child(even){padding-left:28px;border-left:1px solid var(--line)}
+    .num{color:var(--accent);font:700 13px/1 Georgia,serif}.point h3{margin:10px 0 8px;font:900 24px/1.3 var(--serif)}
+    .point p,.step p,.minor{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+    .section{padding:44px 64px 50px;border-bottom:1px solid var(--ink);background:var(--paper-light)}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:30px}.section-head .minor{max-width:420px;text-align:right}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:32px;border-top:5px solid var(--ink)}
+    .step{position:relative;min-height:185px;padding:24px 26px 20px 0}.step+.step{padding-left:26px;border-left:1px solid var(--line)}
+    .step::before{content:"";position:absolute;top:-12px;left:0;width:19px;height:19px;border:4px solid var(--paper-light);border-radius:50%;background:var(--accent)}
+    .step+.step::before{left:19px}.step.focus{padding-right:20px;background:var(--accent-soft)}
+    .step b{color:var(--accent);font-size:12px;letter-spacing:.12em}.step h3{margin:14px 0 9px;font:900 23px/1.25 var(--serif)}
+    .tradeoffs{display:grid;grid-template-columns:1.2fr .8fr;border-bottom:1px solid var(--ink)}
+    .panel{padding:42px 50px}.panel+.panel{border-left:1px solid var(--ink)}.panel h2{margin:9px 0 24px;font:900 34px/1.2 var(--serif)}
+    .rank,.anti{display:grid;align-items:center;gap:18px;padding:15px 0;border-top:1px solid var(--line)}
+    .rank{grid-template-columns:55px 1fr auto}.rank:last-child,.anti:last-child{border-bottom:1px solid var(--line)}
+    .rank i{color:var(--accent);font:700 23px/1 Georgia,serif;font-style:normal}.rank strong,.anti strong{font:800 18px/1.4 var(--serif)}
+    .rank span,.anti span{color:var(--muted);font-size:12px}.anti{grid-template-columns:1fr}.anti span{line-height:1.6}
+    .macro{display:grid;grid-template-columns:.9fr 1.1fr;border-bottom:1px solid var(--ink)}
+    .quote{display:flex;flex-direction:column;justify-content:space-between;padding:46px 50px;color:#fff9ef;background:var(--accent)}
+    blockquote{margin:18px 0 28px;font:900 32px/1.42 var(--serif)}.quote small{font-size:12px;line-height:1.7;opacity:.82}
+    .metrics{padding:42px 52px}.metrics h2{margin:10px 0 22px;font:900 34px/1.2 var(--serif)}
+    .metric{display:grid;grid-template-columns:66px 1fr;gap:18px;padding:13px 0;border-top:1px solid var(--line)}.metric:last-child{border-bottom:1px solid var(--line)}
+    .metric i{color:var(--accent);font:700 27px/1 Georgia,serif;font-style:normal}.metric b{font-size:17px}.metric span{display:block;margin-top:5px;color:var(--muted);font-size:13px;line-height:1.55}
+    .vision{display:grid;grid-template-columns:.72fr 1.28fr;color:var(--paper-light);background:var(--ink)}
+    .vision-lead{padding:48px 48px 50px 64px;border-right:1px solid rgba(255,255,255,.22)}.vision-lead h2{margin:12px 0 22px;font:900 48px/1.08 var(--serif)}
+    .vision-body{padding:44px 64px 46px 46px}.vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 34px}
+    .value{padding-top:13px;border-top:2px solid rgba(255,255,255,.28)}.value b{color:#e96556;font:900 21px/1.35 var(--serif)}
+    .value p{margin:8px 0 0;color:rgba(255,255,255,.7);font-size:14px;line-height:1.7}.closing{margin:30px 0 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.25);font:900 25px/1.5 var(--serif)}
+    footer{display:flex;justify-content:space-between;gap:30px;padding:20px 64px;color:var(--muted);background:var(--paper-light);font-size:11px;line-height:1.6}
+    @media (max-width:768px){
+      body{padding:0}header,.thesis,.tradeoffs,.macro,.vision{grid-template-columns:1fr}header{gap:28px;padding:38px 25px 30px}h1{font-size:52px}.deck{font-size:19px}
+      .edition{min-height:165px;padding:20px 0 0;border:0;border-top:1px solid var(--line)}.edition-no{font-size:80px}.thesis-lead,.panel,.quote,.metrics,.vision-lead,.vision-body{padding:34px 25px}
+      .thesis-grid{grid-template-columns:1fr;padding:20px 25px}.point,.point:nth-child(even){padding:16px 0 20px;border:0;border-bottom:1px solid var(--line)}
+      .section{padding:34px 25px}.section-head{display:block}.section-head .minor{margin-top:13px;text-align:left}.steps{grid-template-columns:1fr}
+      .step,.step+.step{min-height:0;padding:24px 10px 27px 27px;border-left:1px solid var(--line)}.step::before,.step+.step::before{left:-10px}
+      .panel+.panel,.vision-lead{border-left:0;border-right:0;border-top:1px solid var(--ink)}.rank{grid-template-columns:42px 1fr}.rank span{grid-column:2}.vision-grid{grid-template-columns:1fr}
+      footer{display:block;padding:20px 25px}footer span{display:block;margin-top:7px}
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <header>
+      <div><div class="kicker">{{SOURCE_TYPE}}</div><h1>{{TITLE_WITH_EM}}</h1><p class="deck">{{SUBTITLE}}</p></div>
+      <aside class="edition"><div><div class="edition-no">{{ITEM_COUNT}}</div><div class="edition-title">{{COUNT_LABEL}}<br>{{THREAD_COUNT}}</div></div><div class="source">{{SOURCE}}</div></aside>
+    </header>
+
+    <section class="thesis">
+      <div class="thesis-lead"><span class="section-id">01 / {{SECTION_LABEL}}</span><div><h2>{{CORE_THESIS}}</h2><p>{{CORE_THESIS_NOTE}}</p></div></div>
+      <div class="thesis-grid">
+        <article class="point"><span class="num">{{NO_1}}</span><h3>{{POINT_1_TITLE}}</h3><p>{{POINT_1_BODY}}</p></article>
+        <article class="point"><span class="num">{{NO_2}}</span><h3>{{POINT_2_TITLE}}</h3><p>{{POINT_2_BODY}}</p></article>
+        <article class="point"><span class="num">{{NO_3}}</span><h3>{{POINT_3_TITLE}}</h3><p>{{POINT_3_BODY}}</p></article>
+        <article class="point"><span class="num">{{NO_4}}</span><h3>{{POINT_4_TITLE}}</h3><p>{{POINT_4_BODY}}</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><span class="section-id">02 / ROUTE</span><h2>{{ROUTE_TITLE}}</h2></div><p class="minor">{{ROUTE_NOTE}}</p></div>
+      <div class="steps">
+        <article class="step"><b>{{STEP_1_META}}</b><h3>{{STEP_1_TITLE}}</h3><p>{{STEP_1_BODY}}</p></article>
+        <article class="step"><b>{{STEP_2_META}}</b><h3>{{STEP_2_TITLE}}</h3><p>{{STEP_2_BODY}}</p></article>
+        <article class="step focus"><b>{{STEP_3_META}}</b><h3>{{STEP_3_TITLE}}</h3><p>{{STEP_3_BODY}}</p></article>
+        <article class="step"><b>{{STEP_4_META}}</b><h3>{{STEP_4_TITLE}}</h3><p>{{STEP_4_BODY}}</p></article>
+      </div>
+    </section>
+
+    <section class="tradeoffs">
+      <div class="panel"><span class="section-id">03 / PRIORITY</span><h2>{{PRIORITY_TITLE}}</h2>
+        <div class="rank"><i>01</i><strong>{{PRIORITY_1}}</strong><span>{{PRIORITY_1_TAG}}</span></div>
+        <div class="rank"><i>02</i><strong>{{PRIORITY_2}}</strong><span>{{PRIORITY_2_TAG}}</span></div>
+        <div class="rank"><i>03</i><strong>{{PRIORITY_3}}</strong><span>{{PRIORITY_3_TAG}}</span></div>
+      </div>
+      <div class="panel"><span class="section-id">NOT THE CORE</span><h2>{{ANTI_TITLE}}</h2>
+        <div class="anti"><strong>{{ANTI_1}}</strong><span>{{ANTI_1_NOTE}}</span></div>
+        <div class="anti"><strong>{{ANTI_2}}</strong><span>{{ANTI_2_NOTE}}</span></div>
+        <div class="anti"><strong>{{ANTI_3}}</strong><span>{{ANTI_3_NOTE}}</span></div>
+      </div>
+    </section>
+
+    <section class="macro">
+      <div class="quote"><span class="section-id">04 / BIG PICTURE</span><blockquote>{{PULL_QUOTE}}</blockquote><small>{{PULL_QUOTE_NOTE}}</small></div>
+      <div class="metrics"><span class="section-id">COMPETITION</span><h2>{{METRICS_TITLE}}</h2>
+        <div class="metric"><i>01</i><div><b>{{METRIC_1}}</b><span>{{METRIC_1_NOTE}}</span></div></div>
+        <div class="metric"><i>02</i><div><b>{{METRIC_2}}</b><span>{{METRIC_2_NOTE}}</span></div></div>
+        <div class="metric"><i>03</i><div><b>{{METRIC_3}}</b><span>{{METRIC_3_NOTE}}</span></div></div>
+      </div>
+    </section>
+
+    <section class="vision">
+      <div class="vision-lead"><span class="section-id">05 / VALUES</span><h2>{{VALUES_TITLE}}</h2><p class="minor">{{VALUES_NOTE}}</p></div>
+      <div class="vision-body"><div class="vision-grid">
+        <article class="value"><b>{{VALUE_1}}</b><p>{{VALUE_1_NOTE}}</p></article>
+        <article class="value"><b>{{VALUE_2}}</b><p>{{VALUE_2_NOTE}}</p></article>
+        <article class="value"><b>{{VALUE_3}}</b><p>{{VALUE_3_NOTE}}</p></article>
+        <article class="value"><b>{{VALUE_4}}</b><p>{{VALUE_4_NOTE}}</p></article>
+      </div><p class="closing">{{CLOSING_QUOTE}}</p></div>
+    </section>
+
+    <footer><strong>{{FOOTER_TITLE}}</strong><span>{{SOURCE_NOTE}} · 非逐字稿</span></footer>
+  </main>
+</body>
+</html>

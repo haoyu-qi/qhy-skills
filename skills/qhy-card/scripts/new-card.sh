@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [[ $# -lt 1 || $# -gt 2 ]]; then
-  echo "Usage: $0 OUTPUT.html [infograph|poster|whiteboard|weekly|blueprint-manual]" >&2
+  echo "Usage: $0 OUTPUT.html [infograph|poster|whiteboard|weekly|blueprint-manual|editorial-thesis]" >&2
   exit 2
 fi
 
@@ -16,6 +16,7 @@ case "$kind" in
   whiteboard) template="$root/assets/whiteboard_template.html" ;;
   weekly) template="$root/assets/weekly_report_template.html" ;;
   blueprint-manual) template="$root/assets/blueprint_manual_template.html" ;;
+  editorial-thesis) template="$root/assets/editorial_thesis_template.html" ;;
   *) echo "Unknown template: $kind" >&2; exit 2 ;;
 esac
 
