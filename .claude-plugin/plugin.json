@@ -1,7 +1,7 @@
 {
   "name": "qhy-skills",
-  "version": "1.0.0",
-  "description": "QHY multi-skill collection for cards, slide decks, diagrams, documents, and Chinese text polishing with a scalable qhy-* architecture",
+  "version": "1.1.0",
+  "description": "QHY multi-skill collection for cards, slide decks, diagrams, editorial images, documents, and Chinese text polishing with a scalable qhy-* architecture",
   "author": {
     "name": "haoyu-qi",
     "url": "https://github.com/haoyu-qi"
@@ -17,6 +17,8 @@
     "excalidraw",
     "document",
     "visualization",
+    "image-generation",
+    "editorial-illustration",
     "text-polishing",
     "chinese"
   ],

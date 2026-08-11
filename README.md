@@ -1,6 +1,6 @@
 # qhy-skills
 
-一个面向 Claude Code / Codex 的可扩展技能仓库，围绕中文内容生产与表达，逐步补齐“卡片、演示、图示、文档、文本润色”几类核心能力。
+一个面向 Claude Code / Codex 的可扩展技能仓库，围绕中文内容生产与表达，逐步补齐“卡片、演示、图示、图片、文档、文本润色”几类核心能力。
 
 它不是单一的提示词集合，而是一套适合持续扩展的 skill repo：
 
@@ -11,6 +11,7 @@
 ## Why This Repo
 
 - 保留 `qhy-card` 在中文可视化表达上的优势
+- 沉淀文章配图与照片编辑能力，让图像工作流也能按 skill 方式复用
 - 让仓库从单一 HTML 卡片能力，扩展到多种内容交付形态
 - 为后续新增 `qhy-*` 技能保留统一结构和命名规范
 
@@ -19,6 +20,8 @@
 | Skill | Description |
 |------|------|
 | `qhy-card` | 将内容转为高质量 HTML 视觉卡片，适合信息图、海报页、白板图、周报板。 |
+| `qhy-photo` | 将照片或主题转为摄影编辑、纸刊海报、实景拼贴或场景蒸馏作品。 |
+| `qhy-picture` | 为中文文章生成彩色手绘动画风格的 16:9 横版正文配图。 |
 | `qhy-ppt` | 将想法、报告、方案和纪要重组为适合汇报和演示的 PPT / Slide Deck 结构。 |
 | `qhy-draw` | 直接生成 draw.io XML，并导出流程图、架构图、UML、ER 图、思维导图和网络拓扑图。 |
 | `qhy-draw-gif` | 将架构、流程和技术说明转为 `.excalidraw`、PNG 预览和真实动态 GIF。 |
@@ -35,6 +38,20 @@
 - 面向“看一眼就明白”的视觉表达
 - 输出以单文件 HTML 为主
 - 更适合封面、信息图、结构白板、周报看板
+
+### `qhy-photo`
+
+- 面向“把现场事实重新编排成编辑作品”的照片与主题创作
+- 支持照片编辑、实景拼贴、场景蒸馏和极简纸刊海报
+- 强调原图事实锚点、克制留白、单一主色与短标题
+- 更适合照片海报、zine、抽象记忆面板和统一视觉系列
+
+### `qhy-picture`
+
+- 面向“把文章认知锚点变成动画场景”的正文配图
+- 输出以 16:9 彩色手绘位图为主，使用彩铅线条与水彩/水粉色块
+- 强调普通人物推动核心动作、短中文标注和系列一致性
+- 更适合公众号、博客、AI 技术解读、方法论和产品分析文章
 
 ### `qhy-ppt`
 
@@ -123,7 +140,7 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 
 然后重启 Claude Code / Codex。
 
-当前技能以文本工作流为主，不强依赖 Node。`qhy-draw-gif` 需要 Python 3.9+ 与 `Pillow>=10.0.0`；现有公共脚本重点服务 `qhy-card` 的 HTML 预览、检查和脚手架。
+当前技能同时覆盖文本、结构化文档和图像生成工作流，不强依赖 Node。`qhy-picture` 使用宿主提供的内置图像生成能力；`qhy-draw-gif` 需要 Python 3.9+ 与 `Pillow>=10.0.0`；现有公共脚本重点服务 `qhy-card` 的 HTML 预览、检查和脚手架。
 
 ## Quick Start
 
@@ -133,6 +150,14 @@ git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skill
 请用 qhy-card 生成一张信息图
 主题：MCP、Skill、Plugin 三者的区别
 要求：中文、信息密集、宽一点
+```
+
+```text
+请用 qhy-photo 把这张照片做成克制的纸刊编辑海报，保留人物和空间关系
+```
+
+```text
+请用 qhy-picture 给这篇中文文章生成 5 张彩色手绘动画风格的 16:9 正文配图
 ```
 
 ```text
@@ -201,6 +226,8 @@ qhy-skills/
     ├── _template/           # 新 skill 模板
     ├── qhy-avcon-zentao-iteration/ # 禅道软件迭代任务模板
     ├── qhy-card/            # HTML 卡片能力
+    ├── qhy-photo/           # 照片编辑与纸刊海报能力
+    ├── qhy-picture/         # 彩色手绘动画正文配图能力
     ├── qhy-ppt/             # 演示文稿能力
     ├── qhy-draw/            # draw.io 图表生成能力
     ├── qhy-draw-gif/        # 动态架构图与 GIF 生成能力
@@ -230,7 +257,7 @@ qhy-skills/
 - 从“只有风格”升级为“模块 + 风格 + 审美准则 + 多表达形态”
 - 增加模板骨架，减少输出漂移
 - 增加脚手架、质检和示例输出
-- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-draw-gif`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration`、`qhy-mail`、`qhy-bug-xlsx` 等方向的基础能力
+- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-draw-gif`、`qhy-photo`、`qhy-picture`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration`、`qhy-mail`、`qhy-bug-xlsx` 等方向的基础能力
 
 ## License
 
