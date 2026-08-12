@@ -6,13 +6,14 @@
 
 ## 技能总览
 
-当前仓库包含 10 个技能。点击技能名可查看完整规则。
+当前仓库包含 11 个技能。点击技能名可查看完整规则。
 
 | 类别 | Skill | 适合处理 | 主要交付物 |
 |---|---|---|---|
 | 视觉内容 | [`qhy-card`](skills/qhy-card/SKILL.md) | 将复杂内容整理成信息图、海报页、结构白板或周报看板 | 单文件 HTML，可选 JSON 草稿 |
 | 视觉内容 | [`qhy-ppt`](skills/qhy-ppt/SKILL.md) | 制作中文汇报、提案、培训、发布会和路演演示 | 可横向翻页的单文件 HTML deck |
 | 视觉内容 | [`qhy-photo`](skills/qhy-photo/SKILL.md) | 将照片或场景编辑为纸刊海报、实景拼贴、抽象记忆面板或场景蒸馏插画 | 图片作品或可复用生图提示词 |
+| 视觉内容 | [`qhy-picture`](skills/qhy-picture/SKILL.md) | 为公众号、博客、方法论和技术解读文章设计彩色手绘动画风格的正文配图 | 16:9 横版配图、shot list 或成组提示词 |
 | 图示表达 | [`qhy-draw`](skills/qhy-draw/SKILL.md) | 绘制流程图、架构图、UML、ER 图、思维导图和网络拓扑 | `.drawio` 源文件及 PNG / SVG / PDF |
 | 图示表达 | [`qhy-draw-gif`](skills/qhy-draw-gif/SKILL.md) | 制作动态架构图、流程动图和黑底手绘技术图解 | GIF、PNG 与可编辑 `.excalidraw` |
 | 文本与文档 | [`qhy-word`](skills/qhy-word/SKILL.md) | 把想法、草稿或纪要整理成方案、报告、说明文和正式纪要 | 提纲、完整正文、章节草稿或修订建议 |
@@ -24,7 +25,7 @@
 ## 怎么选择
 
 - 内容需要“一眼看懂”，选 `qhy-card`；需要多页讲述，选 `qhy-ppt`。
-- 以真实照片为起点做编辑创作，选 `qhy-photo`。
+- 以真实照片为起点做编辑创作，选 `qhy-photo`；为中文文章制作成组正文配图，选 `qhy-picture`。
 - 需要标准可编辑图表，选 `qhy-draw`；需要动态讲解，选 `qhy-draw-gif`。
 - 需要从零组织正式文档，选 `qhy-word`；已有文本只想去掉 AI 味，选 `qhy-humanizer-zh`。
 - 需要处理实际邮件、Bug 表或禅道迭代，分别选 `qhy-mail`、`qhy-bug-xlsx`、`qhy-avcon-zentao-iteration`。
@@ -60,6 +61,10 @@ cp -R ~/.codex/qhy-skills/skills/qhy-* ~/.codex/skills/
 
 ```text
 请用 qhy-photo 保留这张照片的真实人物和环境，把它编辑成留白克制的纸刊海报。
+```
+
+```text
+请用 qhy-picture 分析这篇中文文章，生成一组风格一致的 16:9 彩色手绘正文配图。
 ```
 
 ```text
@@ -103,6 +108,7 @@ qhy-skills/
     ├── qhy-card/
     ├── qhy-ppt/
     ├── qhy-photo/
+    ├── qhy-picture/
     ├── qhy-draw/
     ├── qhy-draw-gif/
     ├── qhy-word/
@@ -149,4 +155,3 @@ bash scripts/preview.sh output.html
 ## License
 
 MIT
-

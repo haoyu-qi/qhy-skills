@@ -1,0 +1,4 @@
+interface:
+  display_name: "QHY 彩色手绘配图"
+  short_description: "为中文文章设计并生成彩色手绘动画风格的16:9横版正文配图"
+  default_prompt: "Use $qhy-picture to analyze this Chinese article and generate a coherent set of colorful hand-drawn 16:9 illustrations."

@@ -5,6 +5,8 @@
 ## 当前技能
 
 - `qhy-card`：HTML 视觉卡片生成
+- `qhy-photo`：照片编辑、纸刊海报、实景拼贴与场景蒸馏
+- `qhy-picture`：彩色手绘动画风格的 16:9 中文正文配图
 - `qhy-ppt`：演示文稿结构与逐页表达
 - `qhy-draw`：draw.io 图表生成与导出
 - `qhy-draw-gif`：动态架构图、流程动图与 Excalidraw/GIF 输出
@@ -17,6 +19,8 @@
 ## 推荐分工
 
 - `qhy-card`：适合看板、卡片、封面、信息图
+- `qhy-photo`：适合照片海报、zine、抽象记忆面板和场景蒸馏
+- `qhy-picture`：适合公众号、博客、方法论和技术解读文章的成组正文配图
 - `qhy-ppt`：适合汇报、提案、培训、路演
 - `qhy-draw`：适合需要 `.drawio` 源文件的流程图、架构图、UML、ER 图、思维导图、网络拓扑图
 - `qhy-draw-gif`：适合动态架构图、流程动图、黑底手绘技术解释、`.excalidraw` + PNG + GIF 交付
