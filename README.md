@@ -1,201 +1,136 @@
 # qhy-skills
 
-一个面向 Claude Code / Codex 的可扩展技能仓库，围绕中文内容生产与表达，逐步补齐“卡片、演示、图示、图片、文档、文本润色”几类核心能力。
+面向 Claude Code 与 Codex 的中文技能集合，覆盖视觉内容、演示文稿、图示、正式文档、文本润色、邮件、表格整理和研发协作。
 
-它不是单一的提示词集合，而是一套适合持续扩展的 skill repo：
+每个 skill 都是独立、可维护的工作单元：`SKILL.md` 定义触发条件与执行规则，`references/` 保存领域规范，`assets/` 提供模板素材，`scripts/` 承担可重复执行的本地工具。
 
-- 有技能层：每个 skill 独立维护
-- 有模板层：新 skill 可以按模板快速复制
-- 有工具层：预览、校验、脚手架等公共脚本集中管理
+## 技能总览
 
-## Why This Repo
+当前仓库包含 11 个技能。点击技能名可查看完整规则。
 
-- 保留 `qhy-card` 在中文可视化表达上的优势
-- 沉淀文章配图与照片编辑能力，让图像工作流也能按 skill 方式复用
-- 让仓库从单一 HTML 卡片能力，扩展到多种内容交付形态
-- 为后续新增 `qhy-*` 技能保留统一结构和命名规范
+| 类别 | Skill | 适合处理 | 主要交付物 |
+|---|---|---|---|
+| 视觉内容 | [`qhy-card`](skills/qhy-card/SKILL.md) | 将复杂内容整理成信息图、海报页、结构白板或周报看板 | 单文件 HTML，可选 JSON 草稿 |
+| 视觉内容 | [`qhy-ppt`](skills/qhy-ppt/SKILL.md) | 制作中文汇报、提案、培训、发布会和路演演示 | 可横向翻页的单文件 HTML deck |
+| 视觉内容 | [`qhy-photo`](skills/qhy-photo/SKILL.md) | 将照片或场景编辑为纸刊海报、实景拼贴、抽象记忆面板或场景蒸馏插画 | 图片作品或可复用生图提示词 |
+| 视觉内容 | [`qhy-picture`](skills/qhy-picture/SKILL.md) | 为公众号、博客、方法论和技术解读文章设计彩色手绘动画风格的正文配图 | 16:9 横版配图、shot list 或成组提示词 |
+| 图示表达 | [`qhy-draw`](skills/qhy-draw/SKILL.md) | 绘制流程图、架构图、UML、ER 图、思维导图和网络拓扑 | `.drawio` 源文件及 PNG / SVG / PDF |
+| 图示表达 | [`qhy-draw-gif`](skills/qhy-draw-gif/SKILL.md) | 制作动态架构图、流程动图和黑底手绘技术图解 | GIF、PNG 与可编辑 `.excalidraw` |
+| 文本与文档 | [`qhy-word`](skills/qhy-word/SKILL.md) | 把想法、草稿或纪要整理成方案、报告、说明文和正式纪要 | 提纲、完整正文、章节草稿或修订建议 |
+| 文本与文档 | [`qhy-humanizer-zh`](skills/qhy-humanizer-zh/SKILL.md) | 在保留作者立场和口吻的前提下，减少中文文本的 AI 写作痕迹 | 自然化改稿与必要的修改说明 |
+| 沟通协作 | [`qhy-mail`](skills/qhy-mail/SKILL.md) | 起草、润色、回复或转发业务邮件，并生成 HTML 卡片正文 | HTML / 纯文本邮件草稿；确认后发送 |
+| 研发协作 | [`qhy-bug-xlsx`](skills/qhy-bug-xlsx/SKILL.md) | 清洗禅道导出的 `.xlsx`、`.xls` 或 `.csv` Bug 列表 | 含总览、全部明细、T0 明细的整理表 |
+| 研发协作 | [`qhy-avcon-zentao-iteration`](skills/qhy-avcon-zentao-iteration/SKILL.md) | 按 AVCON/QHY 五阶段模板创建或更新禅道迭代与任务 | 迭代执行、父阶段及需求关联子任务 |
 
-## Skills
+## 怎么选择
 
-| Skill | Description |
-|------|------|
-| `qhy-card` | 将内容转为高质量 HTML 视觉卡片，适合信息图、海报页、白板图、周报板。 |
-| `qhy-photo` | 将照片或主题转为摄影编辑、纸刊海报、实景拼贴或场景蒸馏作品。 |
-| `qhy-picture` | 为中文文章生成彩色手绘动画风格的 16:9 横版正文配图。 |
-| `qhy-ppt` | 将想法、报告、方案和纪要重组为适合汇报和演示的 PPT / Slide Deck 结构。 |
-| `qhy-draw` | 直接生成 draw.io XML，并导出流程图、架构图、UML、ER 图、思维导图和网络拓扑图。 |
-| `qhy-draw-gif` | 将架构、流程和技术说明转为 `.excalidraw`、PNG 预览和真实动态 GIF。 |
-| `qhy-word` | 将零散材料整理成可提交、可审阅、可流转的正式文档。 |
-| `qhy-humanizer-zh` | 识别并去除中文文本中的 AI 写作痕迹，让表达更自然、更像真人写作。 |
-| `qhy-avcon-zentao-iteration` | 为 AVCON/QHY 禅道项目创建或更新五阶段迭代执行与任务清单。 |
-| `qhy-mail` | 起草、润色、回复和发送邮件，默认生成 qhy-card HTML 卡片正文，并强制发送前人工确认。 |
-| `qhy-bug-xlsx` | 导入禅道 bug-list 导出，输出包含总览、全部明细和 T0 明细的 bug 整理表。 |
+- 内容需要“一眼看懂”，选 `qhy-card`；需要多页讲述，选 `qhy-ppt`。
+- 以真实照片为起点做编辑创作，选 `qhy-photo`；为中文文章制作成组正文配图，选 `qhy-picture`。
+- 需要标准可编辑图表，选 `qhy-draw`；需要动态讲解，选 `qhy-draw-gif`。
+- 需要从零组织正式文档，选 `qhy-word`；已有文本只想去掉 AI 味，选 `qhy-humanizer-zh`。
+- 需要处理实际邮件、Bug 表或禅道迭代，分别选 `qhy-mail`、`qhy-bug-xlsx`、`qhy-avcon-zentao-iteration`。
 
-## Capability Map
+## 安装
 
-### `qhy-card`
-
-- 面向“看一眼就明白”的视觉表达
-- 输出以单文件 HTML 为主
-- 更适合封面、信息图、结构白板、周报看板
-
-### `qhy-photo`
-
-- 面向“把现场事实重新编排成编辑作品”的照片与主题创作
-- 支持照片编辑、实景拼贴、场景蒸馏和极简纸刊海报
-- 强调原图事实锚点、克制留白、单一主色与短标题
-- 更适合照片海报、zine、抽象记忆面板和统一视觉系列
-
-### `qhy-picture`
-
-- 面向“把文章认知锚点变成动画场景”的正文配图
-- 输出以 16:9 彩色手绘位图为主，使用彩铅线条与水彩/水粉色块
-- 强调普通人物推动核心动作、短中文标注和系列一致性
-- 更适合公众号、博客、AI 技术解读、方法论和产品分析文章
-
-### `qhy-ppt`
-
-- 面向“讲给别人听”的演示表达
-- 输出以多页 HTML deck、逐页文案、讲稿备注结构为主
-- 更适合汇报、提案、培训、路演
-
-### `qhy-draw`
-
-- 面向“把关系画清楚”的 draw.io 图示表达
-- 输出以 `.drawio` 源文件为主，可通过 draw.io Desktop CLI 导出 PNG / SVG / PDF
-- 更适合流程图、架构图、UML 时序/类图、ER 图、思维导图、网络拓扑图
-
-### `qhy-draw-gif`
-
-- 面向“让技术关系动起来”的动态图示表达
-- 输出以 `.excalidraw` 源文件、PNG 静态预览和 animated GIF 为主
-- 更适合动态架构图、流程动图、黑底手绘技术解释、文章/方案的一图看懂动效版
-
-### `qhy-word`
-
-- 面向“形成正式文档”的书面表达
-- 输出以提纲、正文、章节草稿、修订建议为主
-- 更适合方案、报告、纪要、说明文
-
-### `qhy-humanizer-zh`
-
-- 面向“去掉 AI 味”的文本润色
-- 识别宣传腔、空泛归因、三段式排比、过度连接词等常见 AI 写作痕迹
-- 更适合文章、文案、报告段落、对外说明的自然化改写
-
-### `qhy-avcon-zentao-iteration`
-
-- 面向“把软件迭代落到禅道任务”的项目执行表达
-- 固定创建概念、计划、开发、验证、发布五个父阶段
-- 开发阶段子任务优先对齐需求文档中的模块、功能点、页面、接口和交付物
-- 更适合 AVCON/QHY 月度迭代、版本执行、需求落地和任务模板复用
-
-### `qhy-mail`
-
-- 面向“业务邮件可读、好看、可控发送”的沟通表达
-- 默认用 `qhy-card` 生成 HTML 卡片正文，并保留纯文本草稿
-- 所有发送、回复、转发前必须展示确认清单并等待人工确认
-- 更适合会议通知、评审邀请、周报月报、发布通知和对外沟通
-
-### `qhy-bug-xlsx`
-
-- 面向“禅道 bug-list 变成可读整理表”的质量跟踪表达
-- 输入禅道 / ZenTao 导出的 `.xlsx/.xls/.csv` bug 列表
-- 输出 `总览`、`全部明细`、`T0明细`，并统一状态归类、模块归类、日期/备注拆分和行距样式
-- 更适合版本缺陷复盘、T0 问题跟踪、发布前 bug 清单整理和跨团队同步
-
-## qhy-card Highlights
-
-### 模式
-
-| 参数 | 模式 | 适合场景 |
-|------|------|------|
-| `-i` | 信息图 | 一图看懂、概念拆解、项目总览 |
-| `-p` | 海报页 | 汇报封面、观点表达、活动预告 |
-| `-w` | 白板图 | 流程、关系、框架、结构解释 |
-| `-r` | 周报板 | 周报、月报、项目推进看板 |
-
-### 输出
-
-- HTML 单文件
-- 内联 CSS
-- 默认零外部依赖
-- 可选 JSON 结构草稿
-
-## Example Outputs
-
-仓库中已包含若干 `qhy-card` 示例：
-
-- [项目推进看板示例](examples/qhy-card-priority-board.html)
-- [汇报 Deck 示例](examples/qhy-card-priority-deck.html)
-- [AI 路线图示例](examples/qhy-card-ai-roadmap-board.html)
-
-也可以直接查看 [examples/README.md](examples/README.md) 获取示例导航与使用建议。
-
-## Install
+### Claude Code
 
 ```bash
 git clone https://github.com/haoyu-qi/qhy-skills.git ~/.claude/plugins/qhy-skills
 ```
 
-然后重启 Claude Code / Codex。
+克隆完成后重启 Claude Code。
 
-当前技能同时覆盖文本、结构化文档和图像生成工作流，不强依赖 Node。`qhy-picture` 使用宿主提供的内置图像生成能力；`qhy-draw-gif` 需要 Python 3.9+ 与 `Pillow>=10.0.0`；现有公共脚本重点服务 `qhy-card` 的 HTML 预览、检查和脚手架。
+### Codex
 
-## Quick Start
+将需要的 `skills/qhy-*` 目录复制或链接到 `~/.codex/skills/`，然后重新启动 Codex。例如：
 
-可以直接这样使用：
+```bash
+git clone https://github.com/haoyu-qi/qhy-skills.git ~/.codex/qhy-skills
+cp -R ~/.codex/qhy-skills/skills/qhy-* ~/.codex/skills/
+```
+
+更新仓库后，如果使用的是复制安装，需要再次同步对应技能目录；使用目录链接则会随仓库更新生效。
+
+## 快速开始
+
+在对话中直接点名技能并说明目标、材料、受众和输出要求即可。
 
 ```text
-请用 qhy-card 生成一张信息图
-主题：MCP、Skill、Plugin 三者的区别
-要求：中文、信息密集、宽一点
+请用 qhy-card 把下面的版本更新整理成一张中文信息图，输出单文件 HTML。
 ```
 
 ```text
-请用 qhy-photo 把这张照片做成克制的纸刊编辑海报，保留人物和空间关系
+请用 qhy-photo 保留这张照片的真实人物和环境，把它编辑成留白克制的纸刊海报。
 ```
 
 ```text
-请用 qhy-picture 给这篇中文文章生成 5 张彩色手绘动画风格的 16:9 正文配图
+请用 qhy-picture 分析这篇中文文章，生成一组风格一致的 16:9 彩色手绘正文配图。
 ```
 
 ```text
-请用 qhy-ppt 把下面这份项目周报整理成 8 页以内的汇报 deck
-受众：老板
-目标：同步进展并争取资源
+请用 qhy-draw 画一个电商下单流程图，保留 .drawio 源文件并导出 PNG。
 ```
 
 ```text
-请用 qhy-draw 画一个电商下单流程图，并导出 PNG
+请用 qhy-word 把这些会议记录整理成正式纪要，单独列出结论、待办、负责人和时间点。
 ```
 
 ```text
-请用 qhy-draw-gif 把这段 Agent 工作流做成动态架构 GIF，并给我 Excalidraw 源文件
+请用 qhy-bug-xlsx 整理这份禅道 bug-list，输出总览、全部明细和 T0 明细。
 ```
+
+多个技能也可以串联使用，例如先用 `qhy-word` 整理内容，再用 `qhy-ppt` 生成汇报 deck，或先用 `qhy-draw` 固化架构，再用 `qhy-draw-gif` 制作动态讲解版。
+
+## 运行条件
+
+大部分技能以规则、模板和本地文件为主，不要求统一安装运行时。以下能力有额外条件：
+
+| Skill | 条件 |
+|---|---|
+| `qhy-draw` | 导出 PNG / SVG / PDF 时需要 draw.io Desktop CLI；仅生成 `.drawio` 不受影响 |
+| `qhy-draw-gif` | 内置渲染器需要 Python 3.9+ 与 `Pillow>=10.0.0` |
+| `qhy-bug-xlsx` | 整理脚本需要 Node.js 与仓库指定的表格依赖 |
+| `qhy-mail` | 实际发送依赖已配置的 `mail-skill` 与邮箱账号；任何发送、回复、转发都必须先人工确认 |
+| `qhy-avcon-zentao-iteration` | 写入禅道依赖已配置的 ZenTao CLI；认证信息由 CLI 管理 |
+
+## 仓库结构
 
 ```text
-请用 qhy-word 把这些会议纪要整理成正式纪要，并补一个待办清单
+qhy-skills/
+├── .claude-plugin/             # Claude 插件元数据
+├── .github/                    # Issue 与 PR 模板
+├── docs/                       # 仓库架构说明
+├── examples/                   # 代表性输出示例
+├── scripts/                    # 跨技能复用的工具
+├── tests/                      # 仓库级验证
+└── skills/
+    ├── _template/              # 新技能模板
+    ├── qhy-card/
+    ├── qhy-ppt/
+    ├── qhy-photo/
+    ├── qhy-picture/
+    ├── qhy-draw/
+    ├── qhy-draw-gif/
+    ├── qhy-word/
+    ├── qhy-humanizer-zh/
+    ├── qhy-mail/
+    ├── qhy-bug-xlsx/
+    └── qhy-avcon-zentao-iteration/
 ```
+
+单个技能通常采用以下结构：
 
 ```text
-请用 qhy-humanizer-zh 把下面这段话改得更自然，去掉 AI 味
+skills/qhy-<name>/
+├── SKILL.md                    # 必需：用途、触发条件、工作流与边界
+├── references/                # 可选：规则、模式与知识参考
+├── assets/                    # 可选：模板与静态素材
+└── scripts/                   # 可选：技能专属脚本
 ```
 
-```text
-请用 qhy-avcon-zentao-iteration 为 X86 客户端创建 6 月禅道迭代，并按需求文档生成开发阶段子任务
-```
+## 辅助脚本
 
-```text
-请用 qhy-mail 起草一封发布评审会议通知邮件，正文做成 HTML 卡片，我确认后再发送
-```
-
-```text
-请用 qhy-bug-xlsx 导入这份禅道 bug-list，输出 bug 整理表
-要求：包含总览、全部明细和 T0 明细
-```
-
-## Scripts
+根目录脚本当前主要服务 HTML 卡片的创建、检查和预览：
 
 ```bash
 bash scripts/new-card.sh
@@ -203,62 +138,21 @@ bash scripts/quality-check.sh output.html
 bash scripts/preview.sh output.html
 ```
 
-## Collaboration
+详细说明见 [`scripts/README.md`](scripts/README.md)，代表性产出见 [`examples/README.md`](examples/README.md)。
 
-仓库已经补充基础协作模板：
+## 扩展与贡献
 
-- Bug 报告：`.github/ISSUE_TEMPLATE/bug-report.md`
-- 能力提案：`.github/ISSUE_TEMPLATE/feature-request.md`
-- PR 模板：`.github/pull_request_template.md`
+新增技能时：
 
-如果你准备继续扩展 skill、模板或脚本，建议先看 [CONTRIBUTING.md](CONTRIBUTING.md)。
+1. 复制 `skills/_template/`，重命名为 `skills/qhy-<name>/`。
+2. 先完善 `SKILL.md`，明确用途、触发场景、输入输出、执行顺序和边界。
+3. 按需补充 `references/`、`assets/`、`scripts/` 与代表性示例。
+4. 更新本 README 的技能总览、运行条件和仓库结构。
+5. 按 [`CONTRIBUTING.md`](CONTRIBUTING.md) 完成检查并提交变更。
 
-## Repo Layout
-
-```text
-qhy-skills/
-├── .claude-plugin/          # 插件元数据
-├── docs/                    # 架构与仓库级说明
-├── examples/                # 示例输出
-├── scripts/                 # 多 skill 共用脚本
-└── skills/
-    ├── README.md            # skills 目录说明
-    ├── _template/           # 新 skill 模板
-    ├── qhy-avcon-zentao-iteration/ # 禅道软件迭代任务模板
-    ├── qhy-card/            # HTML 卡片能力
-    ├── qhy-photo/           # 照片编辑与纸刊海报能力
-    ├── qhy-picture/         # 彩色手绘动画正文配图能力
-    ├── qhy-ppt/             # 演示文稿能力
-    ├── qhy-draw/            # draw.io 图表生成能力
-    ├── qhy-draw-gif/        # 动态架构图与 GIF 生成能力
-    ├── qhy-word/            # 正式文档能力
-    ├── qhy-humanizer-zh/    # 中文文本去 AI 味
-    ├── qhy-mail/            # HTML 卡片邮件能力
-    ├── qhy-bug-xlsx/        # 禅道 bug-list Excel 整理能力
-    └── qhy-avcon-zentao-iteration/ # AVCON/QHY 禅道迭代任务模板
-```
-
-## Multi-Skill Expansion
-
-后续新增 skill 时，推荐遵循这套结构：
-
-- 每个 skill 放在 `skills/<skill-name>/`
-- 每个 skill 至少包含 `SKILL.md`
-- 知识规则放 `references/`
-- 模板与静态资产放 `assets/`
-- skill 专属脚本放 `scripts/`
-- 公共工具继续放根目录 `scripts/`
-
-建议直接从 [skills/_template](skills/_template) 开始。
-
-## Compared To The Original infographic-card
-
-- 从单技能项目升级为多 skill 仓库
-- 从“只有风格”升级为“模块 + 风格 + 审美准则 + 多表达形态”
-- 增加模板骨架，减少输出漂移
-- 增加脚手架、质检和示例输出
-- 补齐 `qhy-ppt`、`qhy-draw`、`qhy-draw-gif`、`qhy-photo`、`qhy-picture`、`qhy-word`、`qhy-humanizer-zh`、`qhy-avcon-zentao-iteration`、`qhy-mail`、`qhy-bug-xlsx` 等方向的基础能力
+技能行为以各目录内的 `SKILL.md` 为准，README 只维护导航和简要定位。
 
 ## License
 
 MIT
+
