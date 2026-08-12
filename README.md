@@ -155,4 +155,3 @@ bash scripts/preview.sh output.html
 ## License
 
 MIT
-
