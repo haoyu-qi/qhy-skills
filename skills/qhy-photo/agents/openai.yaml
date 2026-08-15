@@ -1,4 +1,4 @@
 interface:
   display_name: "QHY Photo"
-  short_description: "照片编辑、纸刊海报与场景蒸馏"
-  default_prompt: "使用 $qhy-photo 将这张照片阅读成一个克制的编辑作品；先选择照片编辑、实景拼贴或场景蒸馏路径，再生成并检查成品。"
+  short_description: "照片编辑、zine、复活手绘、实物涂鸦与CRT海报"
+  default_prompt: "使用 $qhy-photo 阅读这张照片的事实与关系，选择最合适的编辑、zine、复活手绘、实物涂鸦或 CRT 路径，再生成并检查成品。"
