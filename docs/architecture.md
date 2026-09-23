@@ -38,6 +38,7 @@ skills/<skill-name>/
 
 - `qhy-card`：单页视觉卡片
 - `qhy-ppt`：多页演示文稿
+- `qhy-image-to-ppt`：以图片为依据分层还原单页或多页可编辑 PPTX，支持长图拆页和指定页更新
 - `qhy-draw`：draw.io 图表生成与导出
 - `qhy-draw-gif`：动态架构图、流程动图与 Excalidraw/GIF 输出
 - `qhy-word`：正式文档正文

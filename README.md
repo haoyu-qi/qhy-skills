@@ -6,12 +6,13 @@
 
 ## 技能总览
 
-当前仓库包含 11 个技能。点击技能名可查看完整规则。
+当前仓库包含 12 个技能。点击技能名可查看完整规则。
 
 | 类别 | Skill | 适合处理 | 主要交付物 |
 |---|---|---|---|
 | 视觉内容 | [`qhy-card`](skills/qhy-card/SKILL.md) | 将复杂内容整理成信息图、海报页、结构白板或周报看板 | 单文件 HTML，可选 JSON 草稿 |
 | 视觉内容 | [`qhy-ppt`](skills/qhy-ppt/SKILL.md) | 制作中文汇报、提案、培训、发布会和路演演示 | 可横向翻页的单文件 HTML deck |
+| 视觉内容 | [`qhy-image-to-ppt`](skills/qhy-image-to-ppt/SKILL.md) | 将截图、架构图和信息图分层还原，支持多图合并、长图拆页和指定页更新 | 单页或多页可编辑 PPTX |
 | 视觉内容 | [`qhy-photo`](skills/qhy-photo/SKILL.md) | 将照片或场景编辑为纸刊海报、实景拼贴、抽象记忆面板或场景蒸馏插画 | 图片作品或可复用生图提示词 |
 | 视觉内容 | [`qhy-picture`](skills/qhy-picture/SKILL.md) | 为公众号、博客、方法论和技术解读文章设计彩色手绘动画风格的正文配图 | 16:9 横版配图、shot list 或成组提示词 |
 | 图示表达 | [`qhy-draw`](skills/qhy-draw/SKILL.md) | 绘制流程图、架构图、UML、ER 图、思维导图和网络拓扑 | `.drawio` 源文件及 PNG / SVG / PDF |
@@ -25,6 +26,7 @@
 ## 怎么选择
 
 - 内容需要“一眼看懂”，选 `qhy-card`；需要多页讲述，选 `qhy-ppt`。
+- 将已有图片还原为可编辑 PPTX，选 `qhy-image-to-ppt`；多张图片默认按顺序合成多页。
 - 以真实照片为起点做编辑创作，选 `qhy-photo`；为中文文章制作成组正文配图，选 `qhy-picture`。
 - 需要标准可编辑图表，选 `qhy-draw`；需要动态讲解，选 `qhy-draw-gif`。
 - 需要从零组织正式文档，选 `qhy-word`；已有文本只想去掉 AI 味，选 `qhy-humanizer-zh`。
@@ -81,12 +83,17 @@ cp -R ~/.codex/qhy-skills/skills/qhy-* ~/.codex/skills/
 
 多个技能也可以串联使用，例如先用 `qhy-word` 整理内容，再用 `qhy-ppt` 生成汇报 deck，或先用 `qhy-draw` 固化架构，再用 `qhy-draw-gif` 制作动态讲解版。
 
+```text
+请用 qhy-image-to-ppt 将这些图片按顺序还原为多页可编辑 PPTX，保留原文和复杂素材，移除重复底图。
+```
+
 ## 运行条件
 
 大部分技能以规则、模板和本地文件为主，不要求统一安装运行时。以下能力有额外条件：
 
 | Skill | 条件 |
 |---|---|
+| `qhy-image-to-ppt` | 生成与渲染需要宿主可用的原生 PPTX 工具链；裁切脚本需要 Python 3 与 Pillow，结构检查仅使用 Python 标准库 |
 | `qhy-draw` | 导出 PNG / SVG / PDF 时需要 draw.io Desktop CLI；仅生成 `.drawio` 不受影响 |
 | `qhy-draw-gif` | 内置渲染器需要 Python 3.9+ 与 `Pillow>=10.0.0` |
 | `qhy-bug-xlsx` | 整理脚本需要 Node.js 与仓库指定的表格依赖 |
@@ -107,6 +114,7 @@ qhy-skills/
     ├── _template/              # 新技能模板
     ├── qhy-card/
     ├── qhy-ppt/
+    ├── qhy-image-to-ppt/
     ├── qhy-photo/
     ├── qhy-picture/
     ├── qhy-draw/

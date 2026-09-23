@@ -1,0 +1,4 @@
+interface:
+  display_name: "图片转可编辑 PPT"
+  short_description: "将单张或多张图片分层还原为可编辑 PPTX，支持长图拆页并检查重影与溢出"
+  default_prompt: "使用 $qhy-image-to-ppt 将这些图片按顺序还原为可编辑 PPTX，支持单页、多页和长图拆页；移除带字整页截图底图，保留原文和视觉结构。"

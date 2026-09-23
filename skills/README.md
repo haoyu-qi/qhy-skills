@@ -8,6 +8,7 @@
 - `qhy-photo`：照片编辑、纸刊海报、实景拼贴与场景蒸馏
 - `qhy-picture`：彩色手绘动画风格的 16:9 中文正文配图
 - `qhy-ppt`：演示文稿结构与逐页表达
+- `qhy-image-to-ppt`：图片分层还原为单页或多页可编辑 PPTX
 - `qhy-draw`：draw.io 图表生成与导出
 - `qhy-draw-gif`：动态架构图、流程动图与 Excalidraw/GIF 输出
 - `qhy-word`：正式文档写作与整理
@@ -22,6 +23,7 @@
 - `qhy-photo`：适合照片海报、zine、抽象记忆面板和场景蒸馏
 - `qhy-picture`：适合公众号、博客、方法论和技术解读文章的成组正文配图
 - `qhy-ppt`：适合汇报、提案、培训、路演
+- `qhy-image-to-ppt`：适合截图还原、多图合并、长图拆页及已有 PPTX 的追加或替换
 - `qhy-draw`：适合需要 `.drawio` 源文件的流程图、架构图、UML、ER 图、思维导图、网络拓扑图
 - `qhy-draw-gif`：适合动态架构图、流程动图、黑底手绘技术解释、`.excalidraw` + PNG + GIF 交付
 - `qhy-word`：适合方案、报告、纪要、说明文
