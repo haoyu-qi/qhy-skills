@@ -13,6 +13,7 @@
 - `qhy-draw-gif`：动态架构图、流程动图与 Excalidraw/GIF 输出
 - `qhy-word`：正式文档写作与整理
 - `qhy-humanizer-zh`：中文文本去 AI 味与自然化改写
+- `qhy-analysis`：QHY 风格的选题拆解、文章与口播、旧稿诊断、内容策划与表现复盘
 - `qhy-avcon-zentao-iteration`：AVCON/QHY 禅道五阶段迭代执行与任务清单
 - `qhy-mail`：HTML 卡片邮件起草、回复与发送前确认
 - `qhy-bug-xlsx`：导入禅道 bug-list 并输出 bug 整理表
@@ -28,6 +29,7 @@
 - `qhy-draw-gif`：适合动态架构图、流程动图、黑底手绘技术解释、`.excalidraw` + PNG + GIF 交付
 - `qhy-word`：适合方案、报告、纪要、说明文
 - `qhy-humanizer-zh`：适合文章、文案、报告段落、对外说明
+- `qhy-analysis`：适合需要证据、判断框架和自然中文表达的分析、成稿、结构诊断与内容复盘
 - `qhy-avcon-zentao-iteration`：适合月度迭代、版本执行、需求文档到禅道任务的落地
 - `qhy-mail`：适合会议通知、评审邀请、周报月报、发布通知和对外邮件沟通
 - `qhy-bug-xlsx`：适合禅道缺陷导出整理、T0 问题跟踪、发布前 bug 清单复盘

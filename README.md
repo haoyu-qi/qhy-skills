@@ -6,7 +6,7 @@
 
 ## 技能总览
 
-当前仓库包含 12 个技能。点击技能名可查看完整规则。
+当前仓库包含 13 个技能。点击技能名可查看完整规则。
 
 | 类别 | Skill | 适合处理 | 主要交付物 |
 |---|---|---|---|
@@ -19,6 +19,7 @@
 | 图示表达 | [`qhy-draw-gif`](skills/qhy-draw-gif/SKILL.md) | 制作动态架构图、流程动图和黑底手绘技术图解 | GIF、PNG 与可编辑 `.excalidraw` |
 | 文本与文档 | [`qhy-word`](skills/qhy-word/SKILL.md) | 把想法、草稿或纪要整理成方案、报告、说明文和正式纪要 | 提纲、完整正文、章节草稿或修订建议 |
 | 文本与文档 | [`qhy-humanizer-zh`](skills/qhy-humanizer-zh/SKILL.md) | 在保留作者立场和口吻的前提下，减少中文文本的 AI 写作痕迹 | 自然化改稿与必要的修改说明 |
+| 分析与表达 | [`qhy-analysis`](skills/qhy-analysis/SKILL.md) | 按 QHY 风格拆解选题、成稿、诊断旧稿、策划内容与复盘表现 | 分析蓝图、文章/口播、修订稿、策划与描述性指标 |
 | 沟通协作 | [`qhy-mail`](skills/qhy-mail/SKILL.md) | 起草、润色、回复或转发业务邮件，并生成 HTML 卡片正文 | HTML / 纯文本邮件草稿；确认后发送 |
 | 研发协作 | [`qhy-bug-xlsx`](skills/qhy-bug-xlsx/SKILL.md) | 清洗禅道导出的 `.xlsx`、`.xls` 或 `.csv` Bug 列表 | 含总览、全部明细、T0 明细的整理表 |
 | 研发协作 | [`qhy-avcon-zentao-iteration`](skills/qhy-avcon-zentao-iteration/SKILL.md) | 按 AVCON/QHY 五阶段模板创建或更新禅道迭代与任务 | 迭代执行、父阶段及需求关联子任务 |
@@ -30,6 +31,7 @@
 - 以真实照片为起点做编辑创作，选 `qhy-photo`；为中文文章制作成组正文配图，选 `qhy-picture`。
 - 需要标准可编辑图表，选 `qhy-draw`；需要动态讲解，选 `qhy-draw-gif`。
 - 需要从零组织正式文档，选 `qhy-word`；已有文本只想去掉 AI 味，选 `qhy-humanizer-zh`。
+- 需要把选题分析清楚并写成有依据的内容，或把分析、改稿与内容复盘合在一起，选 `qhy-analysis`。
 - 需要处理实际邮件、Bug 表或禅道迭代，分别选 `qhy-mail`、`qhy-bug-xlsx`、`qhy-avcon-zentao-iteration`。
 
 ## 安装
@@ -78,6 +80,10 @@ cp -R ~/.codex/qhy-skills/skills/qhy-* ~/.codex/skills/
 ```
 
 ```text
+请用 qhy-analysis 拆解这个话题，结合我提供的材料，直接写成自然克制、有依据、有取舍的中文文章。
+```
+
+```text
 请用 qhy-bug-xlsx 整理这份禅道 bug-list，输出总览、全部明细和 T0 明细。
 ```
 
@@ -97,6 +103,7 @@ cp -R ~/.codex/qhy-skills/skills/qhy-* ~/.codex/skills/
 | `qhy-draw` | 导出 PNG / SVG / PDF 时需要 draw.io Desktop CLI；仅生成 `.drawio` 不受影响 |
 | `qhy-draw-gif` | 内置渲染器需要 Python 3.9+ 与 `Pillow>=10.0.0` |
 | `qhy-bug-xlsx` | 整理脚本需要 Node.js 与仓库指定的表格依赖 |
+| `qhy-analysis` | 分析与写作无需额外运行时；可选候选扫描和本地指标计算使用 Python 3.8+ 标准库 |
 | `qhy-mail` | 实际发送依赖已配置的 `mail-skill` 与邮箱账号；任何发送、回复、转发都必须先人工确认 |
 | `qhy-avcon-zentao-iteration` | 写入禅道依赖已配置的 ZenTao CLI；认证信息由 CLI 管理 |
 
@@ -121,6 +128,7 @@ qhy-skills/
     ├── qhy-draw-gif/
     ├── qhy-word/
     ├── qhy-humanizer-zh/
+    ├── qhy-analysis/
     ├── qhy-mail/
     ├── qhy-bug-xlsx/
     └── qhy-avcon-zentao-iteration/
@@ -162,4 +170,4 @@ bash scripts/preview.sh output.html
 
 ## License
 
-MIT
+仓库通用部分为 MIT。`skills/qhy-analysis/` 改编自 chrislitality-svg/wangziru-analysis-skill，保留 CC BY-NC 4.0 署名与非商业条款；详见该技能的 [来源说明](skills/qhy-analysis/references/sources.md) 和 [LICENSE](skills/qhy-analysis/LICENSE)。

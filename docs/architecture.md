@@ -43,6 +43,7 @@ skills/<skill-name>/
 - `qhy-draw-gif`：动态架构图、流程动图与 Excalidraw/GIF 输出
 - `qhy-word`：正式文档正文
 - `qhy-humanizer-zh`：中文文本去 AI 味与自然化改写
+- `qhy-analysis`：把选题拆解、论证、成稿与内容复盘组织成一个自包含的分析表达能力；保留 CC BY-NC 4.0 来源与许可证
 
 ## 3. 模板层
 
