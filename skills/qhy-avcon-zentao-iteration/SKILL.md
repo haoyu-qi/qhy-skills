@@ -35,14 +35,14 @@ Use this skill to create or maintain ZenTao software iteration task structures.
      - `版本发布评审`
      - `产品资料准备`
 8. If requirement documents are provided, use them to generate `开发阶段` subtasks and to refine owners, deadlines, descriptions, and completion criteria. Do not replace the five-stage structure unless the user explicitly asks.
-9. When creating real ZenTao subtasks, pass `parent` in the full `--data` JSON payload instead of as a standalone CLI flag, for example `zentao task create --data='{"executionID":306,"parent":970,"name":"06、需求说明书确认"}'`. Verify that the created task has the expected nonzero `parent`.
-10. After writing to ZenTao, list the execution tasks to verify the new title numbers and summarize task IDs, names, parent IDs, owners, and deadlines.
+9. When creating real ZenTao subtasks, pass `parent` in the full `--data` JSON payload instead of as a standalone CLI flag, for example `zentao task create --data='{"executionID":306,"parent":970,"name":"【任务01-01】 需求说明书确认"}'`. Verify that the created task has the expected nonzero `parent`.
+10. After writing to ZenTao, list the execution tasks to verify the new title prefixes against the parent IDs and summarize task IDs, names, parent IDs, owners, and deadlines.
 
 ## Task Numbering
 
-- Use one sequence per execution for all new task titles, including first-level stage tasks and subtasks. The default format is `01、任务名称`, with at least two digits. Match the separator if the execution already uses a consistent format for numeric prefixes.
-- Before each creation batch, list all tasks in the target execution across statuses and pages, including subtasks. Use the highest existing title prefix plus one, including legacy stage prefixes such as `五、` when calculating the maximum. Start at `01` when the execution has no numbered tasks.
-- Assign consecutive numbers in creation order across parents and batches. Preserve existing titles and use the stage name after the prefix to identify existing parent tasks.
+- Prefix each new title with `【任务编号】` and one space, using the actual parent hierarchy. Format first-level tasks as `【任务01】 任务名称`, their children as `【任务01-01】 子任务名称`, and deeper tasks as `【任务01-01-1】 下级任务名称`. Use two digits for the first two segments and unpadded numbers from the third segment onward.
+- Before each creation batch, list the target execution's tasks across all statuses and pages, including subtasks. For first-level tasks, increment the highest first-level number in the execution. For subtasks, append the next number among the parent's direct children. Start an empty sequence at `01` for the first two levels or `1` from the third level onward. For example, with first-level tasks through `【任务14】` and children of `【任务11】` through `【任务11-08】`, use `【任务15】` for a new first-level task and `【任务11-09】` for the next child of task 11.
+- For legacy titles, use numeric prefixes such as `05、` and stage prefixes such as `五、` when finding the highest sibling number or building a parent's prefix. Use the stage name after its prefix to identify the parent and preserve existing titles. For an unnumbered parent, reuse its path if its numbered children establish one. Otherwise reserve the next available number at the parent's level for its path and use that path when numbering its children. Include such reserved paths from existing child titles when counting used numbers.
 
 ## Subtask Decision
 

@@ -28,11 +28,11 @@ Create these five first-level tasks in order. The titles shown are for a new exe
 
 | Order | Task Name | Goal |
 | --- | --- | --- |
-| 1 | 01、概念阶段 | 确认需求说明书、版本目标和范围边界 |
-| 2 | 02、计划阶段 | 完成项目计划规划、资源安排和计划评审 |
-| 3 | 03、开发阶段 | 完成模块设计、开发实现和模块测试 |
-| 4 | 04、验证阶段 | 完成集成测试和验证闭环 |
-| 5 | 05、发布阶段 | 完成版本发布评审和产品资料准备 |
+| 1 | 【任务01】 概念阶段 | 确认需求说明书、版本目标和范围边界 |
+| 2 | 【任务02】 计划阶段 | 完成项目计划规划、资源安排和计划评审 |
+| 3 | 【任务03】 开发阶段 | 完成模块设计、开发实现和模块测试 |
+| 4 | 【任务04】 验证阶段 | 完成集成测试和验证闭环 |
+| 5 | 【任务05】 发布阶段 | 完成版本发布评审和产品资料准备 |
 
 Do not create these as default stages:
 
@@ -66,7 +66,7 @@ For a four-week monthly iteration:
 
 ## Default Subtasks
 
-When the user confirms that subtasks should be created, use these base titles for stages one, two, four, and five. For the development stage, generate subtasks from the requirement document when one is available. The order column gives the creation order within each stage. Title numbers continue across the whole execution. For example, when the highest existing number is `05`, create `06、需求说明书确认`, then `07、项目计划规划与评审` under their respective parents.
+When the user confirms that subtasks should be created, use these base titles for stages one, two, four, and five. For the development stage, generate subtasks from the requirement document when one is available. Use each parent's number and append the next number in its child sequence. In a new execution, the first concept task is `【任务01-01】 需求说明书确认` and the first planning task is `【任务02-01】 项目计划规划与评审`. If `【任务05-01】 版本发布评审` already exists under the release stage, the next child is `【任务05-02】 产品资料准备`.
 
 | Parent Stage | Order Within Stage | Fixed Subtask Base Title | Goal |
 | --- | --- | --- | --- |
@@ -147,7 +147,7 @@ Quality rules:
 ZenTao CLI 0.1.8 does not expose `parent` as a standalone `task create` or `task update` option. To create real child tasks, pass `parent` in the full JSON request body:
 
 ```bash
-zentao task create --data='{"executionID":306,"parent":970,"name":"08、系统界面网络连接、WiFi和IP配置的开发","type":"devel","assignedTo":"qihaoyu","deadline":"2026-06-16"}'
+zentao task create --data='{"executionID":306,"parent":970,"name":"【任务03-01】 系统界面网络连接、WiFi和IP配置的开发","type":"devel","assignedTo":"qihaoyu","deadline":"2026-06-16"}'
 ```
 
 After creating subtasks, verify with:
