@@ -24,15 +24,15 @@ X86客户端6月迭代
 
 ## Fixed First-Level Stage Tasks
 
-Create these five first-level tasks in order:
+Create these five first-level tasks in order. The titles shown are for a new execution. Follow [Task Numbering](../SKILL.md#task-numbering) to assign the next available numbers in an existing execution.
 
 | Order | Task Name | Goal |
 | --- | --- | --- |
-| 1 | 一、概念阶段 | 确认需求说明书、版本目标和范围边界 |
-| 2 | 二、计划阶段 | 完成项目计划规划、资源安排和计划评审 |
-| 3 | 三、开发阶段 | 完成模块设计、开发实现和模块测试 |
-| 4 | 四、验证阶段 | 完成集成测试和验证闭环 |
-| 5 | 五、发布阶段 | 完成版本发布评审和产品资料准备 |
+| 1 | 01、概念阶段 | 确认需求说明书、版本目标和范围边界 |
+| 2 | 02、计划阶段 | 完成项目计划规划、资源安排和计划评审 |
+| 3 | 03、开发阶段 | 完成模块设计、开发实现和模块测试 |
+| 4 | 04、验证阶段 | 完成集成测试和验证闭环 |
+| 5 | 05、发布阶段 | 完成版本发布评审和产品资料准备 |
 
 Do not create these as default stages:
 
@@ -40,17 +40,17 @@ Do not create these as default stages:
 - 生命周期维护阶段
 - 停产阶段
 
-If concentrated bug fixing is needed, track it under `四、验证阶段` or create specific bug-fix tasks, not a fixed lifecycle stage.
+If concentrated bug fixing is needed, track it under `验证阶段` or create specific bug-fix tasks, not a fixed lifecycle stage.
 
 ## Owner Suggestions
 
 | Stage | Suggested Owner |
 | --- | --- |
-| 一、概念阶段 | 项目/产品负责人 |
-| 二、计划阶段 | 项目经理/研发负责人 |
-| 三、开发阶段 | 研发负责人 |
-| 四、验证阶段 | 测试/研发负责人 |
-| 五、发布阶段 | 发布/测试负责人 |
+| 概念阶段 | 项目/产品负责人 |
+| 计划阶段 | 项目经理/研发负责人 |
+| 开发阶段 | 研发负责人 |
+| 验证阶段 | 测试/研发负责人 |
+| 发布阶段 | 发布/测试负责人 |
 
 ## Schedule Suggestions
 
@@ -58,24 +58,24 @@ For a four-week monthly iteration:
 
 | Stage | Suggested Window |
 | --- | --- |
-| 一、概念阶段 | 第 1 周前半 |
-| 二、计划阶段 | 第 1 周后半 |
-| 三、开发阶段 | 第 2 周到第 3 周 |
-| 四、验证阶段 | 第 4 周前半 |
-| 五、发布阶段 | 第 4 周后半 |
+| 概念阶段 | 第 1 周前半 |
+| 计划阶段 | 第 1 周后半 |
+| 开发阶段 | 第 2 周到第 3 周 |
+| 验证阶段 | 第 4 周前半 |
+| 发布阶段 | 第 4 周后半 |
 
 ## Default Subtasks
 
-When the user confirms that subtasks should be created, use these defaults for stages one, two, four, and five. For `三、开发阶段`, generate subtasks from the requirement document when one is available.
+When the user confirms that subtasks should be created, use these base titles for stages one, two, four, and five. For the development stage, generate subtasks from the requirement document when one is available. The order column gives the creation order within each stage. Title numbers continue across the whole execution. For example, when the highest existing number is `05`, create `06、需求说明书确认`, then `07、项目计划规划与评审` under their respective parents.
 
-| Parent Task | Order | Fixed Subtask | Goal |
+| Parent Stage | Order Within Stage | Fixed Subtask Base Title | Goal |
 | --- | --- | --- | --- |
-| 一、概念阶段 | 1 | 需求说明书确认 | 确认需求说明书内容、范围、边界和版本目标 |
-| 二、计划阶段 | 1 | 项目计划规划与评审 | 完成项目计划、排期、资源和风险评审 |
-| 三、开发阶段 | 1..n | 按需求文档生成 | 从需求文档中的模块、功能点、页面、接口和交付物抽取开发任务 |
-| 四、验证阶段 | 1 | 集成测试 | 完成系统集成测试、缺陷跟踪和验证 |
-| 五、发布阶段 | 1 | 版本发布评审 | 确认版本范围、测试结论、遗留问题、发布风险和准出条件 |
-| 五、发布阶段 | 2 | 产品资料准备 | 准备发布说明、版本范围、使用说明、验收材料和归档资料 |
+| 概念阶段 | 1 | 需求说明书确认 | 确认需求说明书内容、范围、边界和版本目标 |
+| 计划阶段 | 1 | 项目计划规划与评审 | 完成项目计划、排期、资源和风险评审 |
+| 开发阶段 | 1..n | 按需求文档生成 | 从需求文档中的模块、功能点、页面、接口和交付物抽取开发任务 |
+| 验证阶段 | 1 | 集成测试 | 完成系统集成测试、缺陷跟踪和验证 |
+| 发布阶段 | 1 | 版本发布评审 | 确认版本范围、测试结论、遗留问题、发布风险和准出条件 |
+| 发布阶段 | 2 | 产品资料准备 | 准备发布说明、版本范围、使用说明、验收材料和归档资料 |
 
 Fallback development subtasks when no requirement document or feature list is available:
 
@@ -87,7 +87,7 @@ Fallback development subtasks when no requirement document or feature list is av
 
 ## Requirement-Based Development Subtasks
 
-When a requirement document, requirement link, requirement ID, or feature list is available, use it to generate `三、开发阶段` subtasks. Keep the five parent stages unchanged.
+When a requirement document, requirement link, requirement ID, or feature list is available, use it to generate `开发阶段` subtasks. Keep the five parent stages unchanged.
 
 | Source Information | Use |
 | --- | --- |
@@ -126,11 +126,11 @@ Stage mapping:
 
 | Stage | Subtask Sources |
 | --- | --- |
-| 一、概念阶段 | 固定创建 `需求说明书确认` |
-| 二、计划阶段 | 固定创建 `项目计划规划与评审` |
-| 三、开发阶段 | 优先按需求文档生成；无需求文档时兜底创建 `模块一的测试`、`模块一的开发`、`模块一的设计页面设计` |
-| 四、验证阶段 | 固定创建 `集成测试` |
-| 五、发布阶段 | 固定创建 `版本发布评审`、`产品资料准备` |
+| 概念阶段 | 固定创建 `需求说明书确认` |
+| 计划阶段 | 固定创建 `项目计划规划与评审` |
+| 开发阶段 | 优先按需求文档生成；无需求文档时兜底创建 `模块一的测试`、`模块一的开发`、`模块一的设计页面设计` |
+| 验证阶段 | 固定创建 `集成测试` |
+| 发布阶段 | 固定创建 `版本发布评审`、`产品资料准备` |
 
 Quality rules:
 
@@ -140,14 +140,14 @@ Quality rules:
 - If requirements are unclear, capture clarification work under `需求说明书确认`.
 - If technical risk is high, capture validation or review work under `项目计划规划与评审` or the relevant development/verification subtask.
 - Development-stage subtasks must trace back to requirement document modules, features, pages, interfaces, or deliverables when that source exists.
-- `五、发布阶段` must contain exactly `版本发布评审` and `产品资料准备` unless the user explicitly asks for additional release subtasks.
+- `发布阶段` must contain exactly `版本发布评审` and `产品资料准备` unless the user explicitly asks for additional release subtasks.
 
 ## ZenTao Parent/Child Task Creation
 
 ZenTao CLI 0.1.8 does not expose `parent` as a standalone `task create` or `task update` option. To create real child tasks, pass `parent` in the full JSON request body:
 
 ```bash
-zentao task create --data='{"executionID":306,"parent":970,"name":"系统界面网络连接、WiFi和IP配置的开发","type":"devel","assignedTo":"qihaoyu","deadline":"2026-06-16"}'
+zentao task create --data='{"executionID":306,"parent":970,"name":"08、系统界面网络连接、WiFi和IP配置的开发","type":"devel","assignedTo":"qihaoyu","deadline":"2026-06-16"}'
 ```
 
 After creating subtasks, verify with:
@@ -161,11 +161,11 @@ If the resulting task has `parent: 0`, it is not a real child task. Recreate it 
 ## ZenTao Creation Rules
 
 1. Create or update the execution with the selected product, project, branch, date range, and concise name.
-2. Create the five fixed first-level stage tasks using `一、概念阶段` through `五、发布阶段`.
+2. List execution tasks and apply [Task Numbering](../SKILL.md#task-numbering) before creating the five fixed first-level stage tasks or adding subtasks.
 3. Ask whether to create subtasks before creating them.
 4. If the user confirms subtasks, create the fixed default subtasks for stages one, two, four, and five.
-5. For `三、开发阶段`, generate subtasks from requirement documents or feature lists when available.
-6. If there is no requirement document or feature list, use the fallback development subtasks as-is.
+5. For `开发阶段`, generate subtasks from requirement documents or feature lists when available.
+6. If there is no requirement document or feature list, use the fallback development subtask base titles.
 7. Verify by listing tasks from the execution.
 8. Summarize what was created, including execution ID, task IDs, parent IDs, owners, and deadlines.
 
